@@ -4,27 +4,28 @@ public class RatingBean {
 	
 	
 	private int idutente;
-	private EventoBean evento;
+	private int idEvento;
 	private boolean voto;
+	
+	
+	public RatingBean(int idutente, int evento, boolean voto) {
+		this.idutente = idutente;
+		this.idEvento = evento;
+		this.voto = voto;
+	}
+	
 	public int getIdutente() {
 		return idutente;
 	}
 	
-	public RatingBean(int idutente, EventoBean evento, boolean voto) {
-		this.idutente = idutente;
-		this.evento = evento;
-		this.voto = voto;
-	}
-	
-	
 	public void setIdutente(int idutente) {
 		this.idutente = idutente;
 	}
-	public EventoBean getEvento() {
-		return evento;
+	public int getEvento() {
+		return idEvento;
 	}
-	public void setEvento(EventoBean evento) {
-		this.evento = evento;
+	public void setEvento(int evento) {
+		this.idEvento = evento;
 	}
 	public boolean isVoto() {
 		return voto;
@@ -34,7 +35,7 @@ public class RatingBean {
 	}
 	@Override
 	public String toString() {
-		return "RatingBean [idutente=" + idutente + ", evento=" + evento + ", voto=" + voto + "]";
+		return "RatingBean [idutente=" + idutente + ", evento=" + idEvento + ", voto=" + voto + "]";
 	}
 	
 	
