@@ -2,6 +2,12 @@ package it.unisa.studenti.letsmeet.model;
 
 import java.time.Instant;
 
+/**
+ * 
+ * Descrive l’utente registrazione
+ *
+ */
+
 public class UtenteBean {
 	
 	private int idUtente;
@@ -11,7 +17,15 @@ public class UtenteBean {
 	private CredentialsBean credentials;
 	private boolean isVisible;
 	
-	
+	/**
+	 * Costruttore
+	 * @param idUtente id univoco dell'utente
+	 * @param email email dell'utente
+	 * @param feedbackUtente feedback dell'utente
+	 * @param reactivationDate data di riattivazione dell'utente
+	 * @param credentials credenziali dell'utente 
+	 * @param isVisible stato dell'utente 
+	 */
 	public UtenteBean(int idUtente, String email, float feedbackUtente, Instant reactivationDate, CredentialsBean credentials,
 			boolean isVisible) {
 		this.idUtente = idUtente;
