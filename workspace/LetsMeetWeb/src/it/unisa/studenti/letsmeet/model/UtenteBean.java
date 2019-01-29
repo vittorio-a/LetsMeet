@@ -1,6 +1,7 @@
 package it.unisa.studenti.letsmeet.model;
 
 import java.time.Instant;
+import java.util.Date;
 
 /**
  * 
@@ -11,11 +12,14 @@ import java.time.Instant;
 public class UtenteBean {
 	
 	private int idUtente;
-	private String email;
 	private float feedbackUtente;
-	private Instant reactivationDate;
+	private Date reactivationDate;
 	private CredentialsBean credentials;
 	private boolean isVisible;
+	
+	public UtenteBean() {
+		
+	}
 	
 	/**
 	 * Costruttore
@@ -26,10 +30,9 @@ public class UtenteBean {
 	 * @param credentials credenziali dell'utente 
 	 * @param isVisible stato dell'utente 
 	 */
-	public UtenteBean(int idUtente, String email, float feedbackUtente, Instant reactivationDate, CredentialsBean credentials,
+	public UtenteBean(int idUtente, String email, float feedbackUtente, Date reactivationDate, CredentialsBean credentials,
 			boolean isVisible) {
 		this.idUtente = idUtente;
-		this.email = email;
 		this.feedbackUtente = feedbackUtente;
 		this.reactivationDate = reactivationDate;
 		this.credentials = credentials;
@@ -44,22 +47,17 @@ public class UtenteBean {
 	public void setIdUtente(int idUtente) {
 		this.idUtente = idUtente;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+
 	public float getFeedbackUtente() {
 		return feedbackUtente;
 	}
 	public void setFeedbackUtente(float feedbackUtente) {
 		this.feedbackUtente = feedbackUtente;
 	}
-	public Instant getReactivationDate() {
+	public Date getReactivationDate() {
 		return reactivationDate;
 	}
-	public void setReactivationDate(Instant reactivationDate) {
+	public void setReactivationDate(Date reactivationDate) {
 		this.reactivationDate = reactivationDate;
 	}
 	public CredentialsBean getCredentials() {
@@ -78,8 +76,8 @@ public class UtenteBean {
 
 	@Override
 	public String toString() {
-		return "UtenteBean [idUtente=" + idUtente + ", email=" + email + ", feedbackUtente=" + feedbackUtente
-				+ ", reactivationDate=" + reactivationDate + ", credentials=" + credentials + ", isVisible=" + isVisible
+		return "UtenteBean [idUtente=" + idUtente + ", feedbackUtente=" + feedbackUtente
+				+ ", reactivationDate=" + reactivationDate + ", credentials=" + credentials.toString() + ", isVisible=" + isVisible
 				+ "]";
 	}
 	

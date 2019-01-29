@@ -9,7 +9,7 @@ CREATE TABLE Utente(
     passwordUtente BINARY(32),
     email VARCHAR(256) UNIQUE,
 	feedback FLOAT,
-    isVisibile BOOLEAN,
+    stato ENUM{'ATTIVO','INVISIBILE','BANNATO'},
     reactivationDay DATE
 );
 
