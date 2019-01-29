@@ -7,6 +7,12 @@ public class TipoBean {
 	private String descrizione;
 	
 	
+	public TipoBean() {
+		this.descrizione = null;
+		this.nomeTipo = null;
+	}
+	
+	
 	public TipoBean(String nomeTipo, String descrizione) {
 		this.nomeTipo = nomeTipo;
 		this.descrizione = descrizione;

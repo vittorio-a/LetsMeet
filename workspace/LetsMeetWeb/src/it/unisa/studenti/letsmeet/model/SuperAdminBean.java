@@ -7,6 +7,12 @@ public class SuperAdminBean {
 	private String password;
 	private int idSuperAdmin;
 	
+	public SuperAdminBean() {
+		this.idSuperAdmin = 0;
+		this.password = null;
+		this.username = null;
+	}
+	
 	public SuperAdminBean(String username, String password, int idSuperAdmin) {
 		this.username = username;
 		this.password = password;

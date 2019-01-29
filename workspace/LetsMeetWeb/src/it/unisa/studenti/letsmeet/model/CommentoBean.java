@@ -10,6 +10,14 @@ public class CommentoBean {
 	private int idEvento;
 	private Instant creationTime;
 	
+	
+	public CommentoBean() {
+		this.contenuto = null;
+		this.creationTime = null;
+		this.idCommento = 0;
+		this.idEvento = 0;
+		this.idUtente = 0;
+	};
 
 	public CommentoBean(int idUtente, String contenuto, int idCommento, int idEvento, Instant creationTime) {
 		this.idUtente = idUtente;

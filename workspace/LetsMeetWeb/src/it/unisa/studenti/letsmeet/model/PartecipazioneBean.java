@@ -7,6 +7,13 @@ public class PartecipazioneBean {
 	private boolean verificato;
 	private int idPartecipazione;
 	
+	
+	public PartecipazioneBean() {
+		this.idPartecipazione = 0;
+		this.idUtente = 0;
+		this.verificato = false;
+	}
+	
 	public PartecipazioneBean(int idUtente, boolean verificato, int idPartecipazione) {
 		this.idUtente = idUtente;
 		this.verificato = verificato;

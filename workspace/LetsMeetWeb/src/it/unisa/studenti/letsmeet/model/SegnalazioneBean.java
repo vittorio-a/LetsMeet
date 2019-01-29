@@ -8,6 +8,13 @@ public class SegnalazioneBean {
 	private int idItemSegnalato;
 	private TipoSegnalazione tipoSegnalazione;
 	
+	
+	public SegnalazioneBean() {
+		this.idItemSegnalato = 0;
+		this.idSegnalazione = 0;
+		this.tipoSegnalazione = null;
+	}
+	
 /**
  * Costruttore
  * @param idSegnalazione l'id della segnalazione

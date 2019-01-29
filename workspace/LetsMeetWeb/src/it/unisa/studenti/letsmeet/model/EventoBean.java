@@ -1,7 +1,6 @@
 package it.unisa.studenti.letsmeet.model;
 
 import java.time.Instant;
-import java.util.ArrayList;
 
 public class EventoBean {
 	
@@ -16,12 +15,24 @@ public class EventoBean {
 	private int idUtente;
 	private TipoBean tipo;
 	private PosizioneBean posizione;
-	private ArrayList<PartecipazioneBean> partecipanti;
 	private boolean isVisible;
+	
+	public EventoBean() {
+		this.feedback = 0;
+		this.idEvento = 0;
+		this.idUtente = 0;
+		this.isVisible = false;
+		this.nome =null;
+		this.nPartecipanti = 0;
+		this.nVerificati = 0;
+		this.posizione = null;
+		this.tipo = null;
+	}
+	
 	
 	public EventoBean(int idEvento, String nome, float feedback, int nPartecipanti, int nVerificati, Instant oraInizio,
 			Instant oraFine, int idUtente, TipoBean tipo, PosizioneBean posizione,
-			ArrayList<PartecipazioneBean> partecipanti, boolean isVisible) {
+			boolean isVisible) {
 		this.idEvento = idEvento;
 		this.nome = nome;
 		this.feedback = feedback;
@@ -32,7 +43,6 @@ public class EventoBean {
 		this.idUtente = idUtente;
 		this.tipo = tipo;
 		this.posizione = posizione;
-		this.partecipanti = partecipanti;
 		this.isVisible = isVisible;
 	}
 	
@@ -97,12 +107,7 @@ public class EventoBean {
 	public void setPosizione(PosizioneBean posizione) {
 		this.posizione = posizione;
 	}
-	public ArrayList<PartecipazioneBean> getPartecipanti() {
-		return partecipanti;
-	}
-	public void setPartecipanti(ArrayList<PartecipazioneBean> partecipanti) {
-		this.partecipanti = partecipanti;
-	}
+	
 	public boolean isVisible() {
 		return isVisible;
 	}
@@ -118,6 +123,6 @@ public class EventoBean {
 		return "EventoBean [idEvento=" + idEvento + ", nome=" + nome + ", feedback=" + feedback + ", nPartecipanti="
 				+ nPartecipanti + ", nVerificati=" + nVerificati + ", oraInizio=" + oraInizio + ", oraFine=" + oraFine
 				+ ", idUtente=" + idUtente + ", tipo=" + tipo + ", posizione=" + posizione + ", partecipanti="
-				+ partecipanti + ", isVisible=" + isVisible + "]";
+				+ ", isVisible=" + isVisible + "]";
 	}
 }
