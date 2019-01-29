@@ -1,0 +1,204 @@
+@charset "UTF-8";
+
+html{
+	height: 100%;
+}
+
+
+body{
+	
+	height: 100%;
+	width: 100%;
+}
+
+a{
+	
+	color: grey;
+	text-decoration: none;
+}
+
+#container{
+	
+	height: 100%;
+	position: relative;
+	
+	
+}
+
+#header{
+	
+	position:relative;
+	color:white;
+	font-size:180%;
+	background-color: #778899;
+	width: 99%;
+	border-radius: 2px;
+	height: 12%;
+	display: table;
+	opacity: 0.8;
+	
+}
+
+h1{
+	
+	position: relative;
+	top:30%;
+	left: 3%;
+	color: black;
+}
+
+h2{
+	color: black;
+	margin: 0px;
+}
+
+#map{
+	
+	position:absolute;
+	top:25%;
+	font-family: Times New Roman;
+	font-size:180%;
+	background-color: #778899;
+	border-radius: 2px;
+	width: 49%;
+	height: 65%;
+	display: table;
+	
+}
+
+#event{
+	
+	position:absolute;
+	top:25%;
+	left:50%;
+	font-family: Times New Roman;
+	font-size:180%;
+	background-color: #778899;
+	border-radius: 2px;
+	width: 49%;
+	height: 65%;
+	display: table;
+	text-align: center;
+	
+}
+
+#map-container{
+	height: 100%;
+	width: 100%;
+}
+
+#event_container{
+	height: 89.5%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	margin-top:50px;
+}
+
+#manager-info{
+	background-color: rgba(119, 136, 153, 0.8);
+	border-radius: 2px;
+	text-align: center;
+	display:none;
+	position: fixed;
+	top:27%;
+	left:35%;
+	z-index: 2;
+	border: thin solid black;
+}
+
+#fsx, #fdx{
+	margin-top: 10px;
+	color:black;
+}
+
+#fsx{
+	float: left;
+	color:black;
+}
+
+#fdx{
+	float: right;
+	color:black;
+}
+
+#fdw{
+	width: 100%;
+	clear: both;
+	float: left;
+	text-align: center;
+	color:black;
+}
+
+input, select, textarea{
+	display: block;
+	background-color:rgba(255, 255, 255, 1); ;
+	padding: 12px;
+	margin: 16px;
+	width: 75%; 
+}
+
+textarea{
+	width: 75%;
+	position: relative;
+	left: 5%;
+	color:black;
+	
+}
+
+#crea_btn, #cancel_btn{
+	display: inline;
+	width: 30%;
+	color:black;
+}
+
+#event_list{
+	padding: 15px;
+	padding-left: 0px;
+	list-style: none;
+	border: thin solid black;
+	border-radius: 2px;
+	text-align: center;
+	background: #b3bcc6;
+	
+}
+
+#event_list>li{
+	padding-left: 0px;
+
+}
+
+#event_list>li:hover {
+	cursor: pointer;
+	background-color: #b3bcc6;
+}
+
+.gm-style{
+	font-family: monospace !important;
+	font-size: large !important;
+}
+
+
+#info{
+	z-index: 3;
+	position: absolute;
+	left: 32%;
+	top: 3%;
+}
+
+#info:hover {
+	background-color: #778899;
+	cursor: pointer;
+	border-radius: 100px;
+}
+
+#info-cont{
+	visibility: hidden;
+	font-size: 12pt;
+	background-color: white;
+	border: thin solid black;
+	z-index: 3;
+	position: absolute;
+	left: 32%;
+	top: 10%;
+	width: 45%;
+}
