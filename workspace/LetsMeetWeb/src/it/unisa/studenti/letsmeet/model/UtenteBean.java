@@ -1,6 +1,5 @@
 package it.unisa.studenti.letsmeet.model;
 
-import java.sql.Date;
 import java.time.Instant;
 
 /**
