@@ -1,5 +1,7 @@
 package it.unisa.studenti.letsmeet.model;
 
+import java.util.Arrays;
+
 public class CredentialsBean {
 	
 	
@@ -45,8 +47,29 @@ public class CredentialsBean {
 	public String toString() {
 		return "CredentialsBean [username=" + username + ", password=" + password + ", state=" + state + "]";
 	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CredentialsBean other = (CredentialsBean) obj;
+		if (!Arrays.equals(password, other.password))
+			return false;
+		if (state != other.state)
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
 	
-	
-	
-	
+
 }
