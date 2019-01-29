@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -21,8 +20,9 @@ public class CommentoDao implements Dao<CommentoBean> {
 	
 	private static String GET_COMMENT_BY_ID = "SELECT * FROM Commento WHERE id = ?";
 	private static String GET_COMMENTS = "SELECT * FROM Commento";
-	private static String INSERT_COMMENT = "INSERT INTO Commento (idCommento,idMittente,contenuto,idEvento,creationTime) values (?,?,?,?,?)";
-	private static String UPDATE_COMMENT = "UPDATE Commento SET 
+	private static String INSERT_COMMENT = "INSERT INTO Commento (idCommento,idMittente,contenuto,idEvento,creationTime) VALUES (?,?,?,?,?)";
+	private static String DELETE_COMMENT = "DELETE FROM Commento WHERE idCommento = ?";
+	private static String UPDATE_COMMENT = "INSERT INTO Utente(idCommento,idMittente,contenuto,idEvento,creationTime) VALUES(?,?,?,?,?)";
 	//Parametri
 	private static String ID_COMMENTO ="idCommento";
 	private static String ID_MITTENTE = "idMittente";
@@ -93,12 +93,12 @@ public class CommentoDao implements Dao<CommentoBean> {
 
 	
 	@Override
-	public void saveOrUpdate(CommentoBean commento) throws DaoException {
+	public boolean saveOrUpdate(CommentoBean commento) throws DaoException {
 		int idCommento = commento.getIdCommento();
 		if(idCommento != 0) {
 			CommentoBean otherComment = get(idCommento);
-			if(commento.equals(otherComment))
-				return;
+			if(commento.equals(otherComment)) {
+				return false;
 		}else {
 			try {
 			Connection con =  ds.getConnection();
@@ -108,18 +108,52 @@ public class CommentoDao implements Dao<CommentoBean> {
 			ps.setString(3, commento.getContenuto());
 			ps.setInt(4, commento.getIdEvento());
 			ps.setTimestamp(5, Timestamp.from(commento.getCreationTime()));
+			ps.executeUpdate();
+			ps.close();
+			con.close();
 			}catch (SQLException e){
-				throw new DaoException("Errore nel get in CommentoDAO", e, DaoExceptionType.SQLException);
+				throw new DaoException("Errore nel Insert in CommentoDAO", e, DaoExceptionType.SQLException);
 			}
 		
-			
+		}	
+	}else {
+		try {
+		Connection con = ds.getConnection();
+		PreparedStatement ps = con.prepareStatement(UPDATE_COMMENT);
+		ps.setInt(1, commento.getIdCommento());
+		ps.setInt(2, commento.getIdUtente());
+		ps.setString(3, commento.getContenuto());
+		ps.setInt(4, commento.getIdEvento());
+		ps.setTimestamp(5, Timestamp.from(commento.getCreationTime()));
+		ps.executeUpdate();
+		ps.close();
+		con.close();
+		}catch(SQLException e) {
+			throw new DaoException("Errore nel Update in CommentoDAO", e, DaoExceptionType.SQLException);
 		}
+	}
+		return true;
 		
 	}
 
 	@Override
-	public void delete(CommentoBean t) throws DaoException {
-		// TODO Auto-generated method stub
+	public boolean delete(CommentoBean commento) throws DaoException {
+		int idCommento = commento.getIdCommento();
+		if(idCommento != 0){
+			try {
+				Connection con = ds.getConnection();
+				PreparedStatement ps = con.prepareStatement(DELETE_COMMENT);
+				ps.setInt(1, idCommento);
+				ps.close();
+				con.close();
+			}catch(SQLException e){
+				throw new DaoException("Errore nel delete in CommentoDAO", e, DaoExceptionType.SQLException);
+
+			}
+			return true;
+		}else {
+			return false;
+		}
 		
 	}
 
