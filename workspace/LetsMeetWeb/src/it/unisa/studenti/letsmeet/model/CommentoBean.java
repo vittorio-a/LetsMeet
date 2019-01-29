@@ -10,6 +10,15 @@ public class CommentoBean {
 	private int idEvento;
 	private Instant creationTime;
 	
+	
+	
+	public CommentoBean() {
+		this.contenuto = null;
+		this.creationTime = null;
+		this.idCommento = 0;
+		this.idEvento = 0;
+		this.idUtente = 0;
+	};
 
 	public CommentoBean(int idUtente, String contenuto, int idCommento, int idEvento, Instant creationTime) {
 		this.idUtente = idUtente;
@@ -54,6 +63,35 @@ public class CommentoBean {
 	public String toString() {
 		return "CommentoBean [idUtente=" + idUtente + ", contenuto=" + contenuto + ", idCommento=" + idCommento
 				+ ", idEvento=" + idEvento + ", creationTime=" + creationTime + "]";
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CommentoBean other = (CommentoBean) obj;
+		if (contenuto == null) {
+			if (other.contenuto != null)
+				return false;
+		} else if (!contenuto.equals(other.contenuto))
+			return false;
+		if (creationTime == null) {
+			if (other.creationTime != null)
+				return false;
+		} else if (!creationTime.equals(other.creationTime))
+			return false;
+		if (idCommento != other.idCommento)
+			return false;
+		if (idEvento != other.idEvento)
+			return false;
+		if (idUtente != other.idUtente)
+			return false;
+		return true;
 	}
 	
 	

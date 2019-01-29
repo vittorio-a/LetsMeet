@@ -8,6 +8,13 @@ public class CodiceRilasciatoBean {
 	private int codice;
 	private Instant expirationDate;
 	
+	
+	public CodiceRilasciatoBean() {
+		this.codice = 0;
+		this.expirationDate=null;
+		this.idUtente = 0;
+	}
+	
 	public CodiceRilasciatoBean(int idUtente, int codice, Instant expirationDate) {
 		this.idUtente = idUtente;
 		this.codice = codice;

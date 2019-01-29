@@ -4,46 +4,46 @@ USE letsmeet;
 
 
 CREATE TABLE Utente(
-	idUtente INTEGER (11) PRIMARY KEY,
+	idUtente INTEGER (11) PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(80) UNIQUE,
     passwordUtente BINARY(32),
     email VARCHAR(256) UNIQUE,
 	feedback FLOAT,
-    isVisibile BOOLEAN,
-    reactivationDay DATE
+    stato ENUM{'ATTIVO','INVISIBILE','BANNATO'},
+    reactivationDay TIMESTAMP
 );
 
 
 CREATE TABLE CodiceRilasciato(
 	idUtente INTEGER(11),
-    codice SMALLINT,
+    codice SMALLINT AUTO_INCREMENT,
     FOREIGN KEY(idUtente) REFERENCES utente(idUtente)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 CREATE TABLE SuperAdmin(
-	idSuperAdmin TINYINT PRIMARY KEY,
+	idSuperAdmin TINYINT PRIMARY KEY AUTO_INCREMENT,
 	username VARCHAR(80) UNIQUE,
 	passordAdmin BINARY(32)
 );
 
 
 CREATE TABLE Tipo(
-	idTipo TINYINT PRIMARY KEY,
+	idTipo TINYINT PRIMARY KEY AUTO_INCREMENT,
     nomeTipo VARCHAR(100),
     descrizione VARCHAR(100)
 );
 
 
 CREATE TABLE Comune(
-	idComune INTEGER(11) PRIMARY KEY,
+	idComune INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     nomeComune VARCHAR(256)
 );
 
 
 CREATE TABLE Posizione(
-	idPosizione INTEGER(11) PRIMARY KEY,
+	idPosizione INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     longitudine DECIMAL(8,5),
     latitudine DECIMAL(7,5),
     formattedAddress VARCHAR(256)
@@ -61,7 +61,7 @@ CREATE TABLE AppartenenzaComune(
 
 
 CREATE TABLE Provincia(
-	idProvincia INTEGER(11) PRIMARY KEY,
+	idProvincia INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     nomeProvincia VARCHAR(256),
 	sigla VARCHAR(256)
 );
@@ -78,7 +78,7 @@ CREATE TABLE AppartenenzaProvincia(
 
 
 CREATE TABLE Regione(
-	idRegione INTEGER(11) PRIMARY KEY,
+	idRegione INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
 	nomeRegione VARCHAR(256)
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE AppartenenzaRegione(
 
 
 CREATE TABLE Nazione(
-	idNazione INTEGER(11) PRIMARY KEY,
+	idNazione INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     nomeNazione VARCHAR(256)
 );
 
@@ -110,13 +110,13 @@ CREATE TABLE AppartenezaNazione(
 
 
 CREATE TABLE Evento(
-	idEvento INTEGER(11) PRIMARY KEY,
+	idEvento INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     feedback FLOAT,
     npartecipanti INTEGER(11),
     nverificati INTEGER(11),
-    oraInizio DATETIME,
-    oraFine DATETIME,
+    oraInizio TIMESTAMP,
+    oraFine TIMESTAMP,
     idUtente INTEGER(11),
     idTipo TINYINT ,
     idPosizione INTEGER(11),
@@ -142,11 +142,11 @@ CREATE TABLE Rating(
 
 
 CREATE TABLE Commento(
-	idCommento INTEGER(11) PRIMARY KEY,
+	idCommento INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
 	idMittente INTEGER(11),
     contenuto VARCHAR(256),
 	idEvento INTEGER,
-	creationTime DATETIME,
+	creationTime TIMESTAMP,
     FOREIGN KEY(idMittente) REFERENCES Utente(idUtente)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idEvento) REFERENCES Evento(idEvento)
@@ -166,7 +166,7 @@ CREATE TABLE Partecipazione(
 
 
 CREATE TABLE SegnalazioneEvento(
-	idSegnalazione INTEGER(11),
+	idSegnalazione INTEGER(11) AUTO_INCREMENT,
     idUtente INTEGER(11),
 	idEvento INTEGER(11),
     FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)
@@ -177,7 +177,7 @@ CREATE TABLE SegnalazioneEvento(
 
 
 CREATE TABLE SegnalazioneCommento(
-	idSegnalazione INTEGER(11),
+	idSegnalazione INTEGER(11) AUTO_INCREMENT,
     idUtente INTEGER(11),
 	idCommento INTEGER(11),
 	FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)

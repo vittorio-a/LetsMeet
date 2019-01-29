@@ -8,6 +8,13 @@ public class RatingBean {
 	private boolean voto;
 	
 	
+	public RatingBean() {
+		this.idEvento = 0;
+		this.idutente = 0;
+		this.voto = false;
+	}
+	
+	
 	public RatingBean(int idutente, int evento, boolean voto) {
 		this.idutente = idutente;
 		this.idEvento = evento;

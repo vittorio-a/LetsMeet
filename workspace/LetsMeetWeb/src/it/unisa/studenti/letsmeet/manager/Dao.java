@@ -4,15 +4,13 @@ import java.util.List;
 
 public interface Dao<T> {
 	
-	T get(long id);
+	T get(long id) throws DaoException;
 	
-	List<T> getAll();
+	List<T> getAll() throws DaoException;
+		
+	boolean saveOrUpdate(T t) throws DaoException;
 	
-	void save(T t);
-	
-	void update(T t, String[] params);
-	
-	void delete(T t);
+	boolean delete(T t) throws DaoException;
 	
 
 }
