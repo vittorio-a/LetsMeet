@@ -15,13 +15,13 @@ import javax.sql.DataSource;
 import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 import it.unisa.studenti.letsmeet.model.RatingBean;
 
-public class RatingDao {
+public class RatingDao implements DaoDoubleKey<RatingBean> {
 	private static final String GET_RATING_BY_EVENT_ID = "SELECT * FROM Rating WHERE idEvento = ?";
 	private static final String DELETE_RATING = "DELETE FROM Rating WHERE idEvento = ? AND idUtente = ?";
 	private static final String GET_RATING_BY_EVENT_USER_ID = "SELECT * FROM Rating WHERE idEvento = ? AND idUtente = ?";
 	private static final String GET_RATING_BY_USER_ID = "SELECT * FROM Rating WHERE idUtente = ?";
 	private static final String INSERT_RATING = "INSERT Rating(idEvento, idUtente, valutazione) VALUE(?,?,?)";
-	private static final String UPDATE_RATING = "UPDATE Rating WHERE idEveto = ? AND idUtente = ? SET valutazione = ?";
+	private static final String UPDATE_RATING = "UPDATE Rating WHERE idEvento = ? AND idUtente = ? SET valutazione = ?";
 	
 	private static final String EVENT_ID_FIELD = "idEvento";
 	private static final String USER_ID_FILED = "idUtente";
@@ -39,8 +39,8 @@ public class RatingDao {
 		}
 	}
 	
-	
-	public List<RatingBean> getAllRatingForEventId(int id) throws DaoException {
+	//é la seconda chiave evento
+	public List<RatingBean> getAllForSecondKey(int id) throws DaoException {
 		try {
 			Connection conn = ds.getConnection();
 			PreparedStatement st = conn.prepareStatement(GET_RATING_BY_EVENT_ID);
@@ -60,7 +60,7 @@ public class RatingDao {
 	}
 
 	
-	public RatingBean getFromEventAndUserId(int idEvento, int idUtente) throws DaoException {
+	public RatingBean getFromBothKeys(int idEvento, int idUtente) throws DaoException {
 		RatingBean rating = null;
 		try {
 			Connection conn = ds.getConnection();
@@ -80,7 +80,7 @@ public class RatingDao {
 		}
 	}
 	
-	public List<RatingBean> getAllRatingForUserId(int id) throws DaoException {
+	public List<RatingBean> getAllForFirstKey(int id) throws DaoException {
 		try {
 			Connection conn = ds.getConnection();
 			PreparedStatement st = conn.prepareStatement(GET_RATING_BY_USER_ID);
@@ -115,7 +115,7 @@ public class RatingDao {
 		} catch (SQLException e) {
 			throw new DaoException("error getting the connection", e, DaoExceptionType.SQLException);
 		}
-		if(getFromEventAndUserId(t.getEvento(), t.getIdutente()) != null) {
+		if(getFromBothKeys(t.getEvento(), t.getIdutente()) != null) {
 			try {
 				PreparedStatement st = conn.prepareStatement(UPDATE_RATING);
 				st.setInt(1, t.getEvento());
@@ -155,10 +155,13 @@ public class RatingDao {
 				PreparedStatement st = conn.prepareStatement(DELETE_RATING);
 				st.setInt(1, idEvento);
 				st.setInt(2, idUtente);
-				return (st.executeUpdate() > 0);	
+				st.executeQuery();
+				st.close();
+				conn.close();
 			}catch (SQLException e) {
 				throw new DaoException("SQLException in RatingDao", e, DaoExceptionType.SQLException);
 			}
+			return true;
 		}
 		return false;
 	}

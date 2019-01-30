@@ -5,11 +5,11 @@ public class PartecipazioneBean {
 	
 	private int idUtente;
 	private boolean verificato;
-	private int idPartecipazione;
+	private int idEvento;
 	
 	
 	public PartecipazioneBean() {
-		this.idPartecipazione = 0;
+		this.idEvento = 0;
 		this.idUtente = 0;
 		this.verificato = false;
 	}
@@ -17,7 +17,7 @@ public class PartecipazioneBean {
 	public PartecipazioneBean(int idUtente, boolean verificato, int idPartecipazione) {
 		this.idUtente = idUtente;
 		this.verificato = verificato;
-		this.idPartecipazione = idPartecipazione;
+		this.idEvento = idPartecipazione;
 	}
 	
 	
@@ -33,16 +33,16 @@ public class PartecipazioneBean {
 	public void setVerificato(boolean verificato) {
 		this.verificato = verificato;
 	}
-	public int getIdPartecipazione() {
-		return idPartecipazione;
+	public int getIdEvento() {
+		return idEvento;
 	}
-	public void setIdPartecipazione(int idPartecipazione) {
-		this.idPartecipazione = idPartecipazione;
+	public void setIdEvento(int idPartecipazione) {
+		this.idEvento = idPartecipazione;
 	}
 	@Override
 	public String toString() {
 		return "PartecipazioneBean [idUtente=" + idUtente + ", verificato=" + verificato + ", idPartecipazione="
-				+ idPartecipazione + "]";
+				+ idEvento + "]";
 	}
 	
 	
