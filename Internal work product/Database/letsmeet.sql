@@ -25,7 +25,7 @@ CREATE TABLE CodiceRilasciato(
 CREATE TABLE SuperAdmin(
 	idSuperAdmin TINYINT PRIMARY KEY AUTO_INCREMENT,
 	username VARCHAR(80) UNIQUE,
-	passordAdmin BINARY(32)
+	passwordAdmin BINARY(32)
 );
 
 
@@ -106,7 +106,7 @@ CREATE TABLE AppartenezaNazione(
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idNazione) REFERENCES Nazione(idNazione)
 		ON DELETE CASCADE ON UPDATE CASCADE
-);	
+);
 
 
 CREATE TABLE Evento(
@@ -123,7 +123,7 @@ CREATE TABLE Evento(
     isVisibile BOOLEAN,
     FOREIGN KEY(idTipo) REFERENCES Tipo(idTipo)
 		ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (idPosizione) REFERENCES Posizione(idPosizione)    
+    FOREIGN KEY (idPosizione) REFERENCES Posizione(idPosizione)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)
 		ON DELETE CASCADE ON UPDATE CASCADE

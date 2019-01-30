@@ -4,7 +4,7 @@ public class SuperAdminBean {
 	
 	
 	private String username;
-	private String password;
+	private byte[] password;
 	private int idSuperAdmin;
 	
 	public SuperAdminBean() {
@@ -13,7 +13,7 @@ public class SuperAdminBean {
 		this.username = null;
 	}
 	
-	public SuperAdminBean(String username, String password, int idSuperAdmin) {
+	public SuperAdminBean(String username, byte[] password, int idSuperAdmin) {
 		this.username = username;
 		this.password = password;
 		this.idSuperAdmin = idSuperAdmin;
@@ -25,10 +25,10 @@ public class SuperAdminBean {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
+	public byte[] getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(byte[] password) {
 		this.password = password;
 	}
 	public int getIdSuperAdmin() {
@@ -41,6 +41,31 @@ public class SuperAdminBean {
 	public String toString() {
 		return "SuperAdminBean [username=" + username + ", password=" + password + ", idSuperAdmin=" + idSuperAdmin
 				+ "]";
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SuperAdminBean other = (SuperAdminBean) obj;
+		if (idSuperAdmin != other.idSuperAdmin)
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
 
 }
