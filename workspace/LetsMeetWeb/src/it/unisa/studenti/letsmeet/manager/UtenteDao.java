@@ -49,6 +49,7 @@ public class UtenteDao implements Dao<UtenteBean>{
 		try {
 			Connection conn = ds.getConnection();
 			PreparedStatement st = conn.prepareStatement(GET_USER_BY_ID);
+			st.setInt(1, (int) id);
 			ResultSet rs = st.executeQuery();
 			if(rs.next()) {
 				utente = getUserFromResult(rs);

@@ -41,6 +41,7 @@ public class SuperAdminDao implements Dao<SuperAdminBean> {
 		try {
 			Connection cn = ds.getConnection();
 			PreparedStatement ps = cn.prepareStatement(GET_SUPER_ADMIN_BY_ID);
+			ps.setInt(1, (int) id);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				super_admin = getSuperAdminFromResult(rs); 

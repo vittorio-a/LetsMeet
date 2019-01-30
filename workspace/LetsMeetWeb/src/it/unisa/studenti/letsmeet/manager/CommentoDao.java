@@ -44,6 +44,7 @@ public class CommentoDao implements Dao<CommentoBean> {
 		try {
 			Connection con = ds.getConnection();
 			PreparedStatement ps = con.prepareStatement(GET_COMMENT_BY_ID);
+			ps.setInt(1, (int) id);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				commento = getCommentFromResult(rs);
