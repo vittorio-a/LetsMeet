@@ -4,55 +4,55 @@ USE letsmeet;
 
 
 CREATE TABLE Utente(
-	idUtente INTEGER (11) PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(80) UNIQUE,
-    passwordUtente BINARY(32),
-    email VARCHAR(256) UNIQUE,
-	feedback FLOAT,
-    stato ENUM{'ATTIVO','INVISIBILE','BANNATO'},
+	idUtente INTEGER (11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(80) NOT NULL UNIQUE,
+    passwordUtente BINARY(32) NOT NULL,
+    email VARCHAR(256) UNIQUE NOT NULL ,
+	feedback FLOAT NOT NULL ,
+    stato ENUM ('ATTIVO','INVISIBILE','BANNATO') NOT NULL,
     reactivationDay TIMESTAMP
 );
 
 
 CREATE TABLE CodiceRilasciato(
-	idUtente INTEGER(11),
-    codice SMALLINT AUTO_INCREMENT,
+	idUtente INTEGER(11) NOT NULL ,
+    codice SMALLINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     FOREIGN KEY(idUtente) REFERENCES utente(idUtente)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 CREATE TABLE SuperAdmin(
-	idSuperAdmin TINYINT PRIMARY KEY AUTO_INCREMENT,
-	username VARCHAR(80) UNIQUE,
-	passwordAdmin BINARY(32)
+	idSuperAdmin TINYINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	username VARCHAR(80) UNIQUE NOT NULL ,
+	passwordAdmin BINARY(32) NOT NULL 
 );
 
 
 CREATE TABLE Tipo(
-	idTipo TINYINT PRIMARY KEY AUTO_INCREMENT,
-    nomeTipo VARCHAR(100),
+	idTipo TINYINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nomeTipo VARCHAR(100) NOT NULL,
     descrizione VARCHAR(100)
 );
 
 
 CREATE TABLE Comune(
-	idComune INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-    nomeComune VARCHAR(256)
+	idComune INTEGER(11) NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+    nomeComune VARCHAR(256) NOT NULL 
 );
 
 
 CREATE TABLE Posizione(
-	idPosizione INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-    longitudine DECIMAL(8,5),
-    latitudine DECIMAL(7,5),
-    formattedAddress VARCHAR(256)
+	idPosizione INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    longitudine DECIMAL(8,5) NOT NULL,
+    latitudine DECIMAL(7,5) NOT NULL,
+    formattedAddress VARCHAR(256) NOT NULL 
 );
 
 
 CREATE TABLE AppartenenzaComune(
-	idPosizione INTEGER(11),
-    idComune INTEGER(11),
+	idPosizione INTEGER(11) NOT NULL ,
+    idComune INTEGER(11) NOT NULL ,
 	FOREIGN KEY (idPosizione) REFERENCES Posizione(idPosizione)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idComune) REFERENCES Comune(idComune)
@@ -61,15 +61,15 @@ CREATE TABLE AppartenenzaComune(
 
 
 CREATE TABLE Provincia(
-	idProvincia INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-    nomeProvincia VARCHAR(256),
-	sigla VARCHAR(256)
+	idProvincia INTEGER(11) NOT NULL  PRIMARY KEY AUTO_INCREMENT,
+    nomeProvincia VARCHAR(256) NOT NULL ,
+	sigla CHAR(2) NOT NULL 
 );
 
 
 CREATE TABLE AppartenenzaProvincia(
-	idComune INTEGER(11),
-	idProvincia INTEGER(11),
+	idComune INTEGER(11) NOT NULL,
+	idProvincia INTEGER(11) NOT NULL ,
 	FOREIGN KEY (idComune) REFERENCES Comune(idComune)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idProvincia) REFERENCES Provincia(idProvincia)
@@ -78,14 +78,14 @@ CREATE TABLE AppartenenzaProvincia(
 
 
 CREATE TABLE Regione(
-	idRegione INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-	nomeRegione VARCHAR(256)
+	idRegione INTEGER(11) PRIMARY KEY AUTO_INCREMENT NOT NULL ,
+	nomeRegione VARCHAR(256) NOT NULL 
 );
 
 
 CREATE TABLE AppartenenzaRegione(
-	idRegione INTEGER(11),
-	idProvincia INTEGER(11),
+	idRegione INTEGER(11) NOT NULL ,
+	idProvincia INTEGER(11) NOT NULL ,
     FOREIGN KEY (idRegione) REFERENCES Regione(idRegione)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idProvincia) REFERENCES Provincia(idProvincia)
@@ -94,14 +94,14 @@ CREATE TABLE AppartenenzaRegione(
 
 
 CREATE TABLE Nazione(
-	idNazione INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-    nomeNazione VARCHAR(256)
+	idNazione INTEGER(11) PRIMARY KEY AUTO_INCREMENT NOT NULL ,
+    nomeNazione VARCHAR(256) NOT NULL 
 );
 
 
 CREATE TABLE AppartenezaNazione(
-	idRegione INTEGER(11),
-    idNazione INTEGER(11),
+	idRegione INTEGER(11) NOT NULL ,
+    idNazione INTEGER(11) NOT NULL ,
     FOREIGN KEY(idRegione) REFERENCES Regione(idRegione)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idNazione) REFERENCES Nazione(idNazione)
@@ -110,19 +110,19 @@ CREATE TABLE AppartenezaNazione(
 
 
 CREATE TABLE Evento(
-	idEvento INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
-    feedback FLOAT,
-    npartecipanti INTEGER(11),
-    nverificati INTEGER(11),
-    oraInizio TIMESTAMP,
-    oraFine TIMESTAMP,
-    idUtente INTEGER(11),
-    idTipo TINYINT ,
-    idPosizione INTEGER(11),
-    isVisibile BOOLEAN,
+	idEvento INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    feedback FLOAT NOT NULL,
+    npartecipanti INTEGER(11) NOT NULL DEFAULT 0,
+    nverificati INTEGER(11) NOT NULL DEFAULT 0,
+    oraInizio TIMESTAMP NOT NULL,
+    oraFine TIMESTAMP NOT NULL,
+    idUtente INTEGER(11) NOT NULL,
+    idTipo TINYINT NOT NULL,
+    idPosizione INTEGER(11) NOT NULL,
+    isVisibile BOOLEAN NOT NULL,
     FOREIGN KEY(idTipo) REFERENCES Tipo(idTipo)
-		ON DELETE SET NULL ON UPDATE CASCADE,
+		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idPosizione) REFERENCES Posizione(idPosizione)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)
@@ -131,9 +131,9 @@ CREATE TABLE Evento(
 
 
 CREATE TABLE Rating(
-	idUtente INTEGER(11),
-    idEvento INTEGER(11),
-    voto BOOLEAN,
+	idUtente INTEGER(11) NOT NULL,
+    idEvento INTEGER(11) NOT NULL,
+    voto BOOLEAN NOT NULL,
     FOREIGN KEY (idUtente) REFERENCES Utente(idutente)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idEvento) REFERENCES Evento(idEvento)
@@ -142,11 +142,11 @@ CREATE TABLE Rating(
 
 
 CREATE TABLE Commento(
-	idCommento INTEGER(11) PRIMARY KEY AUTO_INCREMENT,
-	idMittente INTEGER(11),
-    contenuto VARCHAR(256),
-	idEvento INTEGER,
-	creationTime TIMESTAMP,
+	idCommento INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	idMittente INTEGER(11) NOT NULL,
+    contenuto VARCHAR(256) NOT NULL,
+	idEvento INTEGER NOT NULL,
+	creationTime TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(idMittente) REFERENCES Utente(idUtente)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idEvento) REFERENCES Evento(idEvento)
@@ -155,9 +155,9 @@ CREATE TABLE Commento(
 
 
 CREATE TABLE Partecipazione(
-	idUtente INTEGER(11),
-	idEvento INTEGER(11),
-	isVerificato BOOLEAN,
+	idUtente INTEGER(11) NOT NULL,
+	idEvento INTEGER(11) NOT NULL,
+	isVerificato BOOLEAN NOT NULL,
     FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idEvento) REFERENCES Evento(idEvento)
@@ -166,22 +166,22 @@ CREATE TABLE Partecipazione(
 
 
 CREATE TABLE SegnalazioneEvento(
-	idSegnalazione INTEGER(11) AUTO_INCREMENT,
-    idUtente INTEGER(11),
-	idEvento INTEGER(11),
+	idSegnalazione INTEGER(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    idUtente INTEGER(11) NOT NULL,
+	idEvento INTEGER(11) NOT NULL,
     FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)
-		ON DELETE SET NULL ON UPDATE CASCADE,
+		ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (idEvento) REFERENCES Evento(idEvento)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 CREATE TABLE SegnalazioneCommento(
-	idSegnalazione INTEGER(11) AUTO_INCREMENT,
-    idUtente INTEGER(11),
-	idCommento INTEGER(11),
+	idSegnalazione INTEGER(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    idUtente INTEGER(11) NOT NULL,
+	idCommento INTEGER(11) NOT NULL,
 	FOREIGN KEY (idUtente) REFERENCES Utente(idUtente)
-		ON DELETE SET NULL ON UPDATE CASCADE,
+		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(idCommento) REFERENCES Commento(idCommento)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );

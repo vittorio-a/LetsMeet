@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface Dao<T> {
 	
-	T get(long id) throws DaoException;
+	T get(int id) throws DaoException;
 	
 	List<T> getAll() throws DaoException;
 		

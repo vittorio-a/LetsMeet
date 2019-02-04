@@ -21,18 +21,21 @@ public class TipoDao implements Dao<TipoBean> {
 	
 	
 	
-	public TipoDao() throws NamingException {
-		ds = DataSourceSingleton.getDataSource();
-	}
+	public TipoDao() throws DaoException {
+		try {
+			ds = DataSourceSingleton.getDataSource();
+		}catch (NamingException e) {
+			throw new DaoException("Non è possibile recuperare data source", e, DaoExceptionType.SQLException);
+		}	}
 	
 
 	@Override
-	public TipoBean get(long id) throws DaoException {
+	public TipoBean get(int id) throws DaoException {
 		TipoBean tipo = null;
 		try {
 			Connection con = ds.getConnection();
 			PreparedStatement ps = con.prepareStatement(GET_TYPE_BY_ID);
-			ps.setInt(1, (int) id);
+			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				tipo = getTypeFromResult(rs);
