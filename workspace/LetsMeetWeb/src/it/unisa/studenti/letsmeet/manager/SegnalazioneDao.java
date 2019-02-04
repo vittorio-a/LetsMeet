@@ -39,7 +39,7 @@ public class SegnalazioneDao implements Dao<SegnalazioneBean> {
 	}
 
 	@Override
-	public SegnalazioneBean get(long id) throws DaoException {
+	public SegnalazioneBean get(int id) throws DaoException {
 		throw new DaoException("Questo metodo non è ancora implementato per la bassa priorità di cui gode", new UnsupportedOperationException("Non verrà mai implementato") , DaoExceptionType.SQLException);
 		
 	}

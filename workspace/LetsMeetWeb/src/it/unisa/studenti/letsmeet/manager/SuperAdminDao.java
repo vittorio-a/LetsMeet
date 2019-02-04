@@ -36,7 +36,7 @@ public class SuperAdminDao implements Dao<SuperAdminBean> {
 	}
 	
 	@Override
-	public SuperAdminBean get(long id) throws DaoException {
+	public SuperAdminBean get(int id) throws DaoException {
 		SuperAdminBean super_admin = null;
 		try {
 			Connection cn = ds.getConnection();

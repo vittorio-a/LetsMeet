@@ -39,7 +39,7 @@ public class CommentoDao implements Dao<CommentoBean> {
 	
 
 	@Override
-	public CommentoBean get(long id) throws DaoException {
+	public CommentoBean get(int id) throws DaoException {
 		CommentoBean commento = new CommentoBean();
 		try {
 			Connection con = ds.getConnection();

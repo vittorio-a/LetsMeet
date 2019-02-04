@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class PosizioneBean {
 	
-	
+	private int id;
 	private BigDecimal longitudine;
 	private BigDecimal latitudine;
 	private String formattedAdress;
@@ -35,10 +35,11 @@ public class PosizioneBean {
 	
 	
 	
-	public PosizioneBean(BigDecimal longitudine, BigDecimal latitudine, String formattedAdress, String nomeComune,
+	public PosizioneBean(int id, BigDecimal longitudine, BigDecimal latitudine, String formattedAdress, String nomeComune,
 			int idComune, String nomeProvincia, int idProvincia, String sigla, String nomeRegione, int idRegione,
 			String nomeNazione, int idNazione) {
 		super();
+		this.id = id;
 		this.longitudine = longitudine;
 		this.latitudine = latitudine;
 		this.formattedAdress = formattedAdress;
@@ -52,6 +53,17 @@ public class PosizioneBean {
 		this.nomeNazione = nomeNazione;
 		this.idNazione = idNazione;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
 	public BigDecimal getLongitudine() {
 		return longitudine;
 	}
@@ -127,7 +139,7 @@ public class PosizioneBean {
 	
 	@Override
 	public String toString() {
-		return "PosizioneBean [longitudine=" + longitudine + ", latitudine=" + latitudine + ", formattedAdress="
+		return "PosizioneBean [id=" + id + " ,longitudine=" + longitudine + ", latitudine=" + latitudine + ", formattedAdress="
 				+ formattedAdress + ", nomeComune=" + nomeComune + ", idComune=" + idComune + ", nomeProvincia="
 				+ nomeProvincia + ", idProvincia=" + idProvincia + ", sigla=" + sigla + ", nomeRegione=" + nomeRegione
 				+ ", idRegione=" + idRegione + ", nomeNazione=" + nomeNazione + ", idNazione=" + idNazione + "]";

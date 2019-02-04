@@ -38,13 +38,16 @@ public class UtenteDao implements Dao<UtenteBean>{
 
 	
 	
-	public UtenteDao() throws NamingException{
-		ds = DataSourceSingleton.getDataSource();
-	}
+	public UtenteDao() throws DaoException{
+		try {
+			ds = DataSourceSingleton.getDataSource();
+		}catch (NamingException e) {
+			throw new DaoException("Non è possibile recuperare data source", e, DaoExceptionType.SQLException);
+		}	}
 	
 	
 	@Override
-	public UtenteBean get(long id) throws DaoException {
+	public UtenteBean get(int id) throws DaoException {
 		UtenteBean utente = null;
 		try {
 			Connection conn = ds.getConnection();
@@ -114,6 +117,7 @@ public class UtenteDao implements Dao<UtenteBean>{
 			}
 			else {
 				try {
+					
 					Connection conn = ds.getConnection();
 					PreparedStatement st = conn.prepareStatement(UPDATE_USER);
 					st.setInt(1, idUtente);
@@ -128,7 +132,7 @@ public class UtenteDao implements Dao<UtenteBean>{
 					st.close();
 					conn.close();
 				}catch (SQLException e) {
-					throw new DaoException("utente update: " + utenteBean.toString(), e, DaoExceptionType.SQLException);
+					throw new DaoException("utente update: " + (utenteBean != null ? utenteBean.toString() : "null"), e, DaoExceptionType.SQLException);
 				}
 			}
 		}
@@ -136,19 +140,18 @@ public class UtenteDao implements Dao<UtenteBean>{
 			try {
 				Connection conn = ds.getConnection();
 				PreparedStatement st = conn.prepareStatement(INSERT_USER);
-				st.setInt(1, idUtente);
 				CredentialsBean creds = utenteBean.getCredentials();
-				st.setString(2, creds.getUsername());
-				st.setBytes(3, creds.getPassword());
-				st.setString(4, utenteBean.getEmail());
-				st.setString(5, creds.getState().name());
-				st.setFloat(6, utenteBean.getFeedbackUtente());
-				st.setTimestamp(7, Timestamp.from(utenteBean.getReactivationDate()));
+				st.setString(1, creds.getUsername());
+				st.setBytes(2, creds.getPassword());
+				st.setString(3, utenteBean.getEmail());
+				st.setString(4, creds.getState().name());
+				st.setFloat(5, utenteBean.getFeedbackUtente());
+				st.setTimestamp(6, Timestamp.from(utenteBean.getReactivationDate()));
 				st.executeUpdate();
 				st.close();
 				conn.close();
 			}catch (SQLException e) {
-				throw new DaoException("utente insert: " + utenteBean.toString(), e, DaoExceptionType.SQLException);
+				throw new DaoException("utente insert: " + (utenteBean != null ? utenteBean.toString() : "null"), e, DaoExceptionType.SQLException);
 			}
 			
 		}
