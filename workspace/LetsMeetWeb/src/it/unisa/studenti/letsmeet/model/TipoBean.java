@@ -1,5 +1,9 @@
 package it.unisa.studenti.letsmeet.model;
 
+/**
+ *Descriive la tipologia di un evento
+ *
+ */
 public class TipoBean {
 	
 	
@@ -9,6 +13,9 @@ public class TipoBean {
 	private String descrizione;
 	
 	
+	/**
+	 * Costruttore vuoto
+	 */
 	public TipoBean() {
 		this.idTipo = 0;
 		this.descrizione = null;
@@ -16,6 +23,11 @@ public class TipoBean {
 	}
 	
 	
+	/**Costruttore 
+	 * @param idTipo id del Tipo
+	 * @param nomeTipo nome del Tipo
+	 * @param descrizione descrizione del Tipo
+	 */
 	public TipoBean(int idTipo , String nomeTipo, String descrizione) {
 		this.idTipo = idTipo;
 		this.nomeTipo = nomeTipo;

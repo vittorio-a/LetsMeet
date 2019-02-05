@@ -1,5 +1,8 @@
 package it.unisa.studenti.letsmeet.model;
 
+/**Rappresenta una partecipazione ad un evento
+ *
+ */
 public class PartecipazioneBean {
 	
 	
@@ -8,12 +11,20 @@ public class PartecipazioneBean {
 	private int idEvento;
 	
 	
+	/**
+	 * Costruttore vuotio
+	 */
 	public PartecipazioneBean() {
 		this.idEvento = 0;
 		this.idUtente = 0;
 		this.verificato = false;
 	}
 	
+	/**Costruttore
+	 * @param idUtente id dell'utente che effettua la partecipazione
+	 * @param verificato stato di verificazione della partecipazione
+	 * @param idPartecipazione ide della partecipazione
+	 */
 	public PartecipazioneBean(int idUtente, boolean verificato, int idPartecipazione) {
 		this.idUtente = idUtente;
 		this.verificato = verificato;

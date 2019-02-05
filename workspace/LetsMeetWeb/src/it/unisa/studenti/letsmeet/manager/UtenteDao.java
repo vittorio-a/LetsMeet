@@ -16,6 +16,10 @@ import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
 import it.unisa.studenti.letsmeet.model.UtenteBean;
 
+/**
+ * @author DinoB
+ *
+ */
 public class UtenteDao implements Dao<UtenteBean>{
 	private DataSource ds;
 	
@@ -38,6 +42,9 @@ public class UtenteDao implements Dao<UtenteBean>{
 
 	
 	
+	/**
+	 * @throws DaoException
+	 */
 	public UtenteDao() throws DaoException{
 		try {
 			ds = DataSourceSingleton.getDataSource();
@@ -66,7 +73,7 @@ public class UtenteDao implements Dao<UtenteBean>{
 		
 		return utente; 
 	}
-
+ 
 	private UtenteBean getUserFromResult(ResultSet rs) throws SQLException {
 		UtenteBean utente = new UtenteBean();
 		StatoUtente stato = StatoUtente.valueOf(rs.getString(STATO_FIELD));
@@ -106,6 +113,9 @@ public class UtenteDao implements Dao<UtenteBean>{
 
 
 
+	/* (non-Javadoc)
+	 * @see it.unisa.studenti.letsmeet.manager.Dao#saveOrUpdate(java.lang.Object)
+	 */
 	@Override
 	public boolean saveOrUpdate(UtenteBean utenteBean) throws DaoException {
 		int idUtente = utenteBean.getIdUtente();

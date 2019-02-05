@@ -2,6 +2,9 @@ package it.unisa.studenti.letsmeet.model;
 
 import java.time.Instant;
 
+/**Rappresenta un codice rilasciato all'utente dopo la registrazione
+ *
+ */
 public class CodiceRilasciatoBean {
 	
 	private int idUtente;
@@ -9,12 +12,20 @@ public class CodiceRilasciatoBean {
 	private Instant expirationDate;
 	
 	
+	/**Costruttore vuoto
+	 * 
+	 */
 	public CodiceRilasciatoBean() {
 		this.codice = 0;
 		this.expirationDate=null;
 		this.idUtente = 0;
 	}
 	
+	/**Costruttore 
+	 * @param idUtente id dell'utente che si è registrato
+	 * @param codice codice di verifica dell'account
+	 * @param expirationDate data dell'invio del codice
+	 */
 	public CodiceRilasciatoBean(int idUtente, int codice, Instant expirationDate) {
 		this.idUtente = idUtente;
 		this.codice = codice;

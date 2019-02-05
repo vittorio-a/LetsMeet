@@ -1,5 +1,9 @@
 package it.unisa.studenti.letsmeet.model;
 
+/**
+ * Rappresenta il rating di un evento
+ *
+ */
 public class RatingBean {
 	
 	
@@ -8,6 +12,9 @@ public class RatingBean {
 	private boolean voto;
 	
 	
+	/**
+	 * Costruttore vuoto
+	 */
 	public RatingBean() {
 		this.idEvento = 0;
 		this.idutente = 0;
@@ -15,6 +22,11 @@ public class RatingBean {
 	}
 	
 	
+	/**Costruttore
+	 * @param idutente id dell'utente che ha effettuato il rating
+	 * @param evento id dll'evento soggeto al rating 
+	 * @param voto  l'effettivo voto del rating 
+	 */
 	public RatingBean(int idutente, int evento, boolean voto) {
 		this.idutente = idutente;
 		this.idEvento = evento;

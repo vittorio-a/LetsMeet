@@ -2,6 +2,9 @@ package it.unisa.studenti.letsmeet.model;
 
 import java.time.Instant;
 
+/**Rappresneta un evento 
+ *
+ */
 public class EventoBean {
 	
 	
@@ -17,6 +20,9 @@ public class EventoBean {
 	private PosizioneBean posizione;
 	private boolean isVisible;
 	
+	/**
+	 * Costryttore vuoto
+	 */
 	public EventoBean() {
 		this.feedback = 0;
 		this.idEvento = 0;
@@ -30,6 +36,19 @@ public class EventoBean {
 	}
 	
 	
+	/**Costruttore
+	 * @param idEvento id dell'evento
+	 * @param nome nome dell'evento
+	 * @param feedback valutazione finale dell'evento
+	 * @param nPartecipanti numero dei partecipanti all'evento
+	 * @param nVerificati numero dei partecipaznti verifucati all'evento
+	 * @param oraInizio orari di inizio dell'evento
+	 * @param oraFine orario di fine dell'evento
+	 * @param idUtente id dell'utente che ha creato l'evento
+	 * @param tipo tipologia dell'evento
+	 * @param posizione posizione dell'evento 
+	 * @param isVisible stato dell'evento
+	 */
 	public EventoBean(int idEvento, String nome, float feedback, int nPartecipanti, int nVerificati, Instant oraInizio,
 			Instant oraFine, int idUtente, TipoBean tipo, PosizioneBean posizione,
 			boolean isVisible) {

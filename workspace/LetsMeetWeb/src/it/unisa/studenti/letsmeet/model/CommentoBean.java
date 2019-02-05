@@ -2,6 +2,9 @@ package it.unisa.studenti.letsmeet.model;
 
 import java.time.Instant;
 
+/**Rappresenta un commento ad un evento
+ *
+ */
 public class CommentoBean {
 	
 	private int idUtente;
@@ -12,6 +15,9 @@ public class CommentoBean {
 	
 	
 	
+	/**
+	 * Costruttore vuoto
+	 */
 	public CommentoBean() {
 		this.contenuto = null;
 		this.creationTime = null;
@@ -20,6 +26,13 @@ public class CommentoBean {
 		this.idUtente = 0;
 	};
 
+	/**Costruttore
+	 * @param idUtente id dell'utente che ha creato il commento
+	 * @param contenuto contenuto del commento
+	 * @param idCommento id del commento
+	 * @param idEvento id dell'evento a cui è collegato il commento
+	 * @param creationTime ora della creazione del commento
+	 */
 	public CommentoBean(int idUtente, String contenuto, int idCommento, int idEvento, Instant creationTime) {
 		this.idUtente = idUtente;
 		this.contenuto = contenuto;

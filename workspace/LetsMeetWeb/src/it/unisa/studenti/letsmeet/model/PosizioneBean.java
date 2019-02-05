@@ -2,6 +2,9 @@ package it.unisa.studenti.letsmeet.model;
 
 import java.math.BigDecimal;
 
+/**Rappresenta una posizione di un evento
+ *
+ */
 public class PosizioneBean {
 	
 	private int id;
@@ -19,6 +22,9 @@ public class PosizioneBean {
 	private int idNazione;
 	
 	
+	/**
+	 * Costruttore vuoto
+	 */
 	public PosizioneBean() {
 		this.formattedAdress = null;
 		this.idComune = 0;
@@ -35,6 +41,21 @@ public class PosizioneBean {
 	
 	
 	
+	/**Costruttore
+	 * @param id id della poszione
+	 * @param longitudine longituidine della posizione 
+	 * @param latitudine latitudine della posizione
+	 * @param formattedAdress indirizzo dell'evento
+	 * @param nomeComune nome del comune della posizione
+	 * @param idComune id del comune della posizione
+	 * @param nomeProvincia nome della regione della posizione
+	 * @param idProvincia id della provincia della posizione
+	 * @param sigla sigla della provincia della posizione
+	 * @param nomeRegione nome della regione della posizione
+	 * @param idRegione id della regione della posizione
+	 * @param nomeNazione nome della nazione della posizione
+	 * @param idNazione id regione della posizione 
+	 */
 	public PosizioneBean(int id, BigDecimal longitudine, BigDecimal latitudine, String formattedAdress, String nomeComune,
 			int idComune, String nomeProvincia, int idProvincia, String sigla, String nomeRegione, int idRegione,
 			String nomeNazione, int idNazione) {

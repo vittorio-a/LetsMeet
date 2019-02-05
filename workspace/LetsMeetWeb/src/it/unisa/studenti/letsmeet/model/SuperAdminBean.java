@@ -1,5 +1,9 @@
 package it.unisa.studenti.letsmeet.model;
 
+/**
+ *Descrive un SuperAdmin della piattaforma
+ *
+ */
 public class SuperAdminBean {
 	
 	
@@ -7,12 +11,20 @@ public class SuperAdminBean {
 	private byte[] password;
 	private int idSuperAdmin;
 	
+	/**
+	 * Costruttore vuoto
+	 */
 	public SuperAdminBean() {
 		this.idSuperAdmin = 0;
 		this.password = null;
 		this.username = null;
 	}
 	
+	/**Costruttore 
+	 * @param username nome da dare al superAdmin con cui verrà riconosciuto 
+	 * @param password password del superAdmin per accedere alla piattaforma
+	 * @param idSuperAdmin id univoco del superAdmin
+	 */
 	public SuperAdminBean(String username, byte[] password, int idSuperAdmin) {
 		this.username = username;
 		this.password = password;

@@ -2,6 +2,9 @@ package it.unisa.studenti.letsmeet.model;
 
 import java.util.Arrays;
 
+/**
+ *Rappresenta le credenziali dell'utente 
+ */
 public class CredentialsBean {
 	
 	
@@ -10,6 +13,9 @@ public class CredentialsBean {
 	private StatoUtente state;
 	
 	
+	/**
+	 * Costruttore vuoto
+	 */
 	public CredentialsBean() {
 		username = null;
 		password = null;
@@ -17,6 +23,11 @@ public class CredentialsBean {
 	}
 	
 	
+	/**Costruttore
+	 * @param username username dell'utente
+	 * @param passwordpassword del'utente
+	 * @param state stato  dell'utente
+	 */
 	public CredentialsBean(String username, byte[] password, StatoUtente state) {
 		this.username = username;
 		this.password = password;
