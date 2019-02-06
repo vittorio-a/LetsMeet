@@ -149,19 +149,20 @@ public class RatingDao implements DaoDoubleKey<RatingBean> {
 	public boolean delete(RatingBean t) throws DaoException {
 		int idEvento = t.getEvento();
 		int idUtente = t.getIdutente();
+		int result = 0;
 		if(idEvento != 0 && idUtente != 0) {
 			try {
 				Connection conn = ds.getConnection();
 				PreparedStatement st = conn.prepareStatement(DELETE_RATING);
 				st.setInt(1, idEvento);
 				st.setInt(2, idUtente);
-				st.executeQuery();
+				result = st.executeUpdate();
 				st.close();
 				conn.close();
 			}catch (SQLException e) {
 				throw new DaoException("SQLException in RatingDao", e, DaoExceptionType.SQLException);
 			}
-			return true;
+			return (result > 0);
 		}
 		return false;
 	}

@@ -140,18 +140,20 @@ public class CommentoDao implements Dao<CommentoBean> {
 	@Override
 	public boolean delete(CommentoBean commento) throws DaoException {
 		int idCommento = commento.getIdCommento();
+		int result = 0;
 		if(idCommento != 0){
 			try {
 				Connection con = ds.getConnection();
 				PreparedStatement ps = con.prepareStatement(DELETE_COMMENT);
 				ps.setInt(1, idCommento);
+				result = ps.executeUpdate();
 				ps.close();
 				con.close();
 			}catch(SQLException e){
 				throw new DaoException("Errore nel delete in CommentoDAO", e, DaoExceptionType.SQLException);
 
 			}
-			return true;
+			return (result > 0);
 		}else {
 			return false;
 		}

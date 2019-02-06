@@ -141,19 +141,20 @@ public class PartecipazioneDao implements DaoDoubleKey<PartecipazioneBean> {
 	public boolean delete(PartecipazioneBean partecipazione) throws DaoException {
 		int idUtente = partecipazione.getIdUtente();
 		int idEvento = partecipazione.getIdEvento();
+		int result = 0;
 		if(idUtente != 0 && idEvento != 0) {
 			try {
 				Connection con = ds.getConnection();
 				PreparedStatement ps = con.prepareStatement(DELETE_PARTECIPATION);
 				ps.setInt(1, idUtente);
 				ps.setInt(2, idEvento);
-				ps.executeQuery();
+				result = ps.executeUpdate();
 				ps.close();
 				con.close();
 			} catch (SQLException e) {
 				throw new DaoException("SQLException in delete PartecipationDao", e, DaoExceptionType.SQLException);
 			}
-			return true;
+			return (result > 0);
 		}
 		return false;
 	}

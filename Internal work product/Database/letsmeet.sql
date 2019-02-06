@@ -120,7 +120,7 @@ CREATE TABLE Evento(
     idUtente INTEGER(11) NOT NULL,
     idTipo TINYINT NOT NULL,
     idPosizione INTEGER(11) NOT NULL,
-    isVisibile BOOLEAN NOT NULL,
+    isVisibile BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY(idTipo) REFERENCES Tipo(idTipo)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idPosizione) REFERENCES Posizione(idPosizione)

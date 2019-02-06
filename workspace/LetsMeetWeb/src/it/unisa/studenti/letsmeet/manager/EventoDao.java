@@ -40,6 +40,13 @@ public class EventoDao implements Dao<EventoBean> {
 	
 	private static final String GET_ALL_EVENTS = "SELECT * FROM Evento e";
 	
+	private static final String UPDATE_EVENTO = "UPDATE Evento SET nome = ?, oraInizio = ?, oraFine = ?,"
+			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisible = ? WHERE id = ? ";
+	
+	
+	private static final String INSERT_EVENTO = "INSERT Evento(nome, oraInizio, oraFine, idUtente, idTipo, idPosizione) VALUE(?,?,?,?,?,?)";
+	
+	private static final String DELETE_EVENTO_BY_ID ="DELETE FROM Evento WHERE idEvento = ?";
 	
 	public EventoDao() throws DaoException{
 		posizioneDao = new PosizioneDao();
@@ -113,47 +120,65 @@ public class EventoDao implements Dao<EventoBean> {
 				try {
 					
 					Connection conn = ds.getConnection();
-					PreparedStatement st = conn.prepareStatement(UPDATE_EVENTO );
-					st.setInt(1, idUtente);
-					CredentialsBean creds = utenteBean.getCredentials();
-					st.setString(2, creds.getUsername());
-					st.setBytes(3, creds.getPassword());
-					st.setString(4, utenteBean.getEmail());
-					st.setString(5, creds.getState().name());
-					st.setFloat(6, utenteBean.getFeedbackUtente());
-					st.setTimestamp(7, Timestamp.from(utenteBean.getReactivationDate()));
+					PreparedStatement st = conn.prepareStatement(UPDATE_EVENTO);
+					st.setString(1,  eventoBean.getNome());
+					st.setTimestamp(2, Timestamp.from(eventoBean.getOraInizio()));
+					st.setTimestamp(3, Timestamp.from(eventoBean.getOraFine()));
+					st.setInt(4, eventoBean.getIdUtente());
+					st.setInt(5, eventoBean.getTipo().getIdTipo());
+					st.setInt(6, eventoBean.getPosizione().getId());
+					st.setBoolean(7, eventoBean.isVisible());
 					st.executeUpdate();
 					st.close();
 					conn.close();
+					return true;
 				}catch (SQLException e) {
-					throw new DaoException("utente update: " + (utenteBean != null ? utenteBean.toString() : "null"), e, DaoExceptionType.SQLException);
+					throw new DaoException("evento update: " + (eventoBean != null ? eventoBean.toString() : "null"), e, DaoExceptionType.SQLException);
 				}
 			}
 		}
 		else {
 			try {
 				Connection conn = ds.getConnection();
-				PreparedStatement st = conn.prepareStatement(INSERT_USER);
-				CredentialsBean creds = utenteBean.getCredentials();
-				st.setString(1, creds.getUsername());
-				st.setBytes(2, creds.getPassword());
-				st.setString(3, utenteBean.getEmail());
-				st.setString(4, creds.getState().name());
-				st.setFloat(5, utenteBean.getFeedbackUtente());
-				st.setTimestamp(6, Timestamp.from(utenteBean.getReactivationDate()));
+				PreparedStatement st = conn.prepareStatement(INSERT_EVENTO);
+				st.setString(1,  eventoBean.getNome());
+				st.setTimestamp(2, Timestamp.from(eventoBean.getOraInizio()));
+				st.setTimestamp(3, Timestamp.from(eventoBean.getOraFine()));
+				st.setInt(4, eventoBean.getIdUtente());
+				st.setInt(5, eventoBean.getTipo().getIdTipo());
+				st.setInt(6, eventoBean.getPosizione().getId());
 				st.executeUpdate();
 				st.close();
 				conn.close();
+				return true;
 			}catch (SQLException e) {
-				throw new DaoException("utente insert: " + (utenteBean != null ? utenteBean.toString() : "null"), e, DaoExceptionType.SQLException);
+				throw new DaoException("evento insert: " + (eventoBean != null ? eventoBean.toString() : "null"), e, DaoExceptionType.SQLException);
 			}
+		}
 			
 	}
 
 	@Override
 	public boolean delete(EventoBean t) throws DaoException {
-		// TODO Auto-generated method stub
-		return false;
+		int id = t.getIdEvento();
+		int result = 0;
+		if(id != 0) {
+			try {
+				Connection conn = ds.getConnection();
+				PreparedStatement st = conn.prepareStatement(DELETE_EVENTO_BY_ID);
+				st.setInt(1, id);
+				result = st.executeUpdate();
+				st.close();
+				conn.close();
+			}catch (SQLException e) {
+				throw new DaoException("evento delete: " + t.getIdEvento(), e, DaoExceptionType.SQLException);
+			}
+			return (result > 0);
+			
+		}
+		else {
+			return false;
+		}
 	}
 
 }

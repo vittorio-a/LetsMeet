@@ -171,18 +171,19 @@ public class UtenteDao implements Dao<UtenteBean>{
 	@Override
 	public boolean delete(UtenteBean utente) throws DaoException {
 		int id = utente.getIdUtente();
+		int ris = 0;
 		if(id != 0) {
 			try {
 				Connection conn = ds.getConnection();
 				PreparedStatement st = conn.prepareStatement(DELETE_USER_BY_ID);
 				st.setInt(1, id);
-				st.executeQuery();
+				ris = st.executeUpdate();
 				st.close();
 				conn.close();
 			}catch (SQLException e) {
 				throw new DaoException("utente delete: " + utente.getIdUtente(), e, DaoExceptionType.SQLException);
 			}
-			return true;
+			return (ris > 0);
 			
 		}
 		else {
