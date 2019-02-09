@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unisa.studenti.letsmeet.model.TipoBean;
 
 abstract class SqlDaoTest<T> {
 
@@ -29,6 +29,13 @@ abstract class SqlDaoTest<T> {
 	protected abstract T getDeleteFalse();
 	protected abstract int getKey(T item);
 	
+	
+	private void cutConnection() throws SQLException{
+		conn.rollback();
+		conn.close();
+	}
+	
+	
 	@BeforeEach
 	void setUp() throws Exception {
 		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/letsmeet", "root", "Nc3Dug2SKVofEBJrhE3x");
@@ -38,8 +45,7 @@ abstract class SqlDaoTest<T> {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		conn.rollback();
-		conn.close();
+		//cutConnection();
 	}
 
 	@Test
@@ -47,6 +53,19 @@ abstract class SqlDaoTest<T> {
 		T object = dao.get(1);
 		assertNotNull(object);
 		assertsGet(object);
+		
+		object = dao.get(Integer.MAX_VALUE);
+		assertNull(object);
+		
+		try {
+			cutConnection();
+
+		}catch (SQLException e) {
+			fail("Not able to cut connection");
+		}
+		assertThrows(DaoException.class, ()->{
+			dao.get(1);
+		});
 	}
 
 	@Test
@@ -54,23 +73,57 @@ abstract class SqlDaoTest<T> {
 		List<T> objects = dao.getAll();
 		assertNotNull(objects);
 		assertsGetAll(objects);
+		
+		try {
+			cutConnection();
+
+		}catch (SQLException e) {
+			fail("Not able to cut connection");
+		}
+		assertThrows(DaoException.class, ()->{
+			dao.getAll();
+		});
 	}
 
 	@Test
 	void testSaveOrUpdate() throws DaoException{
+		List<T> before = dao.getAll();
+		
 		T object = getInsertObject();
 		boolean ret = dao.saveOrUpdate(object);
 		assertTrue(ret);
 		
-		List<T> result = dao.getAll();
-		assertNotNull(result);
-		assertsInsert(result);
+		List<T> afterInsert = dao.getAll();
+		assertNotNull(afterInsert);
+		assertEquals(1, afterInsert.size() - before.size());
+		assertsInsert(afterInsert);
+		
+		
 		
 		object = getUpdateObject();
 		ret = dao.saveOrUpdate(object);
 		T res = dao.get(getKey(object));
 		assertNotNull(res);
+		assertEquals(object, res);
 		assertsUpdate(res);
+
+		
+		List<T> afterUpdate = dao.getAll();
+		
+		object = afterUpdate.get(1);
+		ret = dao.saveOrUpdate(object);
+		assertFalse(ret);
+		
+		final T testCutObj = object;
+		try {
+			cutConnection();
+
+		}catch (SQLException e) {
+			fail("Not able to cut connection");
+		}
+		assertThrows(DaoException.class, ()->{
+			dao.saveOrUpdate(testCutObj);
+		});
 	}
 
 	@Test
@@ -79,9 +132,24 @@ abstract class SqlDaoTest<T> {
 		boolean ret = dao.delete(object);
 		assertTrue(ret);
 		
+		List<T> afterDelete = dao.getAll();
+		assertsDelete(afterDelete);
+		
 		object = getDeleteFalse();
 		ret = dao.delete(object);
 		assertFalse(ret);
+		
+		
+		final T testCutObj = object;
+		try {
+			cutConnection();
+
+		}catch (SQLException e) {
+			fail("Not able to cut connection");
+		}
+		assertThrows(DaoException.class, ()->{
+			dao.delete(testCutObj);
+		});
 		
 		
 	}

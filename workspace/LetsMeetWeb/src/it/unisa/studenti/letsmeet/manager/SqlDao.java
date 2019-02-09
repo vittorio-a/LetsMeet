@@ -82,12 +82,19 @@ public abstract class SqlDao<T> implements Dao<T> {
 			ps = getPreparedGetById(getKey(item));
 			rs = ps.executeQuery();
 			boolean itemExists = rs.next();
-			ps.close();
-			rs.close();
-			if(itemExists){
+						
+			
+			if(itemExists && item.equals(getItemFromResultSet(rs))) {
+				return false;
+			}
+			else if(itemExists){
+				rs.close();
+				ps.close();
 				ps = getPreparedUpdateItem(item);
 				return (ps.executeUpdate() > 0);	
 			}else {
+				rs.close();
+				ps.close();
 				ps = getPreparedInsertItem(item);
 				return (ps.executeUpdate() > 0);
 			}

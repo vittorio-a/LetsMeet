@@ -53,7 +53,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 		utente.setEmail(rs.getString(EMAIL_FIELD));
 		CredentialsBean credes = new CredentialsBean();
 		credes.setPassword(rs.getBytes(PASSWORD_FILED));
-		credes.setUsername(USERNAME_FILED);
+		credes.setUsername(rs.getString(USERNAME_FILED));
 		credes.setState(stato);
 		utente.setCredentials(credes);
 		return utente;

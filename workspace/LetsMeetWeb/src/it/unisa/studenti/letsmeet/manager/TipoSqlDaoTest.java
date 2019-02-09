@@ -19,15 +19,15 @@ class TipoSqlDaoTest extends SqlDaoTest<TipoBean>{
 
 	@Override
 	protected void assertsGet(TipoBean test) {
-		assertEquals(test.getIdTipo(), 1);
-		assertEquals(test.getNomeTipo(), "Epioxevir");
-		assertEquals(test.getDescrizione(), "It should rather be regarded as an integral part of the development sequence.");
+		assertEquals(1, test.getIdTipo());
+		assertEquals("Epioxevir", test.getNomeTipo());
+		assertEquals("It should rather be regarded as an integral part of the development sequence.", test.getDescrizione());
 
 	}
 
 	@Override
 	protected void assertsGetAll(List<TipoBean> test) {
-		assertEquals(test.size(), SIZE);		
+		assertEquals(SIZE, test.size());		
 	}
 
 	@Override
@@ -47,10 +47,8 @@ class TipoSqlDaoTest extends SqlDaoTest<TipoBean>{
 
 	@Override
 	protected void assertsUpdate(TipoBean test) {
-		TipoBean resultBean = getInsertObject();
-		assertEquals(test.getDescrizione(), resultBean.getDescrizione());
-		assertEquals(test.getNomeTipo(), resultBean.getNomeTipo());
 	}
+
 
 	@Override
 	protected void assertsInsert(List<TipoBean> test) {
