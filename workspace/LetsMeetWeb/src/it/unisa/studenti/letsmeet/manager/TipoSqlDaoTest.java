@@ -3,65 +3,62 @@ package it.unisa.studenti.letsmeet.manager;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+
+
 import it.unisa.studenti.letsmeet.model.TipoBean;
 
-class TipoSqlDaoTest {
+class TipoSqlDaoTest extends SqlDaoTest<TipoBean>{
 
-	private Connection conn;
-	private TipoSqlDao dao;
-	
-	
 	private static final int SIZE = 7;
-
-	@BeforeEach
-	void setUp() throws Exception {
-		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/letsmeet", "root", "Nc3Dug2SKVofEBJrhE3x");
-		conn.setAutoCommit(false);
-		dao = new TipoSqlDao(conn);
+	
+	@Override
+	protected SqlDao<TipoBean> getDao(Connection conn) {
+		return new TipoSqlDao(conn);
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-		conn.rollback();
-		conn.close();
+	@Override
+	protected void assertsGet(TipoBean test) {
+		assertEquals(test.getIdTipo(), 1);
+		assertEquals(test.getNomeTipo(), "Epioxevir");
+		assertEquals(test.getDescrizione(), "It should rather be regarded as an integral part of the development sequence.");
+
 	}
 
-	@Test
-	void testGet() throws DaoException{
-		TipoBean tipo = dao.get(1);
-		assertNotNull(tipo);
-		assertEquals(tipo.getIdTipo(), 1);
-		assertEquals(tipo.getNomeTipo(), "Epioxevir");
-		assertEquals(tipo.getDescrizione(), "It should rather be regarded as an integral part of the development sequence.");
+	@Override
+	protected void assertsGetAll(List<TipoBean> test) {
+		assertEquals(test.size(), SIZE);		
 	}
 
-	@Test
-	void testGetAll() throws DaoException{		
-		List<TipoBean> tipos = dao.getAll();
-		assertNotNull(tipos);
-		assertEquals(tipos.size(), SIZE);
-	}
-
-	@Test
-	void testSaveOrUpdate() throws DaoException {
+	@Override
+	protected TipoBean getInsertObject() {
 		TipoBean tipo = new TipoBean();
 		tipo.setDescrizione("Nu bellu tipo");
 		tipo.setNomeTipo("Frischezza");
-		boolean ret = dao.saveOrUpdate(tipo);
-		assertTrue(ret);
-		
-		List<TipoBean> resultBeans = dao.getAll();
-		assertNotNull(resultBeans);
-		assertEquals(resultBeans.size(), SIZE + 1);
+		return tipo;
+	}
+
+	@Override
+	protected TipoBean getUpdateObject() {
+		TipoBean tipo = getInsertObject();
+		tipo.setIdTipo(2);
+		return tipo;
+	}
+
+	@Override
+	protected void assertsUpdate(TipoBean test) {
+		TipoBean resultBean = getInsertObject();
+		assertEquals(test.getDescrizione(), resultBean.getDescrizione());
+		assertEquals(test.getNomeTipo(), resultBean.getNomeTipo());
+	}
+
+	@Override
+	protected void assertsInsert(List<TipoBean> test) {
+		assertEquals(test.size(), SIZE + 1);
 		boolean cesta = false;
 		TipoBean resultBean = null;
-		for(int i = 0; i < resultBeans.size(); i++) {
-			resultBean = resultBeans.get(i);
+		for(int i = 0; i < test.size(); i++) {
+			resultBean = test.get(i);
 			if(resultBean.getNomeTipo().equals("Frischezza")) {
 				cesta = true;
 				break;
@@ -69,26 +66,33 @@ class TipoSqlDaoTest {
 			
 		}
 		assertTrue(cesta);
+		TipoBean tipo = getInsertObject();
 		assertEquals(tipo.getDescrizione(), resultBean.getDescrizione());
 		assertEquals(tipo.getNomeTipo(), resultBean.getNomeTipo());
-		
-		
-		tipo.setIdTipo(2);
-		dao.saveOrUpdate(tipo);
-		resultBean = dao.get(2);
-		assertEquals(tipo.getDescrizione(), resultBean.getDescrizione());
-		assertEquals(tipo.getNomeTipo(), resultBean.getNomeTipo());
-				
 	}
 
-	@Test
-	void testDelete() throws DaoException{
+	@Override
+	protected TipoBean getDeleteObject() {
 		TipoBean tipo = new TipoBean();
 		tipo.setIdTipo(1);
-		dao.delete(tipo);
-		List<TipoBean> tipi = dao.getAll();
-		assertEquals(tipi.size(), SIZE - 1);
-		
+		return tipo;
+	}
+
+	@Override
+	protected void assertsDelete(List<TipoBean> test) {
+		assertEquals(test.size(), SIZE - 1);
+	}
+
+	@Override
+	protected TipoBean getDeleteFalse() {
+		TipoBean tipo = new TipoBean();
+		tipo.setIdTipo(5555);
+		return tipo;
+	}
+
+	@Override
+	protected int getKey(TipoBean item) {
+		return item.getIdTipo();
 	}
 
 }
