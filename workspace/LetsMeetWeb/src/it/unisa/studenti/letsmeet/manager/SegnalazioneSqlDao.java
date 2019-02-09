@@ -1,17 +1,13 @@
 package it.unisa.studenti.letsmeet.manager;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import javax.naming.NamingException;
-import javax.sql.DataSource;
-
-import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 import it.unisa.studenti.letsmeet.model.SegnalazioneBean;
 
-//Non implementato
-public class SegnalazioneDao implements Dao<SegnalazioneBean> {
-	
-	private DataSource ds;
+public class SegnalazioneSqlDao extends SqlDao<SegnalazioneBean> {
 	
 	private static final String GET_SEGN_EVENTO_BY_ID = "SELECT * FROM SegnalazioneEvento WHERE idSegnalazione = ?";
 	private static final String GET_ALL_SEGNS_EVENTO = "SELECT * FROM SegnalazioneEvento";
@@ -31,37 +27,44 @@ public class SegnalazioneDao implements Dao<SegnalazioneBean> {
 	private static final String USER_FILED = "idUtente";
 	private static final String EVENT_FILED = "idEvento";
 	private static final String COMMENT_FILED = "idCommento";
-	
-	
-	
-	public SegnalazioneDao() throws NamingException{
-		ds = DataSourceSingleton.getDataSource();
+
+	public SegnalazioneSqlDao(Connection connection) {
+		super(connection);
 	}
 
 	@Override
-	public SegnalazioneBean get(int id) throws DaoException {
-		throw new DaoException("Questo metodo non è ancora implementato per la bassa priorità di cui gode", new UnsupportedOperationException("Non verrà mai implementato") , DaoExceptionType.SQLException);
-		
+	protected int getKey(SegnalazioneBean item) {
+		return item.getIdItemSegnalato();
 	}
 
 	@Override
-	public List<SegnalazioneBean> getAll() throws DaoException {
-		throw new DaoException("Questo metodo non è ancora implementato per la bassa priorità di cui gode", new UnsupportedOperationException("Non verrà mai implementato") , DaoExceptionType.SQLException);
-	
+	protected SegnalazioneBean getItemFromResultSet(ResultSet rs) throws SQLException {
+		throw new UnsupportedOperationException("Non ancora implementato: bassa priorità");
 	}
 
 	@Override
-	public boolean saveOrUpdate(SegnalazioneBean t) throws DaoException {
-		throw new DaoException("Questo metodo non è ancora implementato per la bassa priorità di cui gode", new UnsupportedOperationException("Non verrà mai implementato") , DaoExceptionType.SQLException);
-
+	protected PreparedStatement getPreparedGetById(int id) throws SQLException {
+		throw new UnsupportedOperationException("Non ancora implementato: bassa priorità");
 	}
 
 	@Override
-	public boolean delete(SegnalazioneBean t) throws DaoException {
-		throw new DaoException("Questo metodo non è ancora implementato per la bassa priorità di cui gode", new UnsupportedOperationException("Non verrà mai implementato") , DaoExceptionType.SQLException);
-
+	protected PreparedStatement getPreparedGetAll() throws SQLException {
+		throw new UnsupportedOperationException("Non ancora implementato: bassa priorità");
 	}
-	
-	
+
+	@Override
+	protected PreparedStatement getPreparedDeleteById(int id) throws SQLException {
+		throw new UnsupportedOperationException("Non ancora implementato: bassa priorità");
+	}
+
+	@Override
+	protected PreparedStatement getPreparedUpdateItem(SegnalazioneBean item) throws SQLException {
+		throw new UnsupportedOperationException("Non ancora implementato: bassa priorità");
+	}
+
+	@Override
+	protected PreparedStatement getPreparedInsertItem(SegnalazioneBean item) throws SQLException {
+		throw new UnsupportedOperationException("Non ancora implementato: bassa priorità");
+	}
 
 }
