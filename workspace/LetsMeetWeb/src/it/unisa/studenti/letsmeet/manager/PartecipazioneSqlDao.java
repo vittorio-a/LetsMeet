@@ -18,7 +18,7 @@ public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
 	
 	private static final String EVENT_ID_FIELD = "idEvento";
 	private static final String USER_ID_FILED = "idUtente";
-	private static final String VERIFICATION_FILED = "votazione";
+	private static final String VERIFICATION_FILED = "isVerificato";
 
 	public PartecipazioneSqlDao(Connection connection) {
 		super(connection);

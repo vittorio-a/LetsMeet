@@ -1,5 +1,10 @@
 package it.unisa.studenti.letsmeet.model;
 
+import java.sql.Array;
+import java.util.Arrays;
+
+import javax.xml.bind.DatatypeConverter;
+
 /**
  *Descrive un SuperAdmin della piattaforma
  *
@@ -51,7 +56,8 @@ public class SuperAdminBean {
 	}
 	@Override
 	public String toString() {
-		return "SuperAdminBean [username=" + username + ", password=" + password + ", idSuperAdmin=" + idSuperAdmin
+		String pswHex = DatatypeConverter.printHexBinary(password);
+		return "SuperAdminBean [username=" + username + ", password=" + pswHex + ", idSuperAdmin=" + idSuperAdmin
 				+ "]";
 	}
 
@@ -70,7 +76,7 @@ public class SuperAdminBean {
 		if (password == null) {
 			if (other.password != null)
 				return false;
-		} else if (!password.equals(other.password))
+		} else if (Arrays.equals(password, other.password))
 			return false;
 		if (username == null) {
 			if (other.username != null)

@@ -78,7 +78,7 @@ public class CommentoBean {
 				+ ", idEvento=" + idEvento + ", creationTime=" + creationTime + "]";
 	}
 
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -106,6 +106,8 @@ public class CommentoBean {
 			return false;
 		return true;
 	}
+
+
 	
 	
 }

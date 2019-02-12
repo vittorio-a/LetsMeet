@@ -11,16 +11,16 @@ import it.unisa.studenti.letsmeet.model.CommentoBean;
 
 public class CommentoSqlDao extends SqlDao<CommentoBean> {
 	
-	private static String GET_COMMENT_BY_ID = "SELECT * FROM Commento WHERE id = ?";
+	private static String GET_COMMENT_BY_ID = "SELECT * FROM Commento WHERE idCommento = ?";
 	private static String GET_COMMENTS = "SELECT * FROM Commento";
 	private static String INSERT_COMMENT = "INSERT INTO Commento (idCommento,idMittente,contenuto,idEvento,creationTime) VALUES (?,?,?,?,?)";
 	private static String DELETE_COMMENT = "DELETE FROM Commento WHERE idCommento = ?";
-	private static String UPDATE_COMMENT = "INSERT INTO Utente(idCommento,idMittente,contenuto,idEvento,creationTime) VALUES(?,?,?,?,?)";
+	private static String UPDATE_COMMENT = "UPDATE Commento SET idMittente = ?, contenuto = ?, idEvento = ?, creationTime = ? WHERE idCommento = ?";
 	//Parametri
 	private static String ID_COMMENTO ="idCommento";
 	private static String ID_MITTENTE = "idMittente";
 	private static String CONTENUTO = "contenuto";
-	private static String ID_EVENTO = "idCommento";
+	private static String ID_EVENTO = "idEvento";
 	private static String CREATION_TIME = "creationTime";
 	
 
@@ -69,11 +69,12 @@ public class CommentoSqlDao extends SqlDao<CommentoBean> {
 	@Override
 	protected PreparedStatement getPreparedUpdateItem(CommentoBean item) throws SQLException {		
 		PreparedStatement ps = connection.prepareStatement(UPDATE_COMMENT);
-		ps.setInt(1, item.getIdCommento());
-		ps.setInt(2, item.getIdUtente());
-		ps.setString(3, item.getContenuto());
-		ps.setInt(4, item.getIdEvento());
-		ps.setTimestamp(5, Timestamp.from(item.getCreationTime()));		
+		ps.setInt(1, item.getIdUtente());
+		ps.setString(2, item.getContenuto());
+		ps.setInt(3, item.getIdEvento());
+		ps.setTimestamp(4, Timestamp.from(item.getCreationTime()));		
+		ps.setInt(5, item.getIdCommento());
+
 		return ps;
 	}
 

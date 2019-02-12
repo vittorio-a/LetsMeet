@@ -49,7 +49,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 		}
 		utente.setIdUtente(rs.getInt(ID_FILED));
 		utente.setReactivationDate(rs.getTimestamp(REACTIVATION_DATE_FIELD).toInstant());
-		utente.setFeedbackUtente(rs.getFloat(FEEDBACK_FILED));
+		utente.setFeedbackUtente(rs.getBigDecimal(FEEDBACK_FILED));
 		utente.setEmail(rs.getString(EMAIL_FIELD));
 		CredentialsBean credes = new CredentialsBean();
 		credes.setPassword(rs.getBytes(PASSWORD_FILED));
@@ -87,7 +87,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 		st.setBytes(3, creds.getPassword());
 		st.setString(4, item.getEmail());
 		st.setString(5, creds.getState().name());
-		st.setFloat(6, item.getFeedbackUtente());
+		st.setBigDecimal(6, item.getFeedbackUtente());
 		st.setTimestamp(7, Timestamp.from(item.getReactivationDate()));
 		return st;
 	}
@@ -100,7 +100,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 		st.setBytes(2, creds.getPassword());
 		st.setString(3, item.getEmail());
 		st.setString(4, creds.getState().name());
-		st.setFloat(5, item.getFeedbackUtente());
+		st.setBigDecimal(5, item.getFeedbackUtente());
 		st.setTimestamp(6, Timestamp.from(item.getReactivationDate()));
 		return st;
 	}

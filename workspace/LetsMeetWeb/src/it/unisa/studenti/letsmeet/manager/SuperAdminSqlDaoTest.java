@@ -84,7 +84,10 @@ class SuperAdminSqlDaoTest extends SqlDaoTest<SuperAdminBean> {
 			
 		}
 		assertTrue(cesta);
-		assertEquals(utenteInsert, test.get(i));
+		SuperAdminBean inserted = test.get(i);
+		utenteInsert.setIdSuperAdmin(inserted.getIdSuperAdmin());
+//		assertTrue(inserted.equals(utenteInsert));
+		assertEquals(utenteInsert, inserted);
 	}
 	
 

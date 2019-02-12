@@ -11,10 +11,9 @@ public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> {
 
 	private static final String GET_SUPER_ADMIN_BY_ID = "SELECT * FROM SuperAdmin WHERE idSuperAdmin = ?";
 	private static final String GET_ALL_SUPER_ADMIN = "SELECT * FROM SuperAdmin";
-	private static final String UPDATE_SUPER_ADMIN = "UPDATE INTO SuperAdmin(idSuperAdmin, username, passwordAdmin)"+
-			" VALUE(?,?,?,?,?,?,?)";
-	private static final String INSERT_SUPER_ADMIN = "INSERT INTO SuperAdmin(idSuperAdmin, username, passwordAdmin)"+
-			" VALUE(?,?,?,?,?,?)";
+	private static final String UPDATE_SUPER_ADMIN = "UPDATE SuperAdmin SET username = ?, passwordAdmin = ? WHERE idAdmin = ?";
+	private static final String INSERT_SUPER_ADMIN = "INSERT INTO SuperAdmin(username, passwordAdmin)"+
+			" VALUE(?,?)";
 	private static final String DELETE_SUPER_ADMIN_BY_ID = "DELETE FROM SuperAdmin WHERE idSuperAdmin = ?";
 	
 	private static final String ID_FILED = "idSuperAdmin";
@@ -61,16 +60,15 @@ public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> {
 	@Override
 	protected PreparedStatement getPreparedUpdateItem(SuperAdminBean item) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(UPDATE_SUPER_ADMIN);
-		ps.setInt(0, item.getIdSuperAdmin());
 		ps.setString(1, item.getUsername());
 		ps.setBytes(2, item.getPassword());
+		ps.setInt(3, item.getIdSuperAdmin());
 		return ps;
 	}
 
 	@Override
 	protected PreparedStatement getPreparedInsertItem(SuperAdminBean item) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(INSERT_SUPER_ADMIN);
-		ps.setInt(0, item.getIdSuperAdmin());
 		ps.setString(1, item.getUsername());
 		ps.setBytes(2, item.getPassword());	
 		return ps;

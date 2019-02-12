@@ -30,8 +30,8 @@ public class PosizioneSqlDao extends SqlDao<PosizioneBean> {
 
 	
 	
-	private static final String GET_POSITION_BY_ID = "SELECT p.idPosizione, p.longitudine, p.latitudine, p.formattedAddress, c.nomeComune, c.idComune, pv.nomeProvincia, pv.idProvincia, pv.sigla, r.nomeRegione, r.idRegione, n.nomeNazione, n.idNazione FROM Evento e\r\n" + 
-			"	NATURAL JOIN Posizione p\r\n" + 
+	private static final String GET_POSITION_BY_ID = "SELECT p.idPosizione, p.longitudine, p.latitudine, p.formattedAddress, c.nomeComune, c.idComune, pv.nomeProvincia, pv.idProvincia, pv.sigla, r.nomeRegione, r.idRegione, n.nomeNazione, n.idNazione\r\n" + 
+			"	 FROM Posizione p\r\n"+
 			"    NATURAL JOIN appartenenzacomune ac\r\n" + 
 			"    NATURAL JOIN Comune c\r\n" + 
 			"    NATURAL JOIN appartenenzaprovincia ap\r\n" + 
@@ -40,12 +40,12 @@ public class PosizioneSqlDao extends SqlDao<PosizioneBean> {
 			"    natural join regione r\r\n" + 
 			"    natural join appartenezanazione an\r\n" + 
 			"    natural join nazione n\r\n" + 
-			"    WHERE e.id = ?";
+			"    WHERE p.idPosizione = ?";
 	
 	
 
-	private static final String GET_ALL_POSITIONS = "SELECT p.idPosizione, p.longitudine, p.latitudine, p.formattedAddress, c.nomeComune, c.idComune, pv.nomeProvincia, pv.idProvincia, pv.sigla, r.nomeRegione, r.idRegione, n.nomeNazione, n.idNazione FROM Evento e\r\n" + 
-			"	NATURAL JOIN Posizione p\r\n" + 
+	private static final String GET_ALL_POSITIONS = "SELECT p.idPosizione, p.longitudine, p.latitudine, p.formattedAddress, c.nomeComune, c.idComune, pv.nomeProvincia, pv.idProvincia, pv.sigla, r.nomeRegione, r.idRegione, n.nomeNazione, n.idNazione\r\n" + 
+			"	 FROM Posizione p\r\n"+
 			"    NATURAL JOIN appartenenzacomune ac\r\n" + 
 			"    NATURAL JOIN Comune c\r\n" + 
 			"    NATURAL JOIN appartenenzaprovincia ap\r\n" + 
@@ -55,7 +55,9 @@ public class PosizioneSqlDao extends SqlDao<PosizioneBean> {
 			"    natural join appartenezanazione an\r\n" + 
 			"    natural join nazione n\r\n";
 	
+	private static final String DELETE_POSITION_BY_ID = "DELETE FROM Posizione WHERE idPosizione = ?"; 
 
+	
 	public PosizioneSqlDao(Connection connection) {
 		super(connection);
 	}
@@ -75,7 +77,7 @@ public class PosizioneSqlDao extends SqlDao<PosizioneBean> {
 		posizione.setIdProvincia(rs.getInt(ID_PROVINCIA_FIELD));
 		posizione.setNomeProvincia(rs.getString(NOME_PROVINCIA_FIELD));
 		posizione.setIdRegione(rs.getInt(ID_PROVINCIA_FIELD));
-		posizione.setNomeRegione(NOME_REGIONE_FIELD);
+		posizione.setNomeRegione(rs.getString(NOME_REGIONE_FIELD));
 		posizione.setIdNazione(rs.getInt(ID_NAZIONE_FIELD));
 		posizione.setNomeNazione(rs.getString(NOME_NAZIONE_FIELD));
 		posizione.setLatitudine(rs.getBigDecimal(LATITUTDINE_FIELD));
@@ -99,7 +101,7 @@ public class PosizioneSqlDao extends SqlDao<PosizioneBean> {
 
 	@Override
 	protected PreparedStatement getPreparedDeleteById(int id) throws SQLException {
-		PreparedStatement st = connection.prepareStatement(GET_POSITION_BY_ID);
+		PreparedStatement st = connection.prepareStatement(DELETE_POSITION_BY_ID);
 		st.setInt(1, id);
 		return st;
 	}

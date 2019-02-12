@@ -6,10 +6,8 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
 
 import it.unisa.studenti.letsmeet.model.PosizioneBean;
-import it.unisa.studenti.letsmeet.model.TipoBean;
 
 class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 
@@ -42,6 +40,10 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 		assertEquals(SIZE, test.size());				
 	}
 
+	static public PosizioneBean getInsertPosition() {
+		return new PosizioneSqlDaoTest().getInsertObject();
+	}
+
 	@Override
 	protected PosizioneBean getInsertObject() {
 		PosizioneBean posizione = new PosizioneBean();
@@ -57,7 +59,8 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 		
 		return posizione;
 	}
-
+	
+	
 	@Override
 	protected PosizioneBean getUpdateObject() {
 		PosizioneBean posizione = getInsertObject();
@@ -75,7 +78,7 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 
 	@Override
 	protected void assertsInsert(List<PosizioneBean> test) {
-		assertEquals(test.size(), SIZE + 1);
+		assertEquals(SIZE + 1, test.size());
 		boolean cesta = false;
 		PosizioneBean resultBean = null;
 		PosizioneBean inserted = getInsertObject();
@@ -101,7 +104,7 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 
 	@Override
 	protected void assertsDelete(List<PosizioneBean> test) {
-		assertEquals(test.size(), SIZE - 1);
+		assertEquals(SIZE - 1, test.size());
 	}
 
 	@Override
