@@ -1,5 +1,6 @@
 package it.unisa.studenti.letsmeet.model;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 /**Rappresneta un evento 
@@ -10,7 +11,7 @@ public class EventoBean {
 	
 	private int idEvento;
 	private String nome;
-	private float feedback;
+	private BigDecimal feedback;
 	private int nPartecipanti;
 	private int nVerificati;
 	private Instant oraInizio;
@@ -19,12 +20,13 @@ public class EventoBean {
 	private TipoBean tipo;
 	private PosizioneBean posizione;
 	private boolean isVisible;
+	private String descrizione;
 	
 	/**
 	 * Costryttore vuoto
 	 */
 	public EventoBean() {
-		this.feedback = 0;
+		this.feedback = null;
 		this.idEvento = 0;
 		this.idUtente = 0;
 		this.isVisible = false;
@@ -49,9 +51,9 @@ public class EventoBean {
 	 * @param posizione posizione dell'evento 
 	 * @param isVisible stato dell'evento
 	 */
-	public EventoBean(int idEvento, String nome, float feedback, int nPartecipanti, int nVerificati, Instant oraInizio,
+	public EventoBean(int idEvento, String nome, BigDecimal feedback, int nPartecipanti, int nVerificati, Instant oraInizio,
 			Instant oraFine, int idUtente, TipoBean tipo, PosizioneBean posizione,
-			boolean isVisible) {
+			boolean isVisible, String descrizione) {
 		this.idEvento = idEvento;
 		this.nome = nome;
 		this.feedback = feedback;
@@ -63,9 +65,20 @@ public class EventoBean {
 		this.tipo = tipo;
 		this.posizione = posizione;
 		this.isVisible = isVisible;
+		this.descrizione = descrizione;
 	}
 	
 	
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+
 	public int getIdEvento() {
 		return idEvento;
 	}
@@ -78,10 +91,10 @@ public class EventoBean {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public float getFeedback() {
+	public BigDecimal getFeedback() {
 		return feedback;
 	}
-	public void setFeedback(float feedback) {
+	public void setFeedback(BigDecimal feedback) {
 		this.feedback = feedback;
 	}
 	public int getnPartecipanti() {
@@ -135,6 +148,63 @@ public class EventoBean {
 	}
 
 
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EventoBean other = (EventoBean) obj;
+		if (descrizione == null) {
+			if (other.descrizione != null)
+				return false;
+		} else if (!descrizione.equals(other.descrizione))
+			return false;
+		if (feedback == null) {
+			if (other.feedback != null)
+				return false;
+		} else if (!feedback.equals(other.feedback))
+			return false;
+		if (idEvento != other.idEvento)
+			return false;
+		if (idUtente != other.idUtente)
+			return false;
+		if (isVisible != other.isVisible)
+			return false;
+		if (nPartecipanti != other.nPartecipanti)
+			return false;
+		if (nVerificati != other.nVerificati)
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (oraFine == null) {
+			if (other.oraFine != null)
+				return false;
+		} else if (!oraFine.equals(other.oraFine))
+			return false;
+		if (oraInizio == null) {
+			if (other.oraInizio != null)
+				return false;
+		} else if (!oraInizio.equals(other.oraInizio))
+			return false;
+		if (posizione == null) {
+			if (other.posizione != null)
+				return false;
+		} else if (!posizione.equals(other.posizione))
+			return false;
+		if (tipo == null) {
+			if (other.tipo != null)
+				return false;
+		} else if (!tipo.equals(other.tipo))
+			return false;
+		return true;
+	}
 
 
 	@Override

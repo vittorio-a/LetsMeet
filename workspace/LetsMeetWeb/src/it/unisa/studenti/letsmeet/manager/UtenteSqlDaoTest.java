@@ -2,6 +2,7 @@ package it.unisa.studenti.letsmeet.manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -69,7 +70,7 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 		creds.setPassword(hashedPsw);
 		utente.setCredentials(creds);
 		utente.setEmail("test@mail.test");
-		utente.setFeedbackUtente(1f);
+		utente.setFeedbackUtente(new BigDecimal("7"));
 		utente.setReactivationDate(Instant.parse("2020-01-01T00:00:00Z"));
 		return utente;
 	}

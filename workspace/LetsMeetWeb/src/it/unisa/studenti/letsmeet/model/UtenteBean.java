@@ -1,5 +1,6 @@
 package it.unisa.studenti.letsmeet.model;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 /**
@@ -11,7 +12,7 @@ import java.time.Instant;
 public class UtenteBean {
 	
 	private int idUtente;
-	private float feedbackUtente;
+	private BigDecimal feedbackUtente;
 	private Instant reactivationDate;
 	private CredentialsBean credentials;
 	private String email;
@@ -25,12 +26,13 @@ public class UtenteBean {
 	 * @param credentials credenziali dell'utente 
 	 * @param isVisible stato dell'utente 
 	 */
-	public UtenteBean(int idUtente, String email, float feedbackUtente, Instant reactivationDate, CredentialsBean credentials) {
+	public UtenteBean(int idUtente, String email, BigDecimal feedbackUtente, Instant reactivationDate, CredentialsBean credentials) {
 		this.idUtente = idUtente;
 		this.feedbackUtente = feedbackUtente;
 		this.reactivationDate = reactivationDate;
 		this.credentials = credentials;
 		this.email = email;
+		this.feedbackUtente = null;
 	}
 	
 	
@@ -52,10 +54,10 @@ public class UtenteBean {
 		this.idUtente = idUtente;
 	}
 
-	public float getFeedbackUtente() {
+	public BigDecimal getFeedbackUtente() {
 		return feedbackUtente;
 	}
-	public void setFeedbackUtente(float feedbackUtente) {
+	public void setFeedbackUtente(BigDecimal feedbackUtente) {
 		this.feedbackUtente = feedbackUtente;
 	}
 	public Instant getReactivationDate() {
@@ -70,6 +72,8 @@ public class UtenteBean {
 	public void setCredentials(CredentialsBean credentials) {
 		this.credentials = credentials;
 	}
+
+
 
 
 
@@ -92,7 +96,10 @@ public class UtenteBean {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (Float.floatToIntBits(feedbackUtente) != Float.floatToIntBits(other.feedbackUtente))
+		if (feedbackUtente == null) {
+			if (other.feedbackUtente != null)
+				return false;
+		} else if (!feedbackUtente.equals(other.feedbackUtente))
 			return false;
 		if (idUtente != other.idUtente)
 			return false;

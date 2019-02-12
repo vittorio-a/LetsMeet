@@ -10,7 +10,6 @@ import it.unisa.studenti.letsmeet.model.EventoBean;
 
 public class EventoSqlDao extends SqlDao<EventoBean> {
 	
-	private static final String GET_EVENT_BY_ID = "SELECT * FORM Evento e WHERE id = ?";
 	private static final String ID_EVENTO_FIELD = "idEvento";
 	private static final String NOME_FIELD = "nome";
 	private static final String FEEDBACK_FIELD = "feedback";
@@ -22,15 +21,18 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 	private static final String ID_TIPO_FIELD = "idTipo";
 	private static final String ID_POSIZIONE = "idPosizione";
 	private static final String IS_VISIBLE_FIELD = "isVisible";
+	private static final String DESCRIZIONE_FIELD = "descrizione";
 	
 	
+	private static final String GET_EVENT_BY_ID = "SELECT * FORM Evento e WHERE idEvento = ?";
+
 	private static final String GET_ALL_EVENTS = "SELECT * FROM Evento e";
 	
 	private static final String UPDATE_EVENTO = "UPDATE Evento SET nome = ?, oraInizio = ?, oraFine = ?,"
-			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisible = ? WHERE id = ? ";
+			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisible = ?, descrizione = ? WHERE id = ? ";
 	
 	
-	private static final String INSERT_EVENTO = "INSERT Evento(nome, oraInizio, oraFine, idUtente, idTipo, idPosizione) VALUE(?,?,?,?,?,?)";
+	private static final String INSERT_EVENTO = "INSERT Evento(nome, oraInizio, oraFine, idUtente, idTipo, idPosizione, descrizione) VALUE(?,?,?,?,?,?,?)";
 	
 	private static final String DELETE_EVENTO_BY_ID ="DELETE FROM Evento WHERE idEvento = ?";
 	
@@ -53,7 +55,7 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 	@Override
 	protected EventoBean getItemFromResultSet(ResultSet rs) throws SQLException, DaoException {
 		EventoBean evento = new EventoBean();
-		evento.setFeedback(rs.getFloat(FEEDBACK_FIELD));
+		evento.setFeedback(rs.getBigDecimal(FEEDBACK_FIELD));
 		evento.setIdEvento(rs.getInt(ID_EVENTO_FIELD));
 		evento.setIdUtente(rs.getInt(ID_CREATORE_FIELD));
 		evento.setNome(rs.getString(NOME_FIELD));
@@ -64,6 +66,7 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 		evento.setPosizione(posizioneSqlDao.get(rs.getInt(ID_POSIZIONE)));
 		evento.setTipo(tipoSqlDao.get(rs.getInt(ID_TIPO_FIELD)));
 		evento.setVisible(rs.getBoolean(IS_VISIBLE_FIELD));
+		evento.setDescrizione(rs.getString(DESCRIZIONE_FIELD));
 		
 		return evento;
 	}
@@ -97,6 +100,8 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 		st.setInt(5, item.getTipo().getIdTipo());
 		st.setInt(6, item.getPosizione().getId());
 		st.setBoolean(7, item.isVisible());
+		st.setBigDecimal(8, item.getFeedback());
+		st.setString(9, item.getDescrizione());
 		return st;
 	}
 
@@ -109,6 +114,7 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 		st.setInt(4, item.getIdUtente());
 		st.setInt(5, item.getTipo().getIdTipo());
 		st.setInt(6, item.getPosizione().getId());
+		st.setString(7, item.getDescrizione());
 		return st;
 	}
 
