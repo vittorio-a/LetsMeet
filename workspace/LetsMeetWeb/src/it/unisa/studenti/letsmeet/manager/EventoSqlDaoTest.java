@@ -1,0 +1,123 @@
+package it.unisa.studenti.letsmeet.manager;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.time.Instant;
+import java.util.List;
+
+
+import it.unisa.studenti.letsmeet.model.EventoBean;
+import it.unisa.studenti.letsmeet.model.PosizioneBean;
+
+class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
+
+	private static final int SIZE = 50;
+	
+	@Override
+	protected SqlDao<EventoBean> getDao(Connection conn) {
+		return new EventoSqlDao(conn);
+	}
+
+	@Override
+	protected void assertsGet(EventoBean test) {
+		assertEquals(1, test.getIdEvento());
+		assertEquals("Such tendency may approximately originate from the base configuration.", test.getNome());
+		assertEquals(3f, test.getFeedback());
+		assertEquals(0, test.getnPartecipanti());
+		assertEquals(0, test.getnVerificati());
+		assertEquals(Instant.parse("2019-02-07T14:22:40Z"), test.getOraInizio());
+		assertEquals(Instant.parse("2019-02-07T23:33:38Z"), test.getOraFine());
+		assertEquals(3, test.getIdUtente());
+		assertEquals(6, test.getTipo().getIdTipo());
+		assertEquals(44, test.getPosizione().getId());
+		assertEquals(true, test.isVisible());
+		
+		
+	}
+
+	@Override
+	protected void assertsGetAll(List<EventoBean> test) {
+		assertEquals(SIZE, test.size());
+	}
+
+	@Override
+	protected EventoBean getInsertObject() {
+		EventoBean bean = new EventoBean();
+		bean.setIdUtente(1);
+		bean.setFeedback(new BigDecimal("5.0"));
+		PosizioneBean posizione = getNewPosition();
+		bean.setPosizione(posizione);
+		bean.setnPartecipanti(0);
+		bean.setnVerificati(0);
+		bean.setOraInizio(Instant.parse("2019-02-07T14:22:40Z"));
+		bean.setOraFine(Instant.parse("2019-02-07T14:22:41Z"));
+		bean.setNome("Un bello evento");
+		bean.setDescrizione("Na bella descrizione overamente");
+		return bean;
+		
+	}
+	
+	private PosizioneBean getNewPosition() {		
+		return PosizioneSqlDaoTest.getInsertPosition();
+	}
+
+	@Override
+	protected EventoBean getUpdateObject() {
+		EventoBean bean = getInsertObject();
+		bean.setIdEvento(1);
+		return bean;
+	}
+
+	@Override
+	protected void assertsUpdate(EventoBean test) {
+		
+	}
+
+	@Override
+	protected void assertsInsert(List<EventoBean> test) {
+		assertEquals(SIZE + 1, test.size());
+		boolean cesta = false;
+		EventoBean resultBean = null;
+		EventoBean inserted = getInsertObject();
+		int i;
+		for(i = 0; i < test.size(); i++) {
+			resultBean = test.get(i);
+			if(resultBean.getNome().equals(inserted.getNome())) {
+				cesta = true;
+				break;
+			}
+			
+		}
+		assertTrue(cesta);
+		assertEquals(inserted,test.get(i));		
+	}
+
+	@Override
+	protected EventoBean getDeleteObject() {
+		EventoBean bean = new EventoBean();
+		bean.setIdEvento(1);
+		return bean;	
+	}
+
+	@Override
+	protected void assertsDelete(List<EventoBean> test) {
+		assertEquals(SIZE - 1, test.size());
+
+	}
+
+	@Override
+	protected EventoBean getDeleteFalse() {
+		EventoBean bean = new EventoBean();
+		bean.setIdEvento(Integer.MAX_VALUE);
+		return bean;		}
+
+	@Override
+	protected int getKey(EventoBean item) {
+		return item.getIdEvento();
+	}
+
+	
+
+}
