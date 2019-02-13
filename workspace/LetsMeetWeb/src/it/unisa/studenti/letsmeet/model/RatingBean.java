@@ -56,6 +56,27 @@ public class RatingBean {
 	public String toString() {
 		return "RatingBean [idutente=" + idutente + ", evento=" + idEvento + ", voto=" + voto + "]";
 	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RatingBean other = (RatingBean) obj;
+		if (idEvento != other.idEvento)
+			return false;
+		if (idutente != other.idutente)
+			return false;
+		if (voto != other.voto)
+			return false;
+		return true;
+	}
+	
 	
 	
 

@@ -11,7 +11,7 @@ public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> {
 
 	private static final String GET_SUPER_ADMIN_BY_ID = "SELECT * FROM SuperAdmin WHERE idSuperAdmin = ?";
 	private static final String GET_ALL_SUPER_ADMIN = "SELECT * FROM SuperAdmin";
-	private static final String UPDATE_SUPER_ADMIN = "UPDATE SuperAdmin SET username = ?, passwordAdmin = ? WHERE idAdmin = ?";
+	private static final String UPDATE_SUPER_ADMIN = "UPDATE SuperAdmin SET username = ?, passwordAdmin = ? WHERE idSuperAdmin = ?";
 	private static final String INSERT_SUPER_ADMIN = "INSERT INTO SuperAdmin(username, passwordAdmin)"+
 			" VALUE(?,?)";
 	private static final String DELETE_SUPER_ADMIN_BY_ID = "DELETE FROM SuperAdmin WHERE idSuperAdmin = ?";

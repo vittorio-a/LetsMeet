@@ -20,13 +20,13 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 	private static final String ID_CREATORE_FIELD = "idUtente";
 	private static final String ID_TIPO_FIELD = "idTipo";
 	private static final String ID_POSIZIONE = "idPosizione";
-	private static final String IS_VISIBLE_FIELD = "isVisible";
+	private static final String IS_VISIBLE_FIELD = "isVisibile";
 	private static final String DESCRIZIONE_FIELD = "descrizione";
 	
 	
 	private static final String GET_EVENT_BY_ID = "SELECT * FORM Evento e WHERE idEvento = ?";
 
-	private static final String GET_ALL_EVENTS = "SELECT * FROM Evento e";
+	private static final String GET_ALL_EVENTS = "SELECT * FROM Evento";
 	
 	private static final String UPDATE_EVENTO = "UPDATE Evento SET nome = ?, oraInizio = ?, oraFine = ?,"
 			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisible = ?, descrizione = ? WHERE id = ? ";
@@ -61,8 +61,8 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 		evento.setNome(rs.getString(NOME_FIELD));
 		evento.setnPartecipanti(rs.getInt(N_PARTECIPANTI_FIELD));
 		evento.setnVerificati(rs.getInt(N_VERIFICATI_FILED));
-		evento.setOraInizio(rs.getDate(ORA_INIZIO_FIELD).toInstant());
-		evento.setOraFine(rs.getDate(ORA_FINE_FIELD).toInstant());
+		evento.setOraInizio(rs.getTimestamp(ORA_INIZIO_FIELD).toInstant());
+		evento.setOraFine(rs.getTimestamp(ORA_FINE_FIELD).toInstant());
 		evento.setPosizione(posizioneSqlDao.get(rs.getInt(ID_POSIZIONE)));
 		evento.setTipo(tipoSqlDao.get(rs.getInt(ID_TIPO_FIELD)));
 		evento.setVisible(rs.getBoolean(IS_VISIBLE_FIELD));

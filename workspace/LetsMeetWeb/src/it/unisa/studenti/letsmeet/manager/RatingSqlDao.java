@@ -14,12 +14,12 @@ public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> {
 	private static final String DELETE_RATING = "DELETE FROM Rating WHERE idUtente = ? AND idEvento = ? ";
 	private static final String GET_RATING_BY_USER_EVENT_ID = "SELECT * FROM Rating WHERE idUtente = ? AND idEvento = ?";
 	private static final String GET_RATING_BY_USER_ID = "SELECT * FROM Rating WHERE idUtente = ?";
-	private static final String INSERT_RATING = "INSERT Rating(idEvento, idUtente, valutazione) VALUE(?,?,?)";
-	private static final String UPDATE_RATING = "UPDATE Rating WHERE idEvento = ? AND idUtente = ? SET valutazione = ?";
+	private static final String INSERT_RATING = "INSERT Rating(idEvento, idUtente, voto) VALUE(?,?,?)";
+	private static final String UPDATE_RATING = "UPDATE Rating SET voto = ? WHERE idUtente = ? AND idEvento = ?";
 	
 	private static final String EVENT_ID_FIELD = "idEvento";
 	private static final String USER_ID_FILED = "idUtente";
-	private static final String RATING_FILED = "votazione";
+	private static final String RATING_FILED = "voto";
 	
 
 	public RatingSqlDao(Connection connection) {
@@ -68,9 +68,9 @@ public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> {
 	@Override
 	protected PreparedStatement getPreparedUpdate(RatingBean item) throws SQLException{
 		PreparedStatement st = connection.prepareStatement(UPDATE_RATING);
-		st.setInt(1, item.getEvento());
+		st.setBoolean(1, item.isVoto());
 		st.setInt(2, item.getIdutente());
-		st.setBoolean(3, item.isVoto());
+		st.setInt(3, item.getEvento());
 		return st;
 	}
 

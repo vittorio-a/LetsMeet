@@ -50,11 +50,33 @@ public class PartecipazioneBean {
 	public void setIdEvento(int idPartecipazione) {
 		this.idEvento = idPartecipazione;
 	}
+	
 	@Override
 	public String toString() {
 		return "PartecipazioneBean [idUtente=" + idUtente + ", verificato=" + verificato + ", idPartecipazione="
 				+ idEvento + "]";
 	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PartecipazioneBean other = (PartecipazioneBean) obj;
+		if (idEvento != other.idEvento)
+			return false;
+		if (idUtente != other.idUtente)
+			return false;
+		if (verificato != other.verificato)
+			return false;
+		return true;
+	}
+	
+	
 	
 	
 	

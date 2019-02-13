@@ -76,7 +76,7 @@ public class SuperAdminBean {
 		if (password == null) {
 			if (other.password != null)
 				return false;
-		} else if (Arrays.equals(password, other.password))
+		} else if (!Arrays.equals(password, other.password))
 			return false;
 		if (username == null) {
 			if (other.username != null)

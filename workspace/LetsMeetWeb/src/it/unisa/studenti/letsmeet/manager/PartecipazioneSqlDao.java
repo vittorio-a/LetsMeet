@@ -10,11 +10,11 @@ import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
 	
 	private static final String GET_PARTECIPATION_BY_EVENT_ID = "SELECT * FROM Partecipazione WHERE idEvento = ?";
-	private static final String DELETE_PARTECIPATION = "DELETE FROM Partecipazione WHERE idEvento = ? AND idUtente = ?";
+	private static final String DELETE_PARTECIPATION = "DELETE FROM Partecipazione WHERE idUtente = ? AND idEvento = ?";
 	private static final String GET_PARTECIPATION_BY_EVENT_USER_ID = "SELECT * FROM Partecipazione WHERE idUtente = ?  AND idEvento = ?";
 	private static final String GET_PARTECIPATION_BY_USER_ID = "SELECT * FROM Partecipazione WHERE idUtente = ?";
-	private static final String INSERT_PARTECIPATION = "INSERT Partecipazione(idUtente, idEvento, isVerification) VALUE(?,?,?)";
-	private static final String UPDATE_PARTECIPATION = "UPDATE Rating WHERE idUtente = ? AND idEvento = ? SET isVerificato = ?";
+	private static final String INSERT_PARTECIPATION = "INSERT Partecipazione(idUtente, idEvento, isVerificato) VALUE(?,?,?)";
+	private static final String UPDATE_PARTECIPATION = "UPDATE Partecipazione  SET isVerificato = ? WHERE idUtente = ? AND idEvento = ?";
 	
 	private static final String EVENT_ID_FIELD = "idEvento";
 	private static final String USER_ID_FILED = "idUtente";
@@ -66,9 +66,9 @@ public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
 	@Override
 	protected PreparedStatement getPreparedUpdate(PartecipazioneBean item) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(UPDATE_PARTECIPATION);
-		ps.setInt(1, item.getIdUtente());
-		ps.setInt(2, item.getIdEvento());
-		ps.setBoolean(3, item.isVerificato());
+		ps.setBoolean(1, item.isVerificato());
+		ps.setInt(2, item.getIdUtente());
+		ps.setInt(3, item.getIdEvento());
 		return ps;
 	}
 
