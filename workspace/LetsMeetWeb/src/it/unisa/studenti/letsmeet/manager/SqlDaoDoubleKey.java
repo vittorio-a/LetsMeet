@@ -20,9 +20,14 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 	protected abstract int getFirstKey(T item);
 	protected abstract int getSecondKey(T item);
 	
+	private static final int SQL_TIMEOUT = 30; //secondi
 	
 	protected Connection connection;
 	
+	/**
+	 * Costruttore per ottenre un instanza del Dao
+	 * @param connection la connessione da utilizzare per le query
+	 */
 	public SqlDaoDoubleKey(Connection connection) {
 		this.connection = connection;
 	}
@@ -34,6 +39,7 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 		ResultSet rs = null;
 		try {
 			ps = getPreparedGetAllFirstKey(id);
+			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
 			while(rs.next()) objects.add(getItemFromResulSet(rs));
 
@@ -58,6 +64,7 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 		ResultSet rs = null;
 		try {
 			ps = getPreparedGetAllSecondKey(id);
+			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
 			while(rs.next()) objects.add(getItemFromResulSet(rs));
 
@@ -83,6 +90,7 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 		ResultSet rs = null;
 		try {
 			ps = getPreparedGetBothKey(id1, id2);
+			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
 			if(rs.next()) object = getItemFromResulSet(rs);
 
@@ -107,6 +115,7 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 		int result = 0;
 		try {
 			ps = getPreparedDelete(item);
+			ps.setQueryTimeout(SQL_TIMEOUT);
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException("SQLException in delete PartecipationDao", e, DaoExceptionType.SQLException);
@@ -123,15 +132,20 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 	@Override
 	public boolean saveOrUpdate(T item) throws DaoException {
 		PreparedStatement ps = null;
-		boolean isOk = false;
 		try {
-			if(getFromBothKeys(getFirstKey(item), getSecondKey(item)) != null) {
+			T itemFromDb = getFromBothKeys(getFirstKey(item), getSecondKey(item));
+			
+			if(itemFromDb != null && item.equals(itemFromDb)) {
+				return false;
+			}else if(itemFromDb != null) {
 				//da fare update perchè è già presente nel db
 				ps = getPreparedUpdate(item);
-				isOk = (ps.executeUpdate() > 0);
+				ps.setQueryTimeout(SQL_TIMEOUT);
+				return (ps.executeUpdate() > 0);
 			}else {
 				ps = getPreparedInsert(item);
-				isOk =  (ps.executeUpdate() > 0);
+				ps.setQueryTimeout(SQL_TIMEOUT);
+				return (ps.executeUpdate() > 0);
 			}
 		}catch(SQLException e) {
 			throw new DaoException("update " + item.toString(), e, DaoExceptionType.SQLException);
@@ -142,6 +156,5 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 				//nothing
 			}
 		}
-		return isOk;	
 	}
 }

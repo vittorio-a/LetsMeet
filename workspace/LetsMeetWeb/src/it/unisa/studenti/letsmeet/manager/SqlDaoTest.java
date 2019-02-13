@@ -30,6 +30,8 @@ abstract class SqlDaoTest<T> {
 	protected abstract int getKey(T item);
 	
 	
+	private static final int SQL_TIMEOUT = 30; //secondi
+	
 	private void cutConnection() throws SQLException{
 		conn.rollback();
 		conn.close();
@@ -45,7 +47,12 @@ abstract class SqlDaoTest<T> {
 
 	@AfterEach
 	void tearDown() throws Exception {
-		//cutConnection();
+		if(conn != null && !conn.isClosed() && !conn.getAutoCommit()) {
+			conn.rollback();	
+		}
+		if(conn != null && !conn.isClosed()) {
+			conn.close();
+		}
 	}
 
 	@Test
@@ -69,6 +76,19 @@ abstract class SqlDaoTest<T> {
 	}
 
 	@Test
+	void testGetCutConn() throws DaoException{
+		try {
+			cutConnection();
+
+		}catch (SQLException e) {
+			fail("Not able to cut connection");
+		}
+		assertThrows(DaoException.class, ()->{
+			dao.get(1);
+		});
+	}
+	
+	@Test
 	void testGetAll() throws DaoException{
 		List<T> objects = dao.getAll();
 		assertNotNull(objects);
@@ -84,9 +104,23 @@ abstract class SqlDaoTest<T> {
 			dao.getAll();
 		});
 	}
+	
 
 	@Test
-	void testSaveOrUpdate() throws DaoException{
+	void testGetAllCutConn() throws DaoException{
+		try {
+			cutConnection();
+
+		}catch (SQLException e) {
+			fail("Not able to cut connection");
+		}
+		assertThrows(DaoException.class, ()->{
+			dao.getAll();
+		});
+	}
+	
+	@Test
+	void testSaveOrUpdateInsert() throws DaoException{
 		List<T> before = dao.getAll();
 		
 		T object = getInsertObject();
@@ -97,11 +131,12 @@ abstract class SqlDaoTest<T> {
 		assertNotNull(afterInsert);
 		assertEquals(1, afterInsert.size() - before.size());
 		assertsInsert(afterInsert);
-		
-		
-		
-		object = getUpdateObject();
-		ret = dao.saveOrUpdate(object);
+	}
+	
+	@Test
+	void testSaveOrUpdateUpdate() throws DaoException{
+		T object = getUpdateObject();
+		boolean ret = dao.saveOrUpdate(object);
 		T res = dao.get(getKey(object));
 		assertNotNull(res);
 		assertEquals(object, res);
@@ -113,8 +148,11 @@ abstract class SqlDaoTest<T> {
 		object = afterUpdate.get(1);
 		ret = dao.saveOrUpdate(object);
 		assertFalse(ret);
-		
-		final T testCutObj = object;
+	}
+
+	
+	@Test
+	void testSaveOrUpdateUpdateCutConn() throws DaoException{
 		try {
 			cutConnection();
 
@@ -122,7 +160,7 @@ abstract class SqlDaoTest<T> {
 			fail("Not able to cut connection");
 		}
 		assertThrows(DaoException.class, ()->{
-			dao.saveOrUpdate(testCutObj);
+			dao.saveOrUpdate(getDeleteObject());
 		});
 	}
 
@@ -137,10 +175,11 @@ abstract class SqlDaoTest<T> {
 		
 		object = getDeleteFalse();
 		ret = dao.delete(object);
-		assertFalse(ret);
-		
-		
-		final T testCutObj = object;
+		assertFalse(ret);		
+	}
+	
+	@Test
+	void testDeleteCutConn() throws DaoException{
 		try {
 			cutConnection();
 
@@ -148,7 +187,7 @@ abstract class SqlDaoTest<T> {
 			fail("Not able to cut connection");
 		}
 		assertThrows(DaoException.class, ()->{
-			dao.delete(testCutObj);
+			dao.delete(getDeleteObject());
 		});
 		
 		

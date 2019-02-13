@@ -22,6 +22,13 @@ public abstract class SqlDao<T> implements Dao<T> {
 	protected abstract PreparedStatement getPreparedUpdateItem(T item) throws SQLException;
 	protected abstract PreparedStatement getPreparedInsertItem(T item) throws SQLException;
 	
+	
+	private static final int SQL_TIMEOUT = 30; //secondi
+
+	/**
+	 * Costruttore che restituisce l'instanza del Dao
+	 * @param connection la connessione da utilizzare per le query
+	 */
 	public SqlDao(Connection connection) {
 		this.connection = connection;
 	}
@@ -32,6 +39,7 @@ public abstract class SqlDao<T> implements Dao<T> {
 		ResultSet rs = null;
 		try {
 			ps = getPreparedGetById(id);
+			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				return getItemFromResultSet(rs);
@@ -58,6 +66,7 @@ public abstract class SqlDao<T> implements Dao<T> {
 		ResultSet rs = null;
 		try {
 			ps = getPreparedGetAll();
+			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
 			while(rs.next()) items.add(getItemFromResultSet(rs));
 		}catch (SQLException e) {
@@ -79,23 +88,19 @@ public abstract class SqlDao<T> implements Dao<T> {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = getPreparedGetById(getKey(item));
-			rs = ps.executeQuery();
-			boolean itemExists = rs.next();
-						
 			
-			if(itemExists && item.equals(getItemFromResultSet(rs))) {
+			T itemDb = this.get(getKey(item));
+			
+			if(itemDb != null && item.equals(getItemFromResultSet(rs))) {
 				return false;
 			}
-			else if(itemExists){
-				rs.close();
-				ps.close();
+			else if(itemDb != null){
 				ps = getPreparedUpdateItem(item);
+				ps.setQueryTimeout(SQL_TIMEOUT);
 				return (ps.executeUpdate() > 0);	
 			}else {
-				rs.close();
-				ps.close();
 				ps = getPreparedInsertItem(item);
+				ps.setQueryTimeout(SQL_TIMEOUT);
 				return (ps.executeUpdate() > 0);
 			}
 		}catch (SQLException e) {
@@ -117,6 +122,7 @@ public abstract class SqlDao<T> implements Dao<T> {
 			PreparedStatement ps = null;
 			try {
 				ps = getPreparedDeleteById(itemId);
+				ps.setQueryTimeout(SQL_TIMEOUT);
 				return (ps.executeUpdate() > 0);
 			}catch (SQLException e) {
 				throw new DaoException("SQLException in delete", e, DaoExceptionType.SQLException);

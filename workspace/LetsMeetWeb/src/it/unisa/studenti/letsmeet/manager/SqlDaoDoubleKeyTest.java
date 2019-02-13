@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,16 +48,29 @@ abstract class SqlDaoDoubleKeyTest<T> {
 	void setUp() throws Exception {
 		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/letsmeet", "root", "Nc3Dug2SKVofEBJrhE3x");
 		conn.setAutoCommit(false);
+		//conn.setT
 		dao = getDao(conn);
 	}
 	
+	@AfterEach
+	void tearDown() throws Exception{
+		if(conn != null && !conn.isClosed() && !conn.getAutoCommit()) {
+			conn.rollback();	
+		}
+		if(conn != null && !conn.isClosed()) {
+			conn.close();
+		}
+	}
 	
 	@Test
 	void testGetAllForFirstKey() throws DaoException{
 		List<T> objects = dao.getAllForFirstKey(firstKey);
 		assertNotNull(objects);
 		assertsGetFirstKey(objects);
-		
+	}
+	
+	@Test
+	void testGetAllForFirstKeyCutConn() throws DaoException{
 		try {
 			cutConnection();
 
@@ -68,13 +82,17 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		});
 	}
 
+
 		
 	@Test
 	void testGetAllForSecondKey() throws DaoException{
 		List<T> objects = dao.getAllForSecondKey(secondKey);
 		assertNotNull(objects);
 		assertsGetSecondKey(objects);
-		
+	}
+	
+	@Test
+	void testGetAllForSecondKeyCutConn() throws DaoException{	
 		try {
 			cutConnection();
 
@@ -86,6 +104,7 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		});	
 	}
 	
+	
 
 	@Test
 	void testGetFromBothKeys() throws DaoException{
@@ -95,7 +114,10 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		
 		object = dao.getFromBothKeys(Integer.MAX_VALUE, Integer.MAX_VALUE);
 		assertNull(object);
-		
+	}
+	
+	@Test
+	void testGetFromBothKeysCutConn() throws DaoException{
 		try {
 			cutConnection();
 
@@ -105,7 +127,8 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		assertThrows(DaoException.class, ()->{
 			dao.getFromBothKeys(firstKey, secondKey);
 		});
-	}	
+	}
+	
 
 	@Test
 	void testDelete() throws DaoException{
@@ -118,28 +141,31 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		List<T> afterDelete = dao.getAllForFirstKey(getFirstKey(object));
 		assertTrue(beforeDelete.size() - afterDelete.size() == 1);
 		assertsDelete(afterDelete);
-		
-		object = getDeleteFalse();
-		ret = dao.delete(object);
-		assertFalse(ret);
-		
-		
-		final T testCutObj = object;
+	}
+	
 
+	@Test
+	void testDeleteNotCancel() throws DaoException{
+		T object = getDeleteFalse();
+		boolean ret = dao.delete(object);
+		assertFalse(ret);
+	}
+	
+	@Test
+	void testDeleteCutConn() throws DaoException{
 		try {
 			cutConnection();
-			/*conn.commit();
-			conn.close();*/
+
 		}catch (SQLException e) {
 			fail("Not able to cut connection");
 		}
 		assertThrows(DaoException.class, ()->{
-			dao.delete(testCutObj);
+			dao.delete(getDeleteObject());
 		});
-			}
+	}
 
 	@Test
-	void testSaveOrUpdate() throws DaoException{
+	void testSaveOrUpdateInsert() throws DaoException{
 		T object = getInsertObject();
 
 		List<T> before = dao.getAllForFirstKey(getFirstKey(object));
@@ -151,11 +177,12 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		assertNotNull(afterInsert);
 		assertEquals(1, afterInsert.size() - before.size());
 		assertsInsert(afterInsert);
-		
-		
-		
-		object = getUpdateObject();
-		ret = dao.saveOrUpdate(object);
+	}
+	
+	@Test
+	void testSaveOrUpdateUpdate() throws DaoException{
+		T object = getUpdateObject();
+		boolean ret = dao.saveOrUpdate(object);
 		T res = dao.getFromBothKeys(getFirstKey(object), getSecondKey(object));
 		assertNotNull(res);
 		assertEquals(object, res);
@@ -167,8 +194,10 @@ abstract class SqlDaoDoubleKeyTest<T> {
 		object = afterUpdate.get(1);
 		ret = dao.saveOrUpdate(object);
 		assertFalse(ret);
-		
-		final T testCutObj = object;
+	}
+	
+	@Test
+	void testSaveOrUpdateCutConn() throws DaoException{
 		try {
 			cutConnection();
 
@@ -176,7 +205,8 @@ abstract class SqlDaoDoubleKeyTest<T> {
 			fail("Not able to cut connection");
 		}
 		assertThrows(DaoException.class, ()->{
-			dao.saveOrUpdate(testCutObj);
-		});	}
+			dao.saveOrUpdate(getDeleteObject());
+		});	
+	}
 
 }
