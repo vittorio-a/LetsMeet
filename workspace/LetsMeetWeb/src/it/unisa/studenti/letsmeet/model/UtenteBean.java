@@ -99,7 +99,7 @@ public class UtenteBean {
 		if (feedbackUtente == null) {
 			if (other.feedbackUtente != null)
 				return false;
-		} else if (!feedbackUtente.equals(other.feedbackUtente))
+		} else if (feedbackUtente.compareTo(other.feedbackUtente) != 0)
 			return false;
 		if (idUtente != other.idUtente)
 			return false;

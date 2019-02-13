@@ -10,10 +10,11 @@ import java.util.List;
 
 import it.unisa.studenti.letsmeet.model.EventoBean;
 import it.unisa.studenti.letsmeet.model.PosizioneBean;
+import it.unisa.studenti.letsmeet.model.TipoBean;
 
 class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 
-	private static final int SIZE = 50;
+	private static final int SIZE = 47;
 	
 	@Override
 	protected SqlDao<EventoBean> getDao(Connection conn) {
@@ -24,7 +25,7 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 	protected void assertsGet(EventoBean test) {
 		assertEquals(1, test.getIdEvento());
 		assertEquals("Such tendency may approximately originate from the base configuration.", test.getNome());
-		assertEquals(3f, test.getFeedback());
+		assertTrue(new BigDecimal(3f).compareTo(test.getFeedback()) == 0);
 		assertEquals(0, test.getnPartecipanti());
 		assertEquals(0, test.getnVerificati());
 		assertEquals(Instant.parse("2019-02-07T14:22:40Z"), test.getOraInizio());
@@ -55,12 +56,18 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 		bean.setOraFine(Instant.parse("2019-02-07T14:22:41Z"));
 		bean.setNome("Un bello evento");
 		bean.setDescrizione("Na bella descrizione overamente");
+		bean.setTipo(getNewTipo());
+		bean.setVisible(true);
 		return bean;
 		
 	}
 	
 	private PosizioneBean getNewPosition() {		
 		return PosizioneSqlDaoTest.getInsertPosition();
+	}
+	
+	private TipoBean getNewTipo() {		
+		return TipoSqlDaoTest.getInsertTipo();
 	}
 
 	@Override
@@ -91,7 +98,18 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 			
 		}
 		assertTrue(cesta);
-		assertEquals(inserted,test.get(i));		
+		
+		EventoBean eventoInDb = test.get(i);
+		inserted.setIdEvento(eventoInDb.getIdEvento());
+		inserted.getTipo().setIdTipo(eventoInDb.getTipo().getIdTipo());
+		PosizioneBean posizioneInserted = inserted.getPosizione();
+		PosizioneBean posizioneInDb = eventoInDb.getPosizione();
+		posizioneInserted.setId(posizioneInDb.getId());
+		posizioneInserted.setIdComune(posizioneInDb.getIdComune());
+		posizioneInserted.setIdProvincia(posizioneInDb.getIdProvincia());
+		posizioneInserted.setIdRegione(posizioneInDb.getIdRegione());
+		posizioneInserted.setIdNazione(posizioneInDb.getIdNazione());
+		assertEquals(inserted,eventoInDb);		
 	}
 
 	@Override

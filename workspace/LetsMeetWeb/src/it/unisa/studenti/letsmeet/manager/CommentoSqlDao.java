@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.CommentoBean;
 
 public class CommentoSqlDao extends SqlDao<CommentoBean> {
@@ -80,7 +82,7 @@ public class CommentoSqlDao extends SqlDao<CommentoBean> {
 
 	@Override
 	protected PreparedStatement getPreparedInsertItem(CommentoBean item) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(INSERT_COMMENT);
+		PreparedStatement ps = connection.prepareStatement(INSERT_COMMENT, Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, item.getIdCommento());
 		ps.setInt(2, item.getIdUtente());
 		ps.setString(3, item.getContenuto());

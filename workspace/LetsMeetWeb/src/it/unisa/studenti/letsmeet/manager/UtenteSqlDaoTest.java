@@ -25,7 +25,7 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 	//'1', 'Rhett696', ?, 'Rayford917@example.com', '0', 'BANNATO', '2019-02-28 22:02:59'
 //'136AA268594E3A7754400C2AB9E042856287F006FE13078463006B2C7BE55ACF'
 
-	private static final int SIZE = 50;
+	private static final int SIZE = 42;
 	
 	
 	@Override
@@ -42,7 +42,7 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 		assertTrue(Arrays.equals(psw, creds.getPassword()));
 		assertEquals(StatoUtente.BANNATO, creds.getState());
 		assertEquals("Rayford917@example.com", test.getEmail());
-		assertEquals(0, test.getFeedbackUtente());
+		assertTrue(new BigDecimal("0").compareTo(test.getFeedbackUtente()) == 0);
 		Instant date = Instant.parse("2019-02-28T21:02:59Z");
 		assertEquals(date, test.getReactivationDate());
 	}
@@ -102,6 +102,9 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 			
 		}
 		assertTrue(cesta);
+
+		UtenteBean utenteInDb = test.get(i);
+		utenteInsert.setIdUtente(utenteInDb.getIdUtente());
 		assertEquals(utenteInsert, test.get(i));
 	}
 

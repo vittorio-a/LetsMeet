@@ -1,6 +1,5 @@
 package it.unisa.studenti.letsmeet.model;
 
-import java.sql.Array;
 import java.util.Arrays;
 
 import javax.xml.bind.DatatypeConverter;

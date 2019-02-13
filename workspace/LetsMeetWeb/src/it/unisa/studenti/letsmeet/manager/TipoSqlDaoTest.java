@@ -30,6 +30,15 @@ class TipoSqlDaoTest extends SqlDaoTest<TipoBean>{
 		assertEquals(SIZE, test.size());		
 	}
 
+	static public TipoBean getInsertTipo() {
+		return (new TipoSqlDaoTest()).getInsertObject();
+	}
+	
+	static public TipoBean getUpdateTipo() {
+		return (new TipoSqlDaoTest()).getUpdateObject();
+	}
+
+	
 	@Override
 	protected TipoBean getInsertObject() {
 		TipoBean tipo = new TipoBean();

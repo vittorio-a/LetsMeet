@@ -166,7 +166,7 @@ public class EventoBean {
 		if (feedback == null) {
 			if (other.feedback != null)
 				return false;
-		} else if (!feedback.equals(other.feedback))
+		} else if (feedback.compareTo(other.feedback) != 0)
 			return false;
 		if (idEvento != other.idEvento)
 			return false;
@@ -211,7 +211,7 @@ public class EventoBean {
 	public String toString() {
 		return "EventoBean [idEvento=" + idEvento + ", nome=" + nome + ", feedback=" + feedback + ", nPartecipanti="
 				+ nPartecipanti + ", nVerificati=" + nVerificati + ", oraInizio=" + oraInizio + ", oraFine=" + oraFine
-				+ ", idUtente=" + idUtente + ", tipo=" + tipo + ", posizione=" + posizione + ", partecipanti="
+				+ ", idUtente=" + idUtente + ", tipo=" + tipo + ", posizione=" + posizione 
 				+ ", isVisible=" + isVisible + "]";
 	}
 }

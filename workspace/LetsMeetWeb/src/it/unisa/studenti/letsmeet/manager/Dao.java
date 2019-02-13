@@ -25,10 +25,10 @@ public interface Dao<T> {
 		
 	/**Permette di poter aggiornare un item preciso oppure salvarlo come nuovo
 	 * @param t item da aggiornare oppure da salvare
-	 * @return true = avvenuta transazione oppure false = transazione fallita
+	 * @return 0 se non sono state effettuate modifiche altrimenti l'id dell'item modificato
 	 * @throws DaoException
 	 */
-	boolean saveOrUpdate(T t) throws DaoException;
+	int saveOrUpdate(T t) throws DaoException;
 	
 	/**Permette di poter cancellare un preciso item
 	 * @param t item da cancellare

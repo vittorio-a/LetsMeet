@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.RatingBean;
 
 public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> {
@@ -58,7 +60,7 @@ public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> {
 
 	@Override
 	protected PreparedStatement getPreparedInsert(RatingBean item) throws SQLException{
-		PreparedStatement st = connection.prepareStatement(INSERT_RATING);
+		PreparedStatement st = connection.prepareStatement(INSERT_RATING, Statement.RETURN_GENERATED_KEYS);
 		st.setInt(1, item.getEvento());
 		st.setInt(2, item.getIdutente());
 		st.setBoolean(3, item.isVoto());

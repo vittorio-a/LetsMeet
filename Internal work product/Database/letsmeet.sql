@@ -8,7 +8,7 @@ CREATE TABLE Utente(
     username VARCHAR(80) NOT NULL UNIQUE,
     passwordUtente BINARY(32) NOT NULL,
     email VARCHAR(256) UNIQUE NOT NULL ,
-	feedback DECIMAL(6,4) NOT NULL ,
+	feedback DECIMAL(6,4) NOT NULL DEFAULT 0,
     stato ENUM ('ATTIVO','INVISIBILE','BANNATO') NOT NULL,
     reactivationDay TIMESTAMP
 );
@@ -112,7 +112,7 @@ CREATE TABLE AppartenezaNazione(
 CREATE TABLE Evento(
 	idEvento INTEGER(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    feedback DECIMAL(6,4) NOT NULL,
+    feedback DECIMAL(6,4) NOT NULL DEFAULT 0,
     npartecipanti INTEGER(11) NOT NULL DEFAULT 0,
     nverificati INTEGER(11) NOT NULL DEFAULT 0,
     oraInizio TIMESTAMP NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE Evento(
     idTipo TINYINT NOT NULL,
     idPosizione INTEGER(11) NOT NULL,
     isVisibile BOOLEAN NOT NULL DEFAULT TRUE,
-	descrizione VARCHAR(256) NOT NULL,
+	descrizione VARCHAR(256) NOT NULL DEFAULT 'Nessuna descrizione disponibile',
     FOREIGN KEY(idTipo) REFERENCES Tipo(idTipo)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (idPosizione) REFERENCES Posizione(idPosizione)

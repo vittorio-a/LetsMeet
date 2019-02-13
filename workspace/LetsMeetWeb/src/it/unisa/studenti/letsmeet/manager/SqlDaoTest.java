@@ -29,9 +29,7 @@ abstract class SqlDaoTest<T> {
 	protected abstract T getDeleteFalse();
 	protected abstract int getKey(T item);
 	
-	
-	private static final int SQL_TIMEOUT = 30; //secondi
-	
+		
 	private void cutConnection() throws SQLException{
 		conn.rollback();
 		conn.close();
@@ -124,8 +122,8 @@ abstract class SqlDaoTest<T> {
 		List<T> before = dao.getAll();
 		
 		T object = getInsertObject();
-		boolean ret = dao.saveOrUpdate(object);
-		assertTrue(ret);
+		int ret = dao.saveOrUpdate(object);
+		assertTrue(ret > 0);
 		
 		List<T> afterInsert = dao.getAll();
 		assertNotNull(afterInsert);
@@ -136,18 +134,16 @@ abstract class SqlDaoTest<T> {
 	@Test
 	void testSaveOrUpdateUpdate() throws DaoException{
 		T object = getUpdateObject();
-		boolean ret = dao.saveOrUpdate(object);
+		int ret = dao.saveOrUpdate(object);
 		T res = dao.get(getKey(object));
 		assertNotNull(res);
 		assertEquals(object, res);
 		assertsUpdate(res);
 
 		
-		List<T> afterUpdate = dao.getAll();
-		
-		object = afterUpdate.get(1);
+		object = dao.get(ret);
 		ret = dao.saveOrUpdate(object);
-		assertFalse(ret);
+		assertTrue(ret == 0);
 	}
 
 	
@@ -160,7 +156,7 @@ abstract class SqlDaoTest<T> {
 			fail("Not able to cut connection");
 		}
 		assertThrows(DaoException.class, ()->{
-			dao.saveOrUpdate(getDeleteObject());
+			dao.saveOrUpdate(getUpdateObject());
 		});
 	}
 

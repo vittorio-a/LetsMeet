@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
 import it.unisa.studenti.letsmeet.model.UtenteBean;
@@ -15,8 +17,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 	
 	private static final String GET_USER_BY_ID = "SELECT * FROM Utente WHERE idUtente = ?";
 	private static final String GET_ALL_USERS = "SELECT * FROM Utente";
-	private static final String UPDATE_USER = "UPDATE INTO Utente(idUtente, username, passwordUtente, email, feedback, reactivationDay, stato)"+
-			" VALUE(?,?,?,?,?,?,?)";
+	private static final String UPDATE_USER = "UPDATE  Utente SET username = ?, passwordUtente = ?, email = ?, feedback = ?, reactivationDay = ?, stato = ? WHERE idUtente = ?";
 	private static final String INSERT_USER = "INSERT INTO Utente(username, passwordUtente, email, feedback, reactivationDay, stato)"+
 			" VALUE(?,?,?,?,?,?)";
 	private static final String DELETE_USER_BY_ID = "DELETE FROM Utente WHERE idUtente = ?";
@@ -45,7 +46,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 		UtenteBean utente = new UtenteBean();
 		StatoUtente stato = StatoUtente.valueOf(rs.getString(STATO_FIELD));
 		if(stato.equals(StatoUtente.INVISIBILE)) {
-			return utente;
+			return null;
 		}
 		utente.setIdUtente(rs.getInt(ID_FILED));
 		utente.setReactivationDate(rs.getTimestamp(REACTIVATION_DATE_FIELD).toInstant());
@@ -81,27 +82,29 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 	@Override
 	protected PreparedStatement getPreparedUpdateItem(UtenteBean item) throws SQLException {
 		PreparedStatement st = connection.prepareStatement(UPDATE_USER);
-		st.setInt(1, item.getIdUtente());
 		CredentialsBean creds = item.getCredentials();
-		st.setString(2, creds.getUsername());
-		st.setBytes(3, creds.getPassword());
-		st.setString(4, item.getEmail());
-		st.setString(5, creds.getState().name());
-		st.setBigDecimal(6, item.getFeedbackUtente());
-		st.setTimestamp(7, Timestamp.from(item.getReactivationDate()));
+		st.setString(1, creds.getUsername());
+		st.setBytes(2, creds.getPassword());
+		st.setString(3, item.getEmail());
+		st.setBigDecimal(4, item.getFeedbackUtente());
+		st.setTimestamp(5, Timestamp.from(item.getReactivationDate()));
+		st.setString(6, creds.getState().name());
+		st.setInt(7, item.getIdUtente());
+
 		return st;
 	}
 
 	@Override
 	protected PreparedStatement getPreparedInsertItem(UtenteBean item) throws SQLException {
-		PreparedStatement st = connection.prepareStatement(INSERT_USER);
+		PreparedStatement st = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
 		CredentialsBean creds = item.getCredentials();
 		st.setString(1, creds.getUsername());
 		st.setBytes(2, creds.getPassword());
 		st.setString(3, item.getEmail());
-		st.setString(4, creds.getState().name());
-		st.setBigDecimal(5, item.getFeedbackUtente());
-		st.setTimestamp(6, Timestamp.from(item.getReactivationDate()));
+		st.setBigDecimal(4, item.getFeedbackUtente());
+		st.setTimestamp(5, Timestamp.from(item.getReactivationDate()));
+		st.setString(6, creds.getState().name());
+
 		return st;
 	}
 

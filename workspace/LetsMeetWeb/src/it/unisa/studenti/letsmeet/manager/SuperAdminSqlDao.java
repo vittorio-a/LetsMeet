@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.SuperAdminBean;
 
 public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> {
@@ -68,7 +70,7 @@ public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> {
 
 	@Override
 	protected PreparedStatement getPreparedInsertItem(SuperAdminBean item) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(INSERT_SUPER_ADMIN);
+		PreparedStatement ps = connection.prepareStatement(INSERT_SUPER_ADMIN, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, item.getUsername());
 		ps.setBytes(2, item.getPassword());	
 		return ps;

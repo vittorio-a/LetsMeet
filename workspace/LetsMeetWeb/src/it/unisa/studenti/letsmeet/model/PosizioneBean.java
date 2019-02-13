@@ -7,6 +7,9 @@ import java.math.BigDecimal;
  */
 public class PosizioneBean {
 	
+	
+
+
 	private int id;
 	private BigDecimal longitudine;
 	private BigDecimal latitudine;
@@ -167,6 +170,68 @@ public class PosizioneBean {
 	}
 	
 	
-	
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PosizioneBean other = (PosizioneBean) obj;
+		if (formattedAdress == null) {
+			if (other.formattedAdress != null)
+				return false;
+		} else if (!formattedAdress.equals(other.formattedAdress))
+			return false;
+		if (id != other.id)
+			return false;
+		if (idComune != other.idComune)
+			return false;
+		if (idNazione != other.idNazione)
+			return false;
+		if (idProvincia != other.idProvincia)
+			return false;
+		if (idRegione != other.idRegione)
+			return false;
+		if (latitudine == null) {
+			if (other.latitudine != null)
+				return false;
+		} else if (latitudine.compareTo(other.latitudine) != 0)
+			return false;
+		if (longitudine == null) {
+			if (other.longitudine != null)
+				return false;
+		} else if (longitudine.compareTo(other.longitudine) != 0)
+			return false;
+		if (nomeComune == null) {
+			if (other.nomeComune != null)
+				return false;
+		} else if (!nomeComune.equals(other.nomeComune))
+			return false;
+		if (nomeNazione == null) {
+			if (other.nomeNazione != null)
+				return false;
+		} else if (!nomeNazione.equals(other.nomeNazione))
+			return false;
+		if (nomeProvincia == null) {
+			if (other.nomeProvincia != null)
+				return false;
+		} else if (!nomeProvincia.equals(other.nomeProvincia))
+			return false;
+		if (nomeRegione == null) {
+			if (other.nomeRegione != null)
+				return false;
+		} else if (!nomeRegione.equals(other.nomeRegione))
+			return false;
+		if (sigla == null) {
+			if (other.sigla != null)
+				return false;
+		} else if (!sigla.equals(other.sigla))
+			return false;
+		return true;
+	}
 	
 }

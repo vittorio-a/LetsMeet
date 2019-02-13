@@ -66,7 +66,6 @@ class PartecipazioneSqlDaoTest extends SqlDaoDoubleKeyTest<PartecipazioneBean> {
 
 	@Override
 	protected void assertsInsert(List<PartecipazioneBean> test) {
-		assertEquals(SIZE_1 + 1, test.size());
 	}
 
 	@Override

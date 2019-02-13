@@ -41,7 +41,11 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 			ps = getPreparedGetAllFirstKey(id);
 			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
-			while(rs.next()) objects.add(getItemFromResulSet(rs));
+			T itemToAdd = null;
+			while(rs.next()) {
+				if((itemToAdd = getItemFromResulSet(rs)) != null)
+					objects.add(itemToAdd);
+			}
 
 		}catch(SQLException e) {
 			throw new DaoException("sql exception in getAllForFirstKey, id: " + id, e, DaoExceptionType.SQLException);
@@ -66,7 +70,11 @@ public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 			ps = getPreparedGetAllSecondKey(id);
 			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
-			while(rs.next()) objects.add(getItemFromResulSet(rs));
+			T itemToAdd = null;
+			while(rs.next()) {
+				if((itemToAdd = getItemFromResulSet(rs)) != null)
+					objects.add(itemToAdd);
+			}
 
 		}catch(SQLException e) {
 			throw new DaoException("sql exception in getAllForSecondKey, id: " + id, e, DaoExceptionType.SQLException);

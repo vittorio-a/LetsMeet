@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.TipoBean;
 
 public class TipoSqlDao extends SqlDao<TipoBean> {
@@ -67,7 +69,7 @@ public class TipoSqlDao extends SqlDao<TipoBean> {
 
 	@Override
 	protected PreparedStatement getPreparedInsertItem(TipoBean item) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(INSERT_TIPO);
+		PreparedStatement ps = connection.prepareStatement(INSERT_TIPO, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, item.getNomeTipo());
 		ps.setString(2, item.getDescrizione());
 		return ps;

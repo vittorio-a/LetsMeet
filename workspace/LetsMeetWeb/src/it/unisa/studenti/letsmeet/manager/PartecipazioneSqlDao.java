@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 
 public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
@@ -24,6 +26,7 @@ public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
 		super(connection);
 	}
 
+	
 	@Override
 	protected PreparedStatement getPreparedGetAllFirstKey(int id) throws SQLException {
 		PreparedStatement ps = connection.prepareStatement(GET_PARTECIPATION_BY_USER_ID);
@@ -56,7 +59,7 @@ public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
 
 	@Override
 	protected PreparedStatement getPreparedInsert(PartecipazioneBean item) throws SQLException {
-		PreparedStatement ps = connection.prepareStatement(INSERT_PARTECIPATION);
+		PreparedStatement ps = connection.prepareStatement(INSERT_PARTECIPATION, Statement.RETURN_GENERATED_KEYS);
 		ps.setInt(1, item.getIdUtente());
 		ps.setInt(2, item.getIdEvento());
 		ps.setBoolean(3, item.isVerificato());

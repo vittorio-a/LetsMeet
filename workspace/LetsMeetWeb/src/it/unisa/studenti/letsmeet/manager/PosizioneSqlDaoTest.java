@@ -18,6 +18,15 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 		return new PosizioneSqlDao(conn);
 	}
 
+	
+	static public PosizioneBean getInsertTipo() {
+		return (new PosizioneSqlDaoTest()).getInsertObject();
+	}
+	
+	static public PosizioneBean getUpdateTipo() {
+		return (new PosizioneSqlDaoTest()).getUpdateObject();
+	}
+
 	@Override
 	protected void assertsGet(PosizioneBean test) {
 		assertEquals(1, test.getId());
@@ -54,7 +63,6 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 		posizione.setLatitudine(new BigDecimal("0.0"));
 		posizione.setLongitudine(new BigDecimal("0.0"));
 		posizione.setNomeRegione("Lazio");
-		posizione.setIdNazione(1);
 		posizione.setNomeNazione("Italia");
 		
 		return posizione;
@@ -63,13 +71,10 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 	
 	@Override
 	protected PosizioneBean getUpdateObject() {
-		PosizioneBean posizione = getInsertObject();
+		throw new UnsupportedOperationException("Non ancora implementato");
+		/*	PosizioneBean posizione = getInsertObject();
 		posizione.setId(1);
-		posizione.setIdComune(1);
-		posizione.setIdProvincia(1);
-		posizione.setIdRegione(1);
-		posizione.setNomeNazione("Itaglia");
-		return posizione;
+		return posizione;*/
 	}
 
 	@Override
@@ -92,6 +97,12 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 			
 		}
 		assertTrue(cesta);
+		PosizioneBean posizioneInDb = test.get(i);
+		inserted.setId(posizioneInDb.getId());
+		inserted.setIdComune(posizioneInDb.getIdComune());
+		inserted.setIdProvincia(posizioneInDb.getIdProvincia());
+		inserted.setIdRegione(posizioneInDb.getIdRegione());
+		inserted.setIdNazione(posizioneInDb.getIdNazione());
 		assertEquals(inserted,test.get(i));
 	}
 
@@ -117,6 +128,17 @@ class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
 	@Override
 	protected int getKey(PosizioneBean item) {
 		return item.getId();
+	}
+	
+	@Override
+	void testSaveOrUpdateUpdate() throws DaoException {
+		// TODO da implementare quando si implementa l'update delle posizioni
+	}
+	
+	@Override
+	void testSaveOrUpdateUpdateCutConn() throws DaoException {
+		// TODO da implementare quando si implementa l'update delle posizioni
+
 	}
 
 }

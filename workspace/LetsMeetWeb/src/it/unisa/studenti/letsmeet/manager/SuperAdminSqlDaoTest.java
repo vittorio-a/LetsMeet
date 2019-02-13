@@ -11,10 +11,8 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.catalina.tribes.util.Arrays;
-import org.junit.jupiter.api.Test;
 
 import it.unisa.studenti.letsmeet.model.SuperAdminBean;
-import it.unisa.studenti.letsmeet.model.UtenteBean;
 
 class SuperAdminSqlDaoTest extends SqlDaoTest<SuperAdminBean> {
 

@@ -9,7 +9,7 @@ import it.unisa.studenti.letsmeet.model.SegnalazioneBean;
 
 public class SegnalazioneSqlDao extends SqlDao<SegnalazioneBean> {
 	
-	private static final String GET_SEGN_EVENTO_BY_ID = "SELECT * FROM SegnalazioneEvento WHERE idSegnalazione = ?";
+	/*private static final String GET_SEGN_EVENTO_BY_ID = "SELECT * FROM SegnalazioneEvento WHERE idSegnalazione = ?";
 	private static final String GET_ALL_SEGNS_EVENTO = "SELECT * FROM SegnalazioneEvento";
 	private static final String GET_SEGN_COMMENTO_BY_ID = "SELECT * FROM SegnalazioneCommento WHERE idSegnalazione = ?";
 	private static final String GET_ALL_SEGNS_COMMENTO = "SELECT * FROM SegnalazioneCommento";
@@ -27,7 +27,7 @@ public class SegnalazioneSqlDao extends SqlDao<SegnalazioneBean> {
 	private static final String USER_FILED = "idUtente";
 	private static final String EVENT_FILED = "idEvento";
 	private static final String COMMENT_FILED = "idCommento";
-
+*/
 	public SegnalazioneSqlDao(Connection connection) {
 		super(connection);
 	}

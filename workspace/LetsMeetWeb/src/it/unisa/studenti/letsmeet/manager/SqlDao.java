@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public abstract class SqlDao<T> implements Dao<T> {
 
 	
@@ -32,6 +33,8 @@ public abstract class SqlDao<T> implements Dao<T> {
 	public SqlDao(Connection connection) {
 		this.connection = connection;
 	}
+	
+	
 	
 	@Override
 	public T get(int id) throws DaoException{
@@ -68,7 +71,11 @@ public abstract class SqlDao<T> implements Dao<T> {
 			ps = getPreparedGetAll();
 			ps.setQueryTimeout(SQL_TIMEOUT);
 			rs = ps.executeQuery();
-			while(rs.next()) items.add(getItemFromResultSet(rs));
+			T itemToAdd = null;
+			while(rs.next()) {
+				if((itemToAdd = getItemFromResultSet(rs)) != null)
+				items.add(itemToAdd);
+			}
 		}catch (SQLException e) {
 			throw new DaoException("SQLException in getAll", e, DaoExceptionType.SQLException);
 		}finally {
@@ -84,25 +91,33 @@ public abstract class SqlDao<T> implements Dao<T> {
 	
 	
 	@Override
-	public boolean saveOrUpdate(T item) throws DaoException {
+	public int saveOrUpdate(T item) throws DaoException {
 		PreparedStatement ps = null;
-		ResultSet rs = null;
+		ResultSet rs = null, rsKey = null;
 		try {
 			
 			T itemDb = this.get(getKey(item));
 			
-			if(itemDb != null && item.equals(getItemFromResultSet(rs))) {
-				return false;
+			if(itemDb != null && item.equals(itemDb)) {
+				return 0;
 			}
 			else if(itemDb != null){
-				ps = getPreparedUpdateItem(item);
-				ps.setQueryTimeout(SQL_TIMEOUT);
-				return (ps.executeUpdate() > 0);	
+				ps = getPreparedUpdateItem(item);	
 			}else {
 				ps = getPreparedInsertItem(item);
-				ps.setQueryTimeout(SQL_TIMEOUT);
-				return (ps.executeUpdate() > 0);
 			}
+			ps.setQueryTimeout(SQL_TIMEOUT);
+			if(ps.executeUpdate() > 0) {
+				//se abbiamo fatto updare torna l'id nel db che non puo essere cambiato
+				if(itemDb != null) return getKey(itemDb);
+				//altrimenti chiedi l'ultima chiave inserita
+				rsKey = ps.getGeneratedKeys();
+				if(rsKey.next()) return rsKey.getInt(1);
+			
+				else throw new DaoException("Unable to retrive inserted key", null, DaoExceptionType.SQLException);
+			}else {
+				throw new DaoException("Unable to insert", null, DaoExceptionType.SQLException);
+			}			
 		}catch (SQLException e) {
 			throw new DaoException("SQLException in saveOrUpdate", e, DaoExceptionType.SQLException);
 		}finally {

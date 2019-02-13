@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+import com.mysql.jdbc.Statement;
+
 import it.unisa.studenti.letsmeet.model.EventoBean;
 
 public class EventoSqlDao extends SqlDao<EventoBean> {
@@ -24,15 +26,15 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 	private static final String DESCRIZIONE_FIELD = "descrizione";
 	
 	
-	private static final String GET_EVENT_BY_ID = "SELECT * FORM Evento e WHERE idEvento = ?";
+	private static final String GET_EVENT_BY_ID = "SELECT * FROM Evento WHERE idEvento = ?";
 
 	private static final String GET_ALL_EVENTS = "SELECT * FROM Evento";
 	
 	private static final String UPDATE_EVENTO = "UPDATE Evento SET nome = ?, oraInizio = ?, oraFine = ?,"
-			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisible = ?, descrizione = ? WHERE id = ? ";
+			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisibile = ?, feedback = ?,descrizione = ? WHERE idEvento = ? ";
 	
 	
-	private static final String INSERT_EVENTO = "INSERT Evento(nome, oraInizio, oraFine, idUtente, idTipo, idPosizione, descrizione) VALUE(?,?,?,?,?,?,?)";
+	private static final String INSERT_EVENTO = "INSERT Evento(nome, oraInizio, oraFine, idUtente, idTipo, idPosizione, descrizione, feedback, isVisibile) VALUE(?,?,?,?,?,?,?,?,?)";
 	
 	private static final String DELETE_EVENTO_BY_ID ="DELETE FROM Evento WHERE idEvento = ?";
 	
@@ -54,6 +56,10 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 
 	@Override
 	protected EventoBean getItemFromResultSet(ResultSet rs) throws SQLException, DaoException {
+		boolean isVisibile = rs.getBoolean(IS_VISIBLE_FIELD);
+		if(!isVisibile) {
+			return null;
+		}
 		EventoBean evento = new EventoBean();
 		evento.setFeedback(rs.getBigDecimal(FEEDBACK_FIELD));
 		evento.setIdEvento(rs.getInt(ID_EVENTO_FIELD));
@@ -102,12 +108,17 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 		st.setBoolean(7, item.isVisible());
 		st.setBigDecimal(8, item.getFeedback());
 		st.setString(9, item.getDescrizione());
+		st.setInt(10, item.getIdEvento());
 		return st;
 	}
+	
+	/*
+	private static final String UPDATE_EVENTO = "UPDATE Evento SET nome = ?, oraInizio = ?, oraFine = ?,"
+			+ "idUtente = ?, idTipo = ?, idPosizione = ?, isVisibile = ?, descrizione = ? WHERE idEvento = ? ";*/
 
 	@Override
 	protected PreparedStatement getPreparedInsertItem(EventoBean item) throws SQLException {
-		PreparedStatement st = connection.prepareStatement(INSERT_EVENTO);
+		PreparedStatement st = connection.prepareStatement(INSERT_EVENTO,Statement.RETURN_GENERATED_KEYS);
 		st.setString(1,  item.getNome());
 		st.setTimestamp(2, Timestamp.from(item.getOraInizio()));
 		st.setTimestamp(3, Timestamp.from(item.getOraFine()));
@@ -115,7 +126,26 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 		st.setInt(5, item.getTipo().getIdTipo());
 		st.setInt(6, item.getPosizione().getId());
 		st.setString(7, item.getDescrizione());
+		st.setBigDecimal(8, item.getFeedback());
+		st.setBoolean(9, item.isVisible());
 		return st;
+	}
+	
+	@Override
+	public int saveOrUpdate(EventoBean item) throws DaoException {
+		TipoSqlDao tipoDao = new TipoSqlDao(connection);
+		int idTipo = 0;
+		if((idTipo = tipoDao.saveOrUpdate(item.getTipo())) > 0) {
+			item.getTipo().setIdTipo(idTipo);
+		}
+		
+		PosizioneSqlDao posizioneDao = new PosizioneSqlDao(connection);
+		int idPosizione = 0;
+		if((idPosizione = posizioneDao.saveOrUpdate(item.getPosizione())) > 0) {
+			item.getPosizione().setId(idPosizione);
+		}
+				
+		return super.saveOrUpdate(item);
 	}
 
 }
