@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Statement;
 
 import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
+import java.sql.Statement;
 
 public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
 	

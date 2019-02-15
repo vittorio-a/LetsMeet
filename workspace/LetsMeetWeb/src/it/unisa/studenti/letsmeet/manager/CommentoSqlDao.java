@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.CommentoBean;
 

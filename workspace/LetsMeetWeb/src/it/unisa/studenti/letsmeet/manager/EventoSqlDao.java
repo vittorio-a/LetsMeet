@@ -5,8 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
-import com.mysql.jdbc.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.EventoBean;
 
@@ -38,6 +39,8 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 	
 	private static final String DELETE_EVENTO_BY_ID ="DELETE FROM Evento WHERE idEvento = ?";
 	
+	
+	private static final String GET_ALL_BY_USER_ID = "SELECT * FROM Evento WHERE idUtente = ?";
 	
 	private PosizioneSqlDao posizioneSqlDao;
 	private TipoSqlDao tipoSqlDao;
@@ -147,5 +150,27 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 				
 		return super.saveOrUpdate(item);
 	}
-
+	
+	public List<EventoBean> getAllByUserId(int id) throws DaoException{
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		List<EventoBean> eventi = new ArrayList<>();
+		try{
+			st = connection.prepareStatement(GET_ALL_BY_USER_ID);
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			boolean check = false;
+			while(rs.next()) eventi.add(getItemFromResultSet(rs));
+		}catch (SQLException e) {
+			throw new DaoException("Unable to get event from user id", e, DaoExceptionType.SQLException);
+		}finally {
+			try{
+				if(rs != null) rs.close();
+				if(st != null) st.close();
+			}catch (SQLException e) {
+				//do nothing
+			}
+		}
+		return eventi;
+	}
 }

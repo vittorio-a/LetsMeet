@@ -14,6 +14,7 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.catalina.tribes.util.Arrays;
+import org.junit.Test;
 
 import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
@@ -27,10 +28,13 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 
 	private static final int SIZE = 42;
 	
+	private UtenteSqlDao utenteSqlDao;
+	
 	
 	@Override
 	protected SqlDao<UtenteBean> getDao(Connection conn) {
-		return new UtenteSqlDao(conn);
+		utenteSqlDao = new UtenteSqlDao(conn);
+		return utenteSqlDao;
 	}
 
 	@Override
@@ -132,4 +136,11 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 		return item.getIdUtente();
 	}
 
+	
+	@org.junit.jupiter.api.Test
+	void testCheckUsername() throws DaoException{
+		assertTrue(utenteSqlDao.checkUsername("cowfefe"));
+		assertFalse(utenteSqlDao.checkUsername("Rhett696"));
+	}
+	
 }

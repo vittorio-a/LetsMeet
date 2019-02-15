@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
@@ -31,6 +31,8 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 	private static final String REACTIVATION_DATE_FIELD = "reactivationDay";
 	private static final String STATO_FIELD = "stato";
 	
+	
+	private static final String CHECK_USERNAME = "SELECT username FROM Utente WHERE username = ?";
 
 	public UtenteSqlDao(Connection connection) {
 		super(connection);
@@ -106,6 +108,28 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 		st.setString(6, creds.getState().name());
 
 		return st;
+	}
+	
+	public boolean checkUsername(String username) throws DaoException{
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+			st = connection.prepareStatement(CHECK_USERNAME);
+			st.setString(1, username);
+			rs = st.executeQuery();
+			boolean check = false;
+			if(!rs.next()) check = true;
+			return check;
+		}catch (SQLException e) {
+			throw new DaoException("Unable to check username", e, DaoExceptionType.SQLException);
+		}finally {
+			try{
+				if(rs != null) rs.close();
+				if(st != null) st.close();
+			}catch (SQLException e) {
+				//do nothing
+			}
+		}
 	}
 
 }

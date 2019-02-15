@@ -136,6 +136,6 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 		return item.getIdEvento();
 	}
 
-	
+	//TODO add testig per nuova funzione
 
 }
