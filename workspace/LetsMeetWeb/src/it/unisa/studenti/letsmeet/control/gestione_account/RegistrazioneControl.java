@@ -96,20 +96,20 @@ public class RegistrazioneControl extends HttpServlet {
 			UtenteSqlDao utenteDao = new UtenteSqlDao(dataSource.getConnection());
 			if(!utenteDao.checkUsername(username)) {
 				PrintWriter out = new PrintWriter(response.getOutputStream());
-				out.print("{'error':'Username già in uso', 'errorcode':1}");
+				out.print("{'error':'Username già in uso', 'errorcode':1, data:null}");
 				out.close();
 				return;
 			}
 			if(password.length() < 4 || password.length() > 20) {
 				PrintWriter out = new PrintWriter(response.getOutputStream());
-				out.print("{'error':'dimensioni password non corrette', 'errorcode':2}");
+				out.print("{'error':'dimensioni password non corrette', 'errorcode':2, data:null}");
 				out.close();
 				return;
 			}
 			Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 			if(!matcher.find()) {
 				PrintWriter out = new PrintWriter(response.getOutputStream());
-				out.print("{'error':'formato email non corretto', 'errorcode':3}");
+				out.print("{'error':'formato email non corretto', 'errorcode':3, data:null}");
 				out.close();
 				return;
 			}
@@ -133,7 +133,7 @@ public class RegistrazioneControl extends HttpServlet {
 			
 			
 			PrintWriter out = new PrintWriter(response.getOutputStream());
-			out.print("{'status':'ok'}");
+			out.print("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
 			out.close();
 			
 		} catch (SQLException|DaoException e) {

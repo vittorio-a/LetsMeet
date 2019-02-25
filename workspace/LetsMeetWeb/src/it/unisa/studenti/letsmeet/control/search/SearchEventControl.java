@@ -7,6 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import it.unisa.studenti.letsmeet.filter.Filter;
+import it.unisa.studenti.letsmeet.filter.FilterFactory;
+import it.unisa.studenti.letsmeet.filter.TipoFiltro;
+import it.unisa.studenti.letsmeet.model.EventoBean;
+
 /**
  * Servlet implementation class SearchEventControl
  */
@@ -25,8 +30,11 @@ public class SearchEventControl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Filter<EventoBean> filter = null;		
+		try {
+			filter = FilterFactory.getFilter(TipoFiltro.DISTANZA, request.getParameterMap());
+			//filter.check()	
+		}
 	}
 
 	/**
