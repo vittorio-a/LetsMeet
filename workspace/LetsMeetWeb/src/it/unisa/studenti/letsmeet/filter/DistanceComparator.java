@@ -10,7 +10,7 @@ import java.lang.StrictMath;
 
 public class DistanceComparator implements Comparator<EventoBean> {
 
-	private static final BigDecimal RaggioTerrestre = new BigDecimal("6372,795477598"); //km
+	private static final BigDecimal RaggioTerrestre = new BigDecimal("6372.795477598"); //km
 	
 	private BigDecimal latitudineUtente;
 	private BigDecimal longitudineUtente;
