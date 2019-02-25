@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 
 import it.unisa.studenti.letsmeet.manager.EventoSqlDao;
 import it.unisa.studenti.letsmeet.manager.UtenteSqlDao;
+import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 import it.unisa.studenti.letsmeet.model.EventoBean;
 import it.unisa.studenti.letsmeet.model.UtenteBean;
@@ -50,12 +51,12 @@ public class ProfiloEsternoControl extends HttpServlet {
 				idUtente = Integer.parseInt(id);
 				isOk = true;
 			}catch (NumberFormatException e) {
-				response.getWriter().append("{'error':'non è possibile parsare l'id', 'errorcode':1}");
+				response.getWriter().append("{\"error\":\"non è possibile parsare l'id\", \"errorcode\":1, \"data\":null}");
 				return;
 			}
 		}
 		if(!isOk) {
-			response.getWriter().append("{'error':'manca il parametro " + ID + "', 'errorcode':2}");
+			response.getWriter().append("{\"error\":\"manca il parametro " + ID + "\", \"errorcode\":2, \"data\":null}");
 			return;
 		}
 		Connection conn = null;
@@ -66,16 +67,21 @@ public class ProfiloEsternoControl extends HttpServlet {
 			
 			UtenteBean utente = utenteDao.get(idUtente);
 			if(utente == null) {
-				response.getWriter().append("{'error':'utente non trovato', 'errorcode':3}");
+				response.getWriter().append("{\"error\":\"utente non trovato\", \"errorcode\":3, \"data\":null}");
 				return;
 			}
 			
 			List<EventoBean> eventi = eventoDao.getAllByUserId(idUtente);
+			CredentialsBean creds = utente.getCredentials();
+			creds.setPassword(null);
+			utente.setCredentials(creds);
+			
 			Gson gson = new Gson();
 			String eventiJson = gson.toJson(eventi);
 			String utenteJson = gson.toJson(utente);
+
 			
-			String res = "{'utente':" + utenteJson + ",'eventi':" + eventiJson + "}";
+			String res = "{\"error\":\"\", \"errorcode\":0, \"data\" : {\"utente\":" + utenteJson + ",\"eventi\":" + eventiJson + "}}";
 			response.getWriter().append(res);
 		}catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
