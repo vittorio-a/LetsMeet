@@ -29,7 +29,7 @@ class CommentoSqlDaoTest extends SqlDaoTest<CommentoBean> {
 		assertEquals("Therefore, the concept of the ability bias can be treated as the only solution.\r\nAccording to some experts, the problem of some of the final phase should keep its influence over the positive influence of any task analysis.  ",
 				test.getContenuto());
 		assertEquals(18, test.getIdEvento());
-		assertEquals(Instant.parse("2019-01-31T23:04:26Z"), test.getCreationTime());
+		assertEquals(Instant.parse("2019-01-31T22:04:26Z"), test.getCreationTime());
 	}
 
 	@Override

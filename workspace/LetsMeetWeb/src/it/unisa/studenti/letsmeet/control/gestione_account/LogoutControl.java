@@ -18,7 +18,6 @@ public class LogoutControl extends HttpServlet {
      * Default constructor. 
      */
     public LogoutControl() {
-        // TODO Auto-generated constructor stub
     }
 
 	/**

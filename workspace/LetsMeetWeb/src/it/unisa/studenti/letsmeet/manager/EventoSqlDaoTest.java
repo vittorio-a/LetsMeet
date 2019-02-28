@@ -28,8 +28,8 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 		assertTrue(new BigDecimal(3f).compareTo(test.getFeedback()) == 0);
 		assertEquals(0, test.getnPartecipanti());
 		assertEquals(0, test.getnVerificati());
-		assertEquals(Instant.parse("2019-02-07T14:22:40Z"), test.getOraInizio());
-		assertEquals(Instant.parse("2019-02-07T23:33:38Z"), test.getOraFine());
+		assertEquals(Instant.parse("2019-02-07T13:22:40Z"), test.getOraInizio());
+		assertEquals(Instant.parse("2019-02-07T22:33:38Z"), test.getOraFine());
 		assertEquals(3, test.getIdUtente());
 		assertEquals(6, test.getTipo().getIdTipo());
 		assertEquals(44, test.getPosizione().getId());

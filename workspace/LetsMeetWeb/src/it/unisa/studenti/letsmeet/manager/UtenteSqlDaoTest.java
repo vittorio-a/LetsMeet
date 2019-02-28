@@ -47,7 +47,7 @@ class UtenteSqlDaoTest extends SqlDaoTest<UtenteBean> {
 		assertEquals(StatoUtente.BANNATO, creds.getState());
 		assertEquals("Rayford917@example.com", test.getEmail());
 		assertTrue(new BigDecimal("0").compareTo(test.getFeedbackUtente()) == 0);
-		Instant date = Instant.parse("2019-02-28T21:02:59Z");
+		Instant date = Instant.parse("2019-02-28T20:02:59Z");
 		assertEquals(date, test.getReactivationDate());
 	}
 
