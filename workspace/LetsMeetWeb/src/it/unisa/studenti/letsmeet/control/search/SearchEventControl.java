@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -52,13 +51,15 @@ public class SearchEventControl extends HttpServlet {
 		String tipo = request.getParameter(TIPO_FILTRO);
 		if(tipo == null) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è presente il paramtero" + TIPO_FILTRO);
+			return;
 		}
 		TipoFiltro tipoFiltro = null;
 		Connection conn = null;
 		try{
 			tipoFiltro = TipoFiltro.valueOf(tipo);
 		}catch (IllegalArgumentException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Paramtero " + TIPO_FILTRO + " non valido");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parametro " + TIPO_FILTRO + " non valido");
+			return;
 		}
 		try {
 			final Filter<EventoBean> filter = FilterFactory.getFilter(tipoFiltro, request.getParameterMap());
