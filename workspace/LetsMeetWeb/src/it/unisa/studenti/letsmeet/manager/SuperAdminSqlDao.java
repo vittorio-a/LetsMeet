@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.SuperAdminBean;
 
-public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> {
+public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> implements SuperAdminDao{
 
 	private static final String GET_SUPER_ADMIN_BY_ID = "SELECT * FROM SuperAdmin WHERE idSuperAdmin = ?";
 	private static final String GET_ALL_SUPER_ADMIN = "SELECT * FROM SuperAdmin";

@@ -12,7 +12,7 @@ import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
 import it.unisa.studenti.letsmeet.model.UtenteBean;
 
-public class UtenteSqlDao extends SqlDao<UtenteBean> {
+public class UtenteSqlDao extends SqlDao<UtenteBean> implements UtenteDao{
 	
 	
 	private static final String GET_USER_BY_ID = "SELECT * FROM Utente WHERE idUtente = ?";
@@ -32,7 +32,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 	private static final String STATO_FIELD = "stato";
 	
 	
-	private static final String CHECK_USERNAME = "SELECT username FROM Utente WHERE username = ?";
+	private static final String GET_BY_USERNAME = "SELECT username FROM Utente WHERE username = ?";
 
 	public UtenteSqlDao(Connection connection) {
 		super(connection);
@@ -111,17 +111,27 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> {
 	}
 	
 	public boolean checkUsername(String username) throws DaoException{
+		UtenteBean utente = getByUsername(username);
+		if(utente == null) return true;
+		return false;
+	}
+	
+	
+	public UtenteBean getByUsername(String username) throws DaoException{
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try{
-			st = connection.prepareStatement(CHECK_USERNAME);
+			st = connection.prepareStatement(GET_BY_USERNAME);
 			st.setString(1, username);
 			rs = st.executeQuery();
-			boolean check = false;
-			if(!rs.next()) check = true;
-			return check;
+			UtenteBean utente;
+			if(!rs.next()) {
+				utente = getItemFromResultSet(rs);
+				return utente;
+			}
+			return null;
 		}catch (SQLException e) {
-			throw new DaoException("Unable to check username", e, DaoExceptionType.SQLException);
+			throw new DaoException("Unable to get user by username", e, DaoExceptionType.SQLException);
 		}finally {
 			try{
 				if(rs != null) rs.close();

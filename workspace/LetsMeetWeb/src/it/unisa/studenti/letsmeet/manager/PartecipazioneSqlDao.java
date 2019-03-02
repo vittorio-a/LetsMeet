@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 import java.sql.Statement;
 
-public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> {
+public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> implements PartecipazioneDao{
 	
 	private static final String GET_PARTECIPATION_BY_EVENT_ID = "SELECT * FROM Partecipazione WHERE idEvento = ?";
 	private static final String DELETE_PARTECIPATION = "DELETE FROM Partecipazione WHERE idUtente = ? AND idEvento = ?";

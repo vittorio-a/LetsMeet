@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.EventoBean;
 
-public class EventoSqlDao extends SqlDao<EventoBean> {
+public class EventoSqlDao extends SqlDao<EventoBean> implements EventoDao{
 	
 	private static final String ID_EVENTO_FIELD = "idEvento";
 	private static final String NOME_FIELD = "nome";
@@ -159,7 +159,6 @@ public class EventoSqlDao extends SqlDao<EventoBean> {
 			st = connection.prepareStatement(GET_ALL_BY_USER_ID);
 			st.setInt(1, id);
 			rs = st.executeQuery();
-			boolean check = false;
 			while(rs.next()) eventi.add(getItemFromResultSet(rs));
 		}catch (SQLException e) {
 			throw new DaoException("Unable to get event from user id", e, DaoExceptionType.SQLException);

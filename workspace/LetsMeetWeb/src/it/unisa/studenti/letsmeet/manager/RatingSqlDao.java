@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.RatingBean;
 
-public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> {
+public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> implements RatingDao{
 	
 	
 	private static final String GET_RATING_BY_EVENT_ID = "SELECT * FROM Rating WHERE idEvento = ?";

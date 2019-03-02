@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import it.unisa.studenti.letsmeet.model.SegnalazioneBean;
 
-public class SegnalazioneSqlDao extends SqlDao<SegnalazioneBean> {
+public class SegnalazioneSqlDao extends SqlDao<SegnalazioneBean> implements SegnalazioneDao{
 	
 	/*private static final String GET_SEGN_EVENTO_BY_ID = "SELECT * FROM SegnalazioneEvento WHERE idSegnalazione = ?";
 	private static final String GET_ALL_SEGNS_EVENTO = "SELECT * FROM SegnalazioneEvento";

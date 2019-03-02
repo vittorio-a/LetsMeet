@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.CommentoBean;
 
-public class CommentoSqlDao extends SqlDao<CommentoBean> {
+public class CommentoSqlDao extends SqlDao<CommentoBean> implements CommentoDao{
 	
 	private static String GET_COMMENT_BY_ID = "SELECT * FROM Commento WHERE idCommento = ?";
 	private static String GET_COMMENTS = "SELECT * FROM Commento";

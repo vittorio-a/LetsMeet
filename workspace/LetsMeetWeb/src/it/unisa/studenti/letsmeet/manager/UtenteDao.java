@@ -11,4 +11,13 @@ public interface UtenteDao extends Dao<UtenteBean> {
 	 * @throws DaoException
 	 */
 	public boolean checkUsername(String username) throws DaoException;
+	
+	/**
+	 * Ritorna l'utente che ha la username specificata
+	 * @param username String username dell'utente che bisogna ritornare
+	 * @return lo {@link UtenteBean} con lo username specificato
+	 * @throws DaoException
+	 */
+	public UtenteBean getByUsername(String username) throws DaoException;
+
 }

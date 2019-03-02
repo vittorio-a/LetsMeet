@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.TipoBean;
 
-public class TipoSqlDao extends SqlDao<TipoBean> {
+public class TipoSqlDao extends SqlDao<TipoBean> implements TipoDao{
 
 
 	private static final String GET_TYPE_BY_ID = "SELECT * FROM Tipo WHERE idTipo = ?";

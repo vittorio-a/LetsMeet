@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.PosizioneBean;
 
-public class PosizioneSqlDao extends SqlDao<PosizioneBean> {
+public class PosizioneSqlDao extends SqlDao<PosizioneBean> implements PosizioneDao{
 	
 
 	private static final String LONGITUDINE_FIELD = "longitudine";

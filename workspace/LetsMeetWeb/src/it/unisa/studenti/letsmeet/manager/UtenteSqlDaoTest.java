@@ -14,7 +14,6 @@ import java.util.List;
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.catalina.tribes.util.Arrays;
-import org.junit.Test;
 
 import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
