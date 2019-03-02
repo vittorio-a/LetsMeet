@@ -197,6 +197,7 @@ public class EventoControl extends HttpServlet {
 			
 		}catch (DaoException e) {
 			
+			
 		} catch (SQLException e) {
 
 		}finally {
