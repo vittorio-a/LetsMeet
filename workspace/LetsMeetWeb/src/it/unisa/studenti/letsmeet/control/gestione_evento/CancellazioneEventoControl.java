@@ -53,11 +53,13 @@ public class CancellazioneEventoControl extends HttpServlet {
 		
 		Connection conn = null;
 		
+		EventoBean evento = new EventoBean();
+		evento.setIdEvento(idEvento);
+		
 		try {
 			conn = ds.getConnection();
 			EventoDao dao = new EventoSqlDao(conn);
-			EventoBean evento = new EventoBean();
-			evento.setIdEvento(idEvento);
+			
 			boolean status = dao.delete(evento);
 			if(status) {
 				response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");

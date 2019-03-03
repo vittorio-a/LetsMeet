@@ -9,4 +9,9 @@
   <listener>
     <listener-class>it.unisa.studenti.letsmeet.init.init</listener-class>
   </listener>
-</web-app>
+  <filter>
+  	<filter-name>AuthFilter</filter-name>
+  	<filter-class>it.unisa.studenti.letsmeet.control.gestione_account.AuthFilter</filter-class></filter>
+  <filter-mapping>
+  	<filter-name>AuthFilter</filter-name>
+  	<url-pattern>/PartecipazioneControl*</url-pattern></filter-mapping></web-app>

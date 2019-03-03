@@ -28,6 +28,7 @@ public class PartecipazioneControl extends HttpServlet {
 
 
 	private static final String ID_EVENTO = "idEvento";
+	public static final String IS_VERIFICATO = "isVerificato";
 
 
 	DataSource ds;
@@ -52,17 +53,22 @@ public class PartecipazioneControl extends HttpServlet {
 			return;
 		}
 		
+		
+		PartecipazioneBean partecipazione = new PartecipazioneBean();
+		partecipazione.setIdEvento(idEvento);
+		partecipazione.setIdUtente((int) request.getSession().getAttribute(LoginControl.ID_IN_SESSION));
+		
+		boolean isVerificato = false;
+		if(request.getParameter(IS_VERIFICATO) != null) isVerificato = true;
+		partecipazione.setVerificato(isVerificato);
+		
+		
 		Connection conn = null;
 		
 		try {
 			conn = ds.getConnection();
 			
 			PartecipazioneDao dao = new PartecipazioneSqlDao(conn);
-			
-			PartecipazioneBean partecipazione = new PartecipazioneBean();
-			partecipazione.setIdEvento(idEvento);
-			partecipazione.setIdUtente((int) request.getSession().getAttribute(LoginControl.ID_IN_SESSION));
-			partecipazione.setVerificato(false);
 			
 			dao.saveOrUpdate(partecipazione);
 			

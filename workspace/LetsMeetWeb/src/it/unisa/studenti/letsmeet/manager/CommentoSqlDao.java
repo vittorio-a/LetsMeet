@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.CommentoBean;
+import it.unisa.studenti.letsmeet.model.UtenteBean;
 
 public class CommentoSqlDao extends SqlDao<CommentoBean> implements CommentoDao{
 	
@@ -18,6 +20,8 @@ public class CommentoSqlDao extends SqlDao<CommentoBean> implements CommentoDao{
 	private static String INSERT_COMMENT = "INSERT INTO Commento (idCommento,idMittente,contenuto,idEvento,creationTime) VALUES (?,?,?,?,?)";
 	private static String DELETE_COMMENT = "DELETE FROM Commento WHERE idCommento = ?";
 	private static String UPDATE_COMMENT = "UPDATE Commento SET idMittente = ?, contenuto = ?, idEvento = ?, creationTime = ? WHERE idCommento = ?";
+	private static String GET_BY_EVENT_ID = "SELECT * FROM Commento WHERE idEvento = ?";
+	
 	//Parametri
 	private static String ID_COMMENTO ="idCommento";
 	private static String ID_MITTENTE = "idMittente";
@@ -91,4 +95,28 @@ public class CommentoSqlDao extends SqlDao<CommentoBean> implements CommentoDao{
 		return ps;
 	}
 
+	
+	public List<CommentoBean> getAllCommentsByEventId(int eventId) throws DaoException{
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try{
+			st = connection.prepareStatement(GET_BY_EVENT_ID);
+			st.setInt(1, eventId);
+			rs = st.executeQuery();
+			List<CommentoBean> commenti = new ArrayList<CommentoBean>();
+			while(rs.next()) {
+				commenti.add(getItemFromResultSet(rs));
+			}
+			return commenti;
+		}catch (SQLException e) {
+			throw new DaoException("Impossibile recuperare i commenti", e, DaoExceptionType.SQLException);
+		}finally {
+			try{
+				if(rs != null) rs.close();
+				if(st != null) st.close();
+			}catch (SQLException e) {
+				//do nothing
+			}
+		}
+	}	
 }
