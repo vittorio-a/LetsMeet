@@ -32,7 +32,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> implements UtenteDao{
 	private static final String STATO_FIELD = "stato";
 	
 	
-	private static final String GET_BY_USERNAME = "SELECT username FROM Utente WHERE username = ?";
+	private static final String GET_BY_USERNAME = "SELECT * FROM Utente WHERE username = ?";
 
 	public UtenteSqlDao(Connection connection) {
 		super(connection);
@@ -125,7 +125,7 @@ public class UtenteSqlDao extends SqlDao<UtenteBean> implements UtenteDao{
 			st.setString(1, username);
 			rs = st.executeQuery();
 			UtenteBean utente;
-			if(!rs.next()) {
+			if(rs.next()) {
 				utente = getItemFromResultSet(rs);
 				return utente;
 			}
