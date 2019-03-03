@@ -8,11 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class AuthFilter implements Filter {
 
-	private static final String LOGIN_PAGE = "Login.jsp";
+	private static final String LOGIN_PAGE = "login.html";
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
@@ -24,9 +25,10 @@ public class AuthFilter implements Filter {
 			isLogged = (boolean) obj;
 			if(isLogged) {
 				filterChain.doFilter(request, response);
+				return;
 			}
 		}
-		request.getRequestDispatcher(LOGIN_PAGE).forward(request, response);
+		((HttpServletResponse) response).sendRedirect(LOGIN_PAGE);
 		
 	}
 

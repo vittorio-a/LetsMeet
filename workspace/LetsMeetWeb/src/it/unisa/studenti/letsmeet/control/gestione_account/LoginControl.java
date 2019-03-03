@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Map;
 
 import javax.naming.NamingException;
@@ -34,10 +35,10 @@ public class LoginControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
-	private static final String USERNAME = null;
+	private static final String USERNAME = "username";
 
 
-	private static final String PASSWORD = null;
+	private static final String PASSWORD = "password";
 
     
 	DataSource ds;
@@ -87,7 +88,7 @@ public class LoginControl extends HttpServlet {
 			byte[] hashedPsw = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 			byte[] hashedStoredPassword = creds.getPassword();
 			
-			if(hashedPsw.equals(hashedStoredPassword)) {
+			if(Arrays.equals(hashedPsw,hashedStoredPassword)) {
 				HttpSession session = request.getSession();
 				session.setAttribute(IS_LOGGED_IN_SESSION, true);
 				session.setAttribute(ID_IN_SESSION, utente.getIdUtente());
