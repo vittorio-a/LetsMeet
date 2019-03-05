@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import com.google.gson.Gson;
 
+import it.unisa.studenti.letsmeet.control.gestione_account.LoginControl;
 import it.unisa.studenti.letsmeet.manager.DaoException;
 import it.unisa.studenti.letsmeet.manager.EventoSqlDao;
 import it.unisa.studenti.letsmeet.manager.TipoSqlDao;
@@ -103,7 +104,7 @@ public class EventoControl extends HttpServlet {
 			}
 		}
 		if(!ciStannoTuttiIParametri) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mancano uno o più parametri richiesti");
+			response.getWriter().append("{\"error\":\"Mancano uno o più parametri\", \"errorcode\":1, \"data\":null}");
 			return;
 		}
 		
@@ -131,10 +132,10 @@ public class EventoControl extends HttpServlet {
 			idTipo = Integer.parseInt(tipoString);
 		}
 		catch (DateTimeParseException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Orari nun so buon");
+			response.getWriter().append("{\"error\":\"Errore nel parsing delle date\", \"errorcode\":2, \"data\":null}");
 			return;
 		}catch (NumberFormatException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Id tipo non valido");
+			response.getWriter().append("{\"error\":\"Errore nel parsing dell'id del tipo\", \"errorcode\":3, \"data\":null}");
 			return;
 		}
 		
@@ -154,24 +155,21 @@ public class EventoControl extends HttpServlet {
 				nome.equals("") ||
 				descrizione.equals("")) {
 			
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Uno o più parametri male");
+			response.getWriter().append("{\"error\":\"Uno o più parametri non corretti\", \"errorcode\":4, \"data\":null}");
 			return;
 		
 		}
 		
 		
 		
-		//UtenteBean utente = (UtenteBean)(request.getSession().getAttribute(ATTRIBUTO_UTENTE));
-		//TODO accuongia che deve essere fatto dalla sessione non dalla query string
+		int idUtente = (int)(request.getSession().getAttribute(LoginControl.ID_IN_SESSION));
 		
 		java.sql.Connection conn = null;
 		EventoBean eventoBean = new EventoBean();
 		eventoBean.setNome(nome);
 		eventoBean.setDescrizione(descrizione);
 		eventoBean.setFeedback(new BigDecimal("0"));
-		//eventoBean.setIdUtente(utente.getIdUtente());
-		//TODO devi accuongiare pure qua prendilo dall'utente
-		eventoBean.setIdUtente(Integer.parseInt(request.getParameter(ATTRIBUTO_UTENTE)));
+		eventoBean.setIdUtente(idUtente);
 
 		eventoBean.setnPartecipanti(0);
 		eventoBean.setnVerificati(0);
@@ -186,14 +184,14 @@ public class EventoControl extends HttpServlet {
 			TipoSqlDao tipoDao = new TipoSqlDao(conn);
 			TipoBean tipo = tipoDao.get(idTipo);
 			if(tipo == null) {
-				//TODO ngazzt e fa coccos
+
 				return;
 			}
 			
 			eventoBean.setTipo(tipo);
 			EventoSqlDao dao = new EventoSqlDao(conn);
 			dao.saveOrUpdate(eventoBean);
-			response.getWriter().append("{Brav o strunz ce le fatt}");
+			response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
 			
 		}catch (DaoException e) {
 			
@@ -214,7 +212,6 @@ public class EventoControl extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 }
