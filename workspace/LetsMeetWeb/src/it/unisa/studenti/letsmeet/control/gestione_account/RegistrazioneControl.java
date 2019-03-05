@@ -32,7 +32,7 @@ import it.unisa.studenti.letsmeet.model.UtenteBean;
 /**
  * Servlet implementation class registrazioneControl
  */
-@WebServlet("/registrazione")
+@WebServlet("/account/registrazione")
 public class RegistrazioneControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

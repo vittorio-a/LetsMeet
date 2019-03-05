@@ -24,12 +24,12 @@ import it.unisa.studenti.letsmeet.model.UtenteBean;
 /**
  * Servlet implementation class profiloEsternoControl
  */
-@WebServlet("/profiloEsterno")
+@WebServlet("/account/profiloEsterno")
 public class ProfiloEsternoControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private DataSource dataSource;
-	private static final String ID = "idUtente";
+	public static final String ID_UTENETE_PAR = "idUtente";
 	
     /**
      * Default constructor. 
@@ -43,7 +43,7 @@ public class ProfiloEsternoControl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter(ID);
+		String id = request.getParameter(ID_UTENETE_PAR);
 		boolean isOk = false;
 		int idUtente = 0;
 		if(id != null) {
@@ -56,7 +56,7 @@ public class ProfiloEsternoControl extends HttpServlet {
 			}
 		}
 		if(!isOk) {
-			response.getWriter().append("{\"error\":\"manca il parametro " + ID + "\", \"errorcode\":2, \"data\":null}");
+			response.getWriter().append("{\"error\":\"manca il parametro " + ID_UTENETE_PAR + "\", \"errorcode\":2, \"data\":null}");
 			return;
 		}
 		Connection conn = null;

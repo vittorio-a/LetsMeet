@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ModeratoreSegnalazioneControl
  */
-@WebServlet("/ModeratoreSegnalazioneControl")
+@WebServlet("/auth_mod/segnalazione/moderatoreSegnalazioneControl")
 public class ModeratoreSegnalazioneControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

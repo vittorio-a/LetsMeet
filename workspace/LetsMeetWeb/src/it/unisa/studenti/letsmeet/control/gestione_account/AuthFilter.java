@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 public class AuthFilter implements Filter {
 
-	private static final String LOGIN_PAGE = "login.html";
+	private static final String LOGIN_PAGE = "/LetsMeetWeb/login.html";
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)

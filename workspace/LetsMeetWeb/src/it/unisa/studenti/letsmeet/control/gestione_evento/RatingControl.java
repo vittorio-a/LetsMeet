@@ -23,7 +23,7 @@ import it.unisa.studenti.letsmeet.model.RatingBean;
 /**
  * Servlet implementation class RatingControl
  */
-@WebServlet("/RatingControl")
+@WebServlet("/auth/eventi/ratingControl")
 public class RatingControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

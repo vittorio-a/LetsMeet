@@ -27,7 +27,7 @@ import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 /**
  * Servlet implementation class EventoInfoControl
  */
-@WebServlet("/EventoInfoControl")
+@WebServlet("/eventi/eventoInfoControl")
 public class EventoInfoControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String ID_PARAM_NAME = "idEvento";

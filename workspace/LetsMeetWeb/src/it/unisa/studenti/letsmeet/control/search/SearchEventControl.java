@@ -28,7 +28,7 @@ import it.unisa.studenti.letsmeet.model.EventoBean;
 /**
  * Servlet implementation class SearchEventControl
  */
-@WebServlet("/SearchEventControl")
+@WebServlet("/auth/search/searchEventControl")
 public class SearchEventControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

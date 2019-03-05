@@ -24,7 +24,7 @@ import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 /**
  * Servlet implementation class CommentoControl
  */
-@WebServlet("/CommentoControl")
+@WebServlet("/auth/eventi/commentoControl")
 public class CommentoControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

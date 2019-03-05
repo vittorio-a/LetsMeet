@@ -21,7 +21,7 @@ import it.unisa.studenti.letsmeet.model.EventoBean;
 /**
  * Servlet implementation class CancellazioneEventoControl
  */
-@WebServlet("/CancellazioneEventoControl")
+@WebServlet("/auth/eventi/cancellazioneEventoControl")
 public class CancellazioneEventoControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -55,6 +55,8 @@ public class CancellazioneEventoControl extends HttpServlet {
 		
 		EventoBean evento = new EventoBean();
 		evento.setIdEvento(idEvento);
+		//TODO controllare che chi elimina l'evento possa farlo (ie chi l'ha creato)
+		
 		
 		try {
 			conn = ds.getConnection();

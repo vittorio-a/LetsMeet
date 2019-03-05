@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class logoutControl
  */
-@WebServlet("/logoutControl")
+@WebServlet("/account/logoutControl")
 public class LogoutControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

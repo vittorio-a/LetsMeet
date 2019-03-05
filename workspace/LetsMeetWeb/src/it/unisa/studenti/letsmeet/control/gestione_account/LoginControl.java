@@ -30,7 +30,7 @@ import it.unisa.studenti.letsmeet.model.UtenteBean;
 /**
  * Servlet implementation class loginControl
  */
-@WebServlet("/loginControl")
+@WebServlet("/account/loginControl")
 public class LoginControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

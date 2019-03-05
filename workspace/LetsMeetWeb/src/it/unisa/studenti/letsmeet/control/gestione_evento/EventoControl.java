@@ -32,7 +32,7 @@ import it.unisa.studenti.letsmeet.model.UtenteBean;
 /**
  * Servlet implementation class eventoControl
  */
-@WebServlet("/eventoControl")
+@WebServlet("/auth/eventi/eventoControl")
 public class EventoControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

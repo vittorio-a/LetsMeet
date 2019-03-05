@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ValidationControl
  */
-@WebServlet("/ValidationControl")
+@WebServlet("/auth/eventi/validationControl")
 public class ValidationControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

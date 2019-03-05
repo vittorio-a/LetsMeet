@@ -22,7 +22,7 @@ import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 /**
  * Servlet implementation class PartecipazioneControl
  */
-@WebServlet("/PartecipazioneControl")
+@WebServlet("/auth/eventi/partecipazioneControl")
 public class PartecipazioneControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

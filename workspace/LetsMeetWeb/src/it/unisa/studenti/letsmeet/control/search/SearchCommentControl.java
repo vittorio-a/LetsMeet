@@ -27,7 +27,7 @@ import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 /**
  * Servlet implementation class SearchCommentControl
  */
-@WebServlet("/SearchCommentControl")
+@WebServlet("/auth/search/searchCommentControl")
 public class SearchCommentControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
