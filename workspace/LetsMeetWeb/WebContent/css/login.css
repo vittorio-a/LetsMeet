@@ -1,0 +1,86 @@
+@charset "ISO-8859-1";
+
+html{
+	height: 100%;
+	
+}
+
+body{
+	
+	font-family: Times New Roman;
+	height: 100%;
+	width: 100%;
+	background-image: url("../images/sfondo.jpeg");
+	background-size: cover;
+	background-position: center;
+	//background-color: #01abc9;
+
+}
+
+a{
+	
+	color: white;
+	text-decoration: none;
+}
+
+#login{
+	
+	position:relative;
+	top:0;
+	left:30%;
+	font-family: Times New Roman;
+	font-size:180%;
+	border-radius: 2px;
+	width: 32%;
+	height: 8%;
+	display: table;
+	text-align: center;
+}
+
+
+
+#username input{
+	
+	margin-top:4em;
+	padding:1.3em;
+	background-color: #fffaf0;
+	
+	
+	}
+	
+#password input{
+	
+	margin-top:4em;
+	padding:1.3em;
+	background-color: #fffaf0;
+}
+	
+#invio input{
+	
+	margin-top:4em;
+	padding:1.3em;
+	width: 30%;
+	background-color: #fffaf0;
+}	
+
+#logo{
+	
+	background:white;
+	border-radius: 50%;
+	position: relative;
+	height: 35%;
+	width: 25%;
+	left: 35%;
+	display: table;
+}
+
+p{
+	padding: 0.5em;
+    background-color: #4aaeff;
+    position: absolute;
+    top: 65%;
+    font-size: 50%;
+    left: 33%;
+    border-radius: 1em;
+}
+	

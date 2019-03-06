@@ -1,0 +1,114 @@
+@charset "ISO-8859-1";
+
+html{
+	
+	height: 100%;
+}
+
+body{
+	
+	font-family: Times New Roman;
+	height: 100%;
+	width: 100%;
+	background-image: url("../images/sfondo.jpg");
+	background-position: center;
+	
+}
+
+#container{
+	
+	height: 100%;
+	position: relative;
+	
+	
+}
+
+#header{
+	
+	position:relative;
+	font-family: Times New Roman;
+	color:white;
+	font-size:180%;
+	background-color: #778899;
+	width: 99%;
+	border-radius: 2px;
+	height: 29%;
+	display: table;
+	opacity: 0.8;
+	
+}
+
+h1{
+	
+	position: relative;
+	top:30%;
+	left: 3%;
+	color: white;
+}
+
+a{
+	
+	color: white;
+	text-decoration: none;
+}
+
+#profilo{
+	
+	width: 2%;
+	height: 15%;
+	position:absolute;
+	top:80%;
+	left:94%;
+}
+
+#settings{
+	
+
+	position:absolute;
+	top:80%;
+	left:97%;
+}
+
+#container_mappa{
+	
+	position:absolute;
+	top:30%;
+	left:0;
+	font-family: Times New Roman;
+	font-size:180%;
+	background-color: #778899;
+	border-radius: 2px;
+	width: 99%;
+	height: 80%;
+	display: table;
+	opacity: 0.8;
+}
+
+#zoom_meno{
+	
+	width: 4%;
+	height: 25%;
+	position:absolute;
+	top:81%;
+	left:91%;
+}
+
+#zoom_piu{
+	
+	width: 4%;
+	height: 10%;
+	position:absolute;
+	top:88%;
+	left:95%;
+}
+
+footer{
+
+	position:relative;
+	top: 80%;
+  	left: 0;
+  	bottom: 0;
+  	width: 100%;
+  	color: white;
+  	text-align: center;
+}

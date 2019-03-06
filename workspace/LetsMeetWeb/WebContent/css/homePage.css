@@ -2,18 +2,25 @@
 
 html{
 	height: 100%;
+	overflow: hidden;
 }
 
 
 body{
 	
+	font-family: Times New Roman;
 	height: 100%;
 	width: 100%;
+	background-image: url("../images/sfondo.jpeg");
+	background-size: cover;
+	background-position: center;
+	//background-color: #01abc9;
+	overflow: hidden;
 }
 
 a{
 	
-	color: grey;
+	color: white;
 	text-decoration: none;
 }
 
@@ -21,6 +28,7 @@ a{
 	
 	height: 100%;
 	position: relative;
+	overflow: hidden;
 	
 	
 }
@@ -28,6 +36,7 @@ a{
 #header{
 	
 	position:relative;
+	font-family: Times New Roman;
 	color:white;
 	font-size:180%;
 	background-color: #778899;
@@ -44,11 +53,11 @@ h1{
 	position: relative;
 	top:30%;
 	left: 3%;
-	color: black;
+	color: white;
 }
 
 h2{
-	color: black;
+	color: white;
 	margin: 0px;
 }
 
@@ -82,6 +91,34 @@ h2{
 	
 }
 
+#profilo{
+	
+	width: 2%;
+	height: 17%;
+	position:absolute;
+	top:80%;
+	left:94%;
+}
+
+#settings{
+	
+	position:absolute;
+	top:77%;
+	left:97%;
+}
+
+footer{
+
+	position:relative;
+	top: 70%;
+  	left: 0;
+  	bottom: 0;
+  	width: 100%;
+  	color: white;
+  	text-align: center;
+}
+
+
 #map-container{
 	height: 100%;
 	width: 100%;
@@ -91,7 +128,6 @@ h2{
 	height: 89.5%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	margin-top:50px;
 }
 
 #manager-info{
@@ -108,17 +144,14 @@ h2{
 
 #fsx, #fdx{
 	margin-top: 10px;
-	color:black;
 }
 
 #fsx{
 	float: left;
-	color:black;
 }
 
 #fdx{
 	float: right;
-	color:black;
 }
 
 #fdw{
@@ -126,12 +159,11 @@ h2{
 	clear: both;
 	float: left;
 	text-align: center;
-	color:black;
 }
 
 input, select, textarea{
 	display: block;
-	background-color:rgba(255, 255, 255, 1); ;
+	background-color: rgba(255, 255, 255, 1);
 	padding: 12px;
 	margin: 16px;
 	width: 75%; 
@@ -141,33 +173,30 @@ textarea{
 	width: 75%;
 	position: relative;
 	left: 5%;
-	color:black;
 	
 }
 
 #crea_btn, #cancel_btn{
 	display: inline;
 	width: 30%;
-	color:black;
 }
 
-#event_list{
+
+li{
 	padding: 15px;
 	padding-left: 0px;
 	list-style: none;
 	border: thin solid black;
 	border-radius: 2px;
 	text-align: center;
-	background: #b3bcc6;
 	
 }
 
-#event_list>li{
+ul{
 	padding-left: 0px;
-
 }
 
-#event_list>li:hover {
+li:hover {
 	cursor: pointer;
 	background-color: #b3bcc6;
 }

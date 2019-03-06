@@ -1,0 +1,128 @@
+@charset "ISO-8859-1";
+
+html{
+	
+	height: 100%;
+}
+
+
+ body{
+	
+	font-family: Times New Roman;
+	height: 100%;
+	width: 100%;
+	background-image: url("../images/sfondo.jpeg");
+	background-position: center;
+	
+}
+
+a{
+	
+	color: white;
+	text-decoration: none;
+}
+
+#container{
+	
+	height: 100%;
+	position: relative;
+	
+	
+}
+
+#header{
+	
+	position:relative;
+	font-family: Times New Roman;
+	color:white;
+	font-size:180%;
+	background-color: #778899;
+	width: 99%;
+	border-radius: 2px;
+	height: 29%;
+	display: table;
+	opacity: 0.8;
+	
+}
+
+#container_profilo{
+	
+	position:absolute;
+	top:30%;
+	font-family: Times New Roman;
+	font-size:120%;
+	background-color: #778899;
+	border-radius: 2px;
+	width: 30%;
+	height: 65%;
+	display: table;
+	opacity: 0.8;
+	
+}
+
+#container_info{
+	
+	position:absolute;
+	top:30%;
+	left:31%;
+	font-family: Times New Roman;
+	font-size:120%;
+	background-color: #778899;
+	border-radius: 2px;
+	width: 68%;
+	height: 65%;
+	display: table;
+	opacity: 0.8;
+}
+
+h1{
+	
+	position: relative;
+	top:30%;
+	left: 3%;
+	color: white;
+}
+
+#list1{
+	
+	position: absolute;
+	top:80%;
+	left: 8%;
+	color: white;
+	
+}
+
+#list2{
+	
+	position: absolute;
+	top:65%;
+	left: 8%;
+	color: white;
+}
+
+#profilo{
+	
+	width: 2%;
+	height: 15%;
+	position:absolute;
+	top:80%;
+	left:94%;
+}
+
+#settings{
+	
+	position:absolute;
+	top:80%;
+	left:97%;
+}
+
+footer{
+
+	position:relative;
+	top: 65%;
+  	left: 0;
+  	bottom: 0;
+  	width: 100%;
+  	color: white;
+  	text-align: center;
+}
