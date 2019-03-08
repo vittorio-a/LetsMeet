@@ -7,6 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ *  Interfaccia generale per tutti i Dao di tipo SqlDoubleKey
+ *
+ * @param <T>
+ */
 
 public abstract class SqlDaoDoubleKey<T> implements DaoDoubleKey<T>{
 	

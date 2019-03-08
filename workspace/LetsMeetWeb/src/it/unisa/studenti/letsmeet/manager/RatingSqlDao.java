@@ -9,6 +9,11 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.RatingBean;
 
+/**
+ * 
+ * Implementazione dell'interfaccia SqlDaoDoubleKey dell'oggetto RatingBean
+ *
+ */
 public class RatingSqlDao extends SqlDaoDoubleKey<RatingBean> implements RatingDao{
 	
 	

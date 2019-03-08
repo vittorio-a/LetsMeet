@@ -8,6 +8,9 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.PosizioneBean;
 
+/**
+ * Implementazione dell'interfaccia SqlDao dell'oggetto PosizioneBean
+ */
 public class PosizioneSqlDao extends SqlDao<PosizioneBean> implements PosizioneDao{
 	
 

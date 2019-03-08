@@ -9,6 +9,11 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.TipoBean;
 
+/**
+ * 
+ * Implementazione dell'interfaccia SqlDao della classe TipoDao
+ *
+ */
 public class TipoSqlDao extends SqlDao<TipoBean> implements TipoDao{
 
 

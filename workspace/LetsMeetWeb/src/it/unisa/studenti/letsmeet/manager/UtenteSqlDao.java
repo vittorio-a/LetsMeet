@@ -12,6 +12,11 @@ import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
 import it.unisa.studenti.letsmeet.model.UtenteBean;
 
+/**
+ * 
+ * Implementazione dell'interfaccia SqlDao della classe UtenteBean
+ *
+ */
 public class UtenteSqlDao extends SqlDao<UtenteBean> implements UtenteDao{
 	
 	

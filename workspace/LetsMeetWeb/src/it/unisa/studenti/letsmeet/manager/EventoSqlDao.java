@@ -11,6 +11,11 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.EventoBean;
 
+/**
+ * 
+ * Implementazione dell'interfaccia SqlDao della classe EventoBean
+ *
+ */
 public class EventoSqlDao extends SqlDao<EventoBean> implements EventoDao{
 	
 	private static final String ID_EVENTO_FIELD = "idEvento";

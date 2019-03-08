@@ -9,6 +9,11 @@ import java.sql.SQLException;
 import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 import java.sql.Statement;
 
+/**
+ * 
+ * Implementazione dell'interfaccia SqlDaoDoubleKey per la classe PartecipazioneDao
+ *
+ */
 public class PartecipazioneSqlDao extends SqlDaoDoubleKey<PartecipazioneBean> implements PartecipazioneDao{
 	
 	private static final String GET_PARTECIPATION_BY_EVENT_ID = "SELECT * FROM Partecipazione WHERE idEvento = ?";

@@ -9,6 +9,11 @@ import java.sql.Statement;
 
 import it.unisa.studenti.letsmeet.model.SuperAdminBean;
 
+/**
+ * 
+ * Implementazione dell'interfaccia SqlDao della classe SuperAdminBean
+ *
+ */
 public class SuperAdminSqlDao extends SqlDao<SuperAdminBean> implements SuperAdminDao{
 
 	private static final String GET_SUPER_ADMIN_BY_ID = "SELECT * FROM SuperAdmin WHERE idSuperAdmin = ?";

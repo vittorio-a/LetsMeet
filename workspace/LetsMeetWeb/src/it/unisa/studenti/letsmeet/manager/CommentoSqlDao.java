@@ -13,6 +13,11 @@ import java.sql.Statement;
 import it.unisa.studenti.letsmeet.model.CommentoBean;
 import it.unisa.studenti.letsmeet.model.UtenteBean;
 
+/**
+ * Implementazione dell'interfaccia SqlDao dell'oggetto CommentoBean
+ *
+ *
+ */
 public class CommentoSqlDao extends SqlDao<CommentoBean> implements CommentoDao{
 	
 	private static String GET_COMMENT_BY_ID = "SELECT * FROM Commento WHERE idCommento = ?";

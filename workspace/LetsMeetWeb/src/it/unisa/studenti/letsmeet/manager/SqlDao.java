@@ -7,7 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 
+ * Interfaccia generale per tutti i Dao di tipo Sql
+ *
+ * @param <T> oggetto dello studio del nostro sole
+ */
 
 public abstract class SqlDao<T> implements Dao<T> {
 
