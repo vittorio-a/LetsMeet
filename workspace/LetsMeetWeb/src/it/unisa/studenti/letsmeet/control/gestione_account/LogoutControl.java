@@ -25,6 +25,7 @@ public class LogoutControl extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
+		response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
 	}
 
 	/**
