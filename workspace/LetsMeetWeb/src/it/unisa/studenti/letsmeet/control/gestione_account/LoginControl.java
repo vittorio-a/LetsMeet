@@ -1,14 +1,15 @@
 package it.unisa.studenti.letsmeet.control.gestione_account;
 
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.Map;
 
 import javax.naming.NamingException;
@@ -46,6 +47,9 @@ public class LoginControl extends HttpServlet {
 	public static final String ID_IN_SESSION = "idUtente";
 	public static final String USERNAME_IN_SESSION = "username";
 	public static final String IS_LOGGED_IN_SESSION = "isLogged";
+
+
+	private static final String HOME_URL = "/homePage.html";
 
 
 	
@@ -90,10 +94,37 @@ public class LoginControl extends HttpServlet {
 			
 			if(Arrays.equals(hashedPsw,hashedStoredPassword)) {
 				HttpSession session = request.getSession();
+				
+				//setta gli attributi per il login
 				session.setAttribute(IS_LOGGED_IN_SESSION, true);
 				session.setAttribute(ID_IN_SESSION, utente.getIdUtente());
 				session.setAttribute(USERNAME_IN_SESSION, creds.getUsername());
-				response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
+				
+				//prendi gli attributi per completare la richesta precedente al login se c'è stata
+				Object boolObj = session.getAttribute(AuthFilter.IS_REDIRECT_LOGIN);
+				boolean isRedirectLogin = (boolObj != null) ? (boolean) boolObj : false;
+				if(isRedirectLogin) {
+					session.setAttribute(AuthFilter.IS_REDIRECT_LOGIN, false);
+					Map<String, String[]> exParams = (Map<String, String[]>) session.getAttribute(AuthFilter.INTENDED_PARAMS);
+					String exUrl = (String) session.getAttribute(AuthFilter.INTENDED_URL);
+					if(exUrl != null && exParams != null) {
+						Enumeration<String> oldParams = request.getAttributeNames();
+						while(oldParams.hasMoreElements()) {
+							request.removeAttribute(oldParams.nextElement());
+						}
+						exParams.forEach((key, values)->{
+							for(int i = 0; i < values.length; i++)
+								request.setAttribute(key, values[i]);
+						});
+						request.getRequestDispatcher(exUrl).forward(request, response);
+						return;
+					}
+					
+				}
+				
+				request.getRequestDispatcher(HOME_URL).forward(request, response);
+
+				//response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
 				return;
 			}
 			response.getWriter().append("{\"error\":\"Username o password non validi\", \"errorcode\":3, \"data\":null}");

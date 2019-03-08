@@ -17,29 +17,30 @@ body{
 
 }
 
-#username input{
-	
+ul{
+	list-style: none;
+}
+
+#username{
 	padding:1.3em;
-	background-color: #fffaf0;
-	
-	
+	background-color: #fffaf0;	
 	}
 	
-#password input{
+#password,#confermapsw{
 	
 	margin-top: 4%;
 	padding:1.3em;
 	background-color: #fffaf0;
 }
 	
-#email input{
+#email{
 	
 	margin-top: 4%;
 	padding:1.3em;
 	background-color: #fffaf0;
 }
 
-#bottone input{
+#bottone{
 	
 	margin-top: 4%;
 	padding:0.8em;
