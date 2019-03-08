@@ -3,14 +3,15 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<link href="css/registration.css" rel="stylesheet" type="text/css">
-		<title>Registretion</title>
+		<title>Registration</title>
+		<script type="text/javascript" src="validation.js"></script>
 	</head>
 	
 		<body>
 			
 			<div id="login">
 			
-					<form id="registration" action="/LetsMeetWeb/account/registrazione">
+					<form id="registration" action="/LetsMeetWeb/account/registrazione" onsubmit="return validateRegistration()">
 					<ul>
 					<li>
 							<input type="text" id="username" name="username" placeholder="Usarname" size="72">

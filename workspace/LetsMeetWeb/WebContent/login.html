@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<link href="css/login.css" rel="stylesheet" type="text/css">
+				<script type="text/javascript" src="validationLogin.js"></script>
 		<title>Log In</title>
 	</head>
 
@@ -18,11 +19,11 @@
 			
 			<div id="login">
 			
-					<form id="username" action="/LetsMeetWeb/account/loginControl" method="post">
+					<form id="login" action="/LetsMeetWeb/account/loginControl" method="post" onsubmit="validateLogin()">
 					
-							<input type="text" name="username" placeholder="Usarname" size="72">
+							<input type="text" id="username" name="username" placeholder="Usarname" size="72">
 					
-							<input type="password" name="password" placeholder="Password" size="72">
+							<input type="password" id="password" name="password" placeholder="Password" size="72">
 					
 							<input type="submit" name="invio" value="Invio" size="45">
 					
