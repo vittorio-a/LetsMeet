@@ -46,6 +46,7 @@
       #latlng {
         width: 225px;
       }
+      
     </style>
 		
 	</head>
@@ -106,6 +107,20 @@
 						<aside id="event">
 						
 						<h2> Eventi </h2>
+						
+						<div id="radio_buttons">
+						
+							 <input id="radio_button1" type="radio" name="selection_type" value="0"> Globale
+							 
+							 <input id="radio_button2" type="radio" name="selection_type" value="1"> A Distanza
+							 
+							 
+  						
+  						</div>
+  						
+  							<input id="number_box" type="number" name="quantity" min="1" max="9999">
+  							
+  							<span>Km</span>
 						
 							<div id="event_container">
 								<ul id="event_list">

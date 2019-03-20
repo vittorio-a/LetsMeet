@@ -28,7 +28,7 @@ a{
 	
 	height: 100%;
 	position: relative;
-	overflow: hidden;
+	
 	
 	
 }
@@ -39,7 +39,7 @@ a{
 	font-family: Times New Roman;
 	color:white;
 	font-size:180%;
-	background-color: #778899;
+	background-color: #4682b4;
 	width: 99%;
 	border-radius: 2px;
 	height: 12%;
@@ -59,6 +59,10 @@ h1{
 h2{
 	color: white;
 	margin: 0px;
+	padding-top: 5px;
+	padding-left: 2px;
+	text-align: left;
+	display: inline;
 }
 
 #map{
@@ -82,12 +86,14 @@ h2{
 	left:50%;
 	font-family: Times New Roman;
 	font-size:180%;
-	background-color: #778899;
+	background-color: #4682b4;
 	border-radius: 2px;
 	width: 49%;
 	height: 65%;
-	display: table;
+	display: block;
 	text-align: center;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	
 }
 
@@ -124,11 +130,55 @@ footer{
 	width: 100%;
 }
 
+
+
 #event_container{
+	
 	height: 89.5%;
-	overflow-y: scroll;
-	overflow-x: hidden;
+	
 }
+
+#radio_buttons{
+	
+	color: white;
+	margin: 0px;
+	font-size: 60%;
+	display: inline;
+}
+
+span{
+	
+	color: white;
+	margin: 0px;
+	font-size: 60%;
+	display: inline;
+	
+}
+
+#radio_button1{
+	
+	
+	
+	display: inline-block;
+	width: 5%;
+	
+}
+
+#radio_button2{
+	
+	
+	display: inline-block;
+	width: 5%;
+	
+}
+
+#number_box{
+	
+	width: 6%;
+	display: inline;
+	
+}
+
 
 #manager-info{
 	background-color: rgba(119, 136, 153, 0.8);
@@ -198,7 +248,7 @@ ul{
 
 li:hover {
 	cursor: pointer;
-	background-color: #b3bcc6;
+	background-color: #1e90ff;
 }
 
 .gm-style{
