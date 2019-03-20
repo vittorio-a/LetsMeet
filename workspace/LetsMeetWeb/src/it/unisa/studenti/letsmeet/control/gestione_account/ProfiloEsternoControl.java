@@ -24,7 +24,7 @@ import it.unisa.studenti.letsmeet.model.UtenteBean;
 /**
  * Servlet implementation class profiloEsternoControl
  */
-@WebServlet("/account/profiloEsterno")
+@WebServlet("/auth/account/profiloEsterno")
 public class ProfiloEsternoControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -44,6 +44,7 @@ public class ProfiloEsternoControl extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter(ID_UTENETE_PAR);
+		if(id == null) id = ((Integer) request.getSession().getAttribute(LoginControl.ID_IN_SESSION)).toString();
 		boolean isOk = false;
 		int idUtente = 0;
 		if(id != null) {
