@@ -112,18 +112,23 @@ public class EventoControl extends HttpServlet {
 		posizione = gson.fromJson(request.getParameter(POSIZIONE), PosizioneBean.class);
 		
 		String indirizzo, comune, provincia, sigla, regione, nazione, nome, oraInizioString, oraFineString, descrizione, tipoString;
+		BigDecimal lat, lng;
 		indirizzo = posizione.getFormattedAdress();
 		comune = posizione.getNomeComune();
 		provincia = posizione.getNomeProvincia();
 		sigla = posizione.getSigla();
 		regione = posizione.getNomeRegione();
 		nazione = posizione.getNomeNazione();
+		lat = posizione.getLatitudine();
+		lng = posizione.getLongitudine();
 		nome = request.getParameter(NOME_EVENTO);
 		oraInizioString = request.getParameter(ORA_INIZIO);
 		oraFineString = request.getParameter(ORA_FINE);
 		descrizione = request.getParameter(DESCRIZIONE);
 		tipoString = request.getParameter(TIPO);
-		
+		if(!oraInizioString.endsWith("Z")) oraInizioString = oraInizioString + "Z";
+		if(!oraFineString.endsWith("Z")) oraFineString = oraFineString + "Z";
+
 		Instant oraInizio = null, oraFine = null;
 		int idTipo = 0;
 		try {
@@ -153,11 +158,19 @@ public class EventoControl extends HttpServlet {
 				nazione == null ||
 				nazione.equals("") ||
 				nome.equals("") ||
-				descrizione.equals("")) {
+				descrizione.equals("") ||
+				lat == null ||
+				lng == null)
+		{
 			
 			response.getWriter().append("{\"error\":\"Uno o più parametri non corretti\", \"errorcode\":4, \"data\":null}");
 			return;
 		
+		}
+		
+		if(sigla.length() > 2) {
+			sigla = sigla.substring(0, 2);
+			posizione.setSigla(sigla);
 		}
 		
 		
@@ -194,10 +207,10 @@ public class EventoControl extends HttpServlet {
 			response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
 			
 		}catch (DaoException e) {
-			
+			response.getWriter().append("{\"error\":\"Errore nella gestione della persistenza\", \"errorcode\":4, \"data\":null}");
 			
 		} catch (SQLException e) {
-
+			response.getWriter().append("{\"error\":\"Errore mysql\", \"errorcode\":4, \"data\":null}");
 		}finally {
 			if(conn != null)
 				try {

@@ -122,9 +122,7 @@ public class LoginControl extends HttpServlet {
 					
 				}
 				
-				request.getRequestDispatcher(HOME_URL).forward(request, response);
-
-				//response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
+				response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":null}");
 				return;
 			}
 			response.getWriter().append("{\"error\":\"Username o password non validi\", \"errorcode\":3, \"data\":null}");

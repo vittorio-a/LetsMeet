@@ -25,7 +25,7 @@ public class SearchUserControl extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Non ancora implementato").append(request.getContextPath());
+		response.getWriter().append("{\"error\":\"Non ancora implementato\", \"errorcode\":1, \"data\":null}");
 	}
 
 	/**

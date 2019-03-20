@@ -84,7 +84,7 @@ public class ProfiloEsternoControl extends HttpServlet {
 			String res = "{\"error\":\"\", \"errorcode\":0, \"data\" : {\"utente\":" + utenteJson + ",\"eventi\":" + eventiJson + "}}";
 			response.getWriter().append(res);
 		}catch (Exception e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().append("{\"error\":\"internal generic error\", \"errorcode\":4, \"data\":null}");
 		}
 	}
 

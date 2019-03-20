@@ -50,7 +50,7 @@ public class SearchEventControl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tipo = request.getParameter(TIPO_FILTRO);
 		if(tipo == null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Non è presente il paramtero" + TIPO_FILTRO);
+			response.getWriter().append("{\"error\":\"Non è presente il paramtero" + TIPO_FILTRO + "\", \"errocode\":1, \"data\":null}");
 			return;
 		}
 		TipoFiltro tipoFiltro = null;
@@ -58,7 +58,7 @@ public class SearchEventControl extends HttpServlet {
 		try{
 			tipoFiltro = TipoFiltro.valueOf(tipo);
 		}catch (IllegalArgumentException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parametro " + TIPO_FILTRO + " non valido");
+			response.getWriter().append("{\"error\":\"Parametro " + TIPO_FILTRO + "non valido\", \"errocode\":2, \"data\":null}");
 			return;
 		}
 		try {
@@ -73,11 +73,14 @@ public class SearchEventControl extends HttpServlet {
 			String jsonResponse =  gson.toJson(eventiFiltrati);
 			response.getWriter().append(jsonResponse);
 		}catch (FilterFactroyException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to load filter");
+			response.getWriter().append("{\"error\":\"Impossibile caricare il filtro\", \"errocode\":3, \"data\":null}");
+			return;
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to get db connection");
+			response.getWriter().append("{\"error\":\"Impossibile connettersi al db\", \"errocode\":4, \"data\":null}");
+			return;
 		} catch (DaoException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Dao execp");
+			response.getWriter().append("{\"error\":\"Errore nella gestione della persistenza\", \"errocode\":5, \"data\":null}");
+			return;		
 		}finally {
 			if(conn != null)
 				try {

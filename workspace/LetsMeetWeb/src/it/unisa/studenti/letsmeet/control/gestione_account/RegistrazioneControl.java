@@ -81,7 +81,9 @@ public class RegistrazioneControl extends HttpServlet {
 		
 		
 		if(!(params[0] && params[1] && params[2])) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mancano uno o più parametri richiesti");
+			PrintWriter out = new PrintWriter(response.getOutputStream());
+			out.print("{\"error\":\"Mancano uno o più parametri richiesti\", \"errorcode\":4, \"data\":null}");
+			out.close();
 			return;
 		}
 		
@@ -96,20 +98,20 @@ public class RegistrazioneControl extends HttpServlet {
 			UtenteSqlDao utenteDao = new UtenteSqlDao(dataSource.getConnection());
 			if(!utenteDao.checkUsername(username)) {
 				PrintWriter out = new PrintWriter(response.getOutputStream());
-				out.print("{'error':'Username già in uso', 'errorcode':1, data:null}");
+				out.print("{\"error\":\"Username già in uso\", \"errorcode\":1, \"data\":null}");
 				out.close();
 				return;
 			}
 			if(password.length() < 4 || password.length() > 20) {
 				PrintWriter out = new PrintWriter(response.getOutputStream());
-				out.print("{'error':'dimensioni password non corrette', 'errorcode':2, data:null}");
+				out.print("{\"error\":\"dimensioni password non corrette\", \"errorcode\":2, \"data\":null}");
 				out.close();
 				return;
 			}
 			Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
 			if(!matcher.find()) {
 				PrintWriter out = new PrintWriter(response.getOutputStream());
-				out.print("{'error':'formato email non corretto', 'errorcode':3, data:null}");
+				out.print("{\"error\":\"formato email non corretto\", \"errorcode\":3, \"data\":null}");
 				out.close();
 				return;
 			}
@@ -120,7 +122,10 @@ public class RegistrazioneControl extends HttpServlet {
 			try {
 				digest = MessageDigest.getInstance("SHA-256");
 			} catch (NoSuchAlgorithmException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "impossibile hash");
+				PrintWriter out = new PrintWriter(response.getOutputStream());
+				out.print("{\"error\":\"Impossibile computare l'hash\", \"errorcode\":5, \"data\":null}");
+				out.close();
+				return;
 			}
 			byte[] hashedPsw = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 			creds.setPassword(hashedPsw);
@@ -137,8 +142,9 @@ public class RegistrazioneControl extends HttpServlet {
 			out.close();
 			
 		} catch (SQLException|DaoException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "impossibile controllare username");
-		}finally {
+			PrintWriter out = new PrintWriter(response.getOutputStream());
+			out.print("{\"error\":\"Impossibile controllare username\", \"errorcode\":6, \"data\":null}");
+			out.close();		}finally {
 			if(conn != null)
 				try {
 					conn.close();
