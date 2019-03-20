@@ -18,9 +18,8 @@ public class ProfiloControl extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//passo la richiesta a profilo out aggiungendo l'id dell'utente loggato
-		request.setAttribute(ProfiloEsternoControl.ID_UTENETE_PAR, request.getSession().getAttribute(LoginControl.ID_IN_SESSION).toString());
-		request.getRequestDispatcher("/profiloEsterno").forward(request, response);
+		//passo la richiesta a profilo out 
+		request.getRequestDispatcher("/auth/account/profiloEsterno").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
