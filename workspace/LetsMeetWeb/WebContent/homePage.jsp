@@ -1,6 +1,8 @@
+<%@page import="it.unisa.studenti.letsmeet.control.gestione_account.LoginControl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 
 	<head>
@@ -8,9 +10,11 @@
 		<meta charset="UTF-8">
 		<link href="css/homePage.css" rel="stylesheet" type="text/css">
 		<title>LetsMeet</title>
-		 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXKJ5FYwMS0kMu4FVl-RvpJ8oVHvtjw4&callback=init" async defer></script>
-		<script type="text/javascript" src="js/homePage.js"></script>
-	<!--  	<style>
+			<script type="text/javascript" src="js/homePage.js"></script>
+		
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXKJ5FYwMS0kMu4FVl-RvpJ8oVHvtjw4&callback=init" async defer></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map-container {
@@ -42,7 +46,7 @@
       #latlng {
         width: 225px;
       }
-    </style>-->
+    </style>
 		
 	</head>
 	
@@ -59,12 +63,12 @@
 							<div id="fdx">
 								<label>Tipo
 												<select name="Type" id="type_field">
-													<option>Cultura</option>
-													<option>Sport</option>
-													<option>Educazione</option>
-													<option>Divertimento</option>
-													<option>Arte</option>
-													<option>Altro</option>
+													<option value=1>Cultura</option>
+													<option value=2>Sport</option>
+													<option value=3>Educazione</option>
+													<option value=4>Divertimento</option>
+													<option value=5>Arte</option>
+													<option value=6>Altro</option>
 												</select></label><br/>
 								
 								<label>Data e ora d'inizio<input id="date_field" name="datetime" type="datetime-local"></label><br/>
@@ -79,6 +83,10 @@
 						<div id="header">
 					
 							<h1><a href="homePage.html">LetsMeet</a></h1> 
+							
+							<a href="profilo.html"><img id="profilo" alt="profilo" src="images/profilo.png"></a> 
+							
+							<a href="impostazioni.html"><img id="settings" alt="settings" src="images/two-cogwheels-configuration-interface-symbol.png"></a>
 				
 						</div>
 								
@@ -107,6 +115,14 @@
 							</div>
 							
 						</aside>
+				
+				<footer>
+				
+					<h3>LetsMeet2019</h3>
+				
+				</footer>
+				
+			</div>
 				
 			</body>
 </html>

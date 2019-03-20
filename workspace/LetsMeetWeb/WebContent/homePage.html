@@ -7,9 +7,11 @@
 		<meta charset="UTF-8">
 		<link href="css/homePage.css" rel="stylesheet" type="text/css">
 		<title>LetsMeet</title>
-		 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXKJ5FYwMS0kMu4FVl-RvpJ8oVHvtjw4&callback=init" async defer></script>
-		<script type="text/javascript" src="js/homePage.js"></script>
-	<!--  	<style>
+			<script type="text/javascript" src="js/homePage.js"></script>
+		
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXKJ5FYwMS0kMu4FVl-RvpJ8oVHvtjw4&callback=init" async defer></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map-container {
@@ -41,11 +43,12 @@
       #latlng {
         width: 225px;
       }
-    </style>-->
+    </style>
 		
 	</head>
 	
 			<body>
+				<p id="idUtente" style="display: none;"><%=session.getAttribute(LoginControl.ID_IN_SESSION)%></p>
 				
 				<div id="container">
 						<div id="manager-info">
