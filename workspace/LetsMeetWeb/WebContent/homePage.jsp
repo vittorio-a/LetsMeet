@@ -85,7 +85,7 @@
 					
 							<h1><a href="homePage.html">LetsMeet</a></h1> 
 							
-							<a href="profilo.html"><img id="profilo" alt="profilo" src="images/profilo.png"></a> 
+							<a href="auth/profilo.jsp"><img id="profilo" alt="profilo" src="images/profilo.png"></a> 
 							
 							<a href="impostazioni.html"><img id="settings" alt="settings" src="images/two-cogwheels-configuration-interface-symbol.png"></a>
 				
