@@ -5,13 +5,14 @@ var positionMarker;
 var updatePositionTimer;
 var events;
 var geocoder;
-var infowindow;
+var infowindow =null;
 var markers;
 
 
 
 
 function init(){
+    infowindow = new google.maps.InfoWindow;
 	markers = [];
 	if(navigator.geolocation){
     	navigator.geolocation.getCurrentPosition(initMap);
@@ -54,6 +55,7 @@ function createCookie(name, value, days) {
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
+/*
 function getCookie(c_name) {
     if (document.cookie.length > 0) {
         c_start = document.cookie.indexOf(c_name + "=");
@@ -67,12 +69,64 @@ function getCookie(c_name) {
         }
     }
     return "";
+}*/
+
+
+
+function onClickMarker(elem) {
+	var i = elem.getAttribute("data-position");
+	var event = markers[i];
+	var lat = event.posizione.latitudine;
+	var lng = event.posizione.longitudine;
+	var coords = {lat:lat, lng:lng};
+	map.setCenter(coords);
+	//map.setZoom(13);
+ //  	infowindow.setContent(getEventDesc(event));
+//   	infowindow.open(map, markers[i].marker);		
 }
 
+
 function loadEvents(){
-	var js = getCookie("events");
+	//var js = getCookie("events");
 	var list = document.getElementById("event_list");
-	if(js){
+
+    $(list).empty();
+	
+	$.post(
+			"/LetsMeetWeb/auth/search/searchEventControl",
+			{tipo_filtro : "ALL"},
+			function(result){
+				var events = JSON.parse(result);
+				markers = events;
+				var i = 0;
+				events.forEach(function(event){
+					addMarker({lat:event.posizione.latitudine, lng:event.posizione.longitudine}, getEventDesc(event) + getEventButtons(event) , event.nome);
+					var node = document.createElement("li");
+					node.setAttribute("data-position", i);
+					i++;
+					node.setAttribute("onclick", "onClickMarker(this)");
+					var textNode = document.createTextNode(event.nome);
+					/*node.addEventListener("click", function() {
+						map.setCenter(event.coords);
+						map.setZoom(15);
+						for (var i=0; i<markers.length; i++) {
+							var lat = markers[i].marker.getPosition().lat();
+							var lng = markers[i].marker.getPosition().lng();
+							if(event.name == markers[i].name){
+							    var infoWindow = new google.maps.InfoWindow;
+						       	infoWindow.setContent(getEventDesc(event));
+						       	infoWindow.open(map, markers[i].marker);		
+						    }
+						}
+					});*/
+					node.appendChild(textNode);
+					list.appendChild(node);
+				});
+			}).fail(function(){
+				console.log("errore");
+			});
+	
+	/*if(js){
 		var events = JSON.parse(js);
 		events.forEach(function(event){
 			addMarker(event.coords, getEventDesc(event), event.name);
@@ -98,7 +152,7 @@ function loadEvents(){
 	}
 	else{
 		return [];
-	}
+	}*/
 }
 
 function initMap(position){
@@ -186,8 +240,6 @@ function actionClick(cord){
           if (results[0]) {
             
             
-            
-            infowindow = new google.maps.InfoWindow;
             var pos = results[0].geometry.location;
             document.getElementById("addr_field").value = results[0].formatted_address;
             
@@ -223,7 +275,7 @@ function closeManager(){
 
 function setMarker(){
     var address = document.getElementById("addr_field").value;
-    var type = document.getElementById("type_field").value;
+    var type = $("#type_field").children("option:selected").val();
     var description = document.getElementById("desc_field").value;
     var datetime = document.getElementById("date_field").value;
     var name = document.getElementById("name_field").value;
@@ -238,16 +290,44 @@ function setMarker(){
         if (status === 'OK') {
           if (results[0]) {
     	      var event = {coords: results[0].geometry.location, full_address: results[0].formatted_address, name:name ,description:description,type:type,date:datetime};
-
+    	    console.log(results);
+    	    var eventToSend = {
+    	    		  nome : name,
+    	    		  ora_inizio : datetime,
+    	    		  ora_fine: datetime,
+    	    		  posizione : JSON.stringify({
+    	    			  longitudine : results[0].geometry.location.lng(), 
+    	    			  latitudine : results[0].geometry.location.lat(),
+    	    			  formattedAdress : results[0].formatted_address,
+    	    			  nomeComune : results[0].address_components[2].long_name,
+    	    			  nomeProvincia: results[0].address_components[3].long_name,
+    	    			  sigla : results[0].address_components[3].short_name,
+    	    			  nomeRegione : results[0].address_components[4].long_name,
+    	    			  nomeNazione : results[0].address_components[5].long_name,
+    	    		  }),
+    	    		  descrizione: description,
+    	    		  tipo_evento: type,
+    	    	}
+    	    console.log(eventToSend);
+    	      $.post(
+    	  			"/LetsMeetWeb/auth/eventi/eventoControl",
+    	  			eventToSend,
+    	  			function(result){
+    	  				console.log(result);
+    	  				loadEvents();
+    	  		
+    	  			}).fail(function(){
+    	  				console.log("errore");
+    	  			});
         	   /*	 addMarker(results[0].geometry.location, getEventDesc(event), event.name);
-        		    
+        	
         	      map.setCenter(event.coords);
         	      map.setZoom(15);
         	      console.log(event);*/
-    	      addEvent(event);
+    	    /*  addEvent(event);
         	    events.push(event);
-        	    createCookie("events", JSON.stringify(events));
-        	    closeManager();
+        	    createCookie("events", JSON.stringify(events));*/
+        	   // closeManager();
             
           } else {
             window.alert('No results found');
@@ -258,7 +338,7 @@ function setMarker(){
       });
 }
 
-
+/*
 function addEvent(event){
 	addMarker(event.coords, getEventDesc(event), event.name);
 	var node = document.createElement("LI");
@@ -274,13 +354,12 @@ function addEvent(event){
 			var lat = markers[i].marker.getPosition().lat();
 			var lng = markers[i].marker.getPosition().lng();
 			if(event.name == markers[i].name){
-			    var infoWindow = new google.maps.InfoWindow;
-		       	infoWindow.setContent(getEventDesc(event));
-		       	infoWindow.open(map, markers[i].marker);		
+		       	infowindow.setContent(getEventDesc(event));
+		       	infowindow.open(map, markers[i].marker);		
 		    }
 		}
 	});
-}
+}*/
 
 function addMarker(cords, description, name){
 	var marker = new google.maps.Marker({
@@ -289,22 +368,26 @@ function addMarker(cords, description, name){
       });
 		markers.push({marker:marker, name:name});
 	    marker.addListener('click',function(){
-	    var infoWindow = new google.maps.InfoWindow;
-       	infoWindow.setContent(description);
-       	infoWindow.open(map, marker);
+       	infowindow.setContent(description);
+       	infowindow.open(map, marker);
       });
 }
 
 
-function getEventDesc(event){4
-	var d = new Date(event.date);
+function getEventDesc(event){
+	var d = new Date(event.oraInizio.seconds * 1000);
 	var formatted_datetime = d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear()+" "+d.getHours()+":"+d.getMinutes();
-	var descHtml = "<b>" + event.name + "</b><br/>" +
-		"<b>Tipo: </b>" + event.type + "<br/>" + 
-		"<b>Indirizzo: </b>" + event.full_address + "<br/>" +
+	var descHtml = "<b>" + event.nome + "</b><br/>" +
+		"<b>Tipo: </b>" + event.tipo.nomeTipo + "<br/>" + 
+		"<b>Indirizzo: </b>" + event.posizione.formattedAdress + "<br/>" +
 		"<b>Data e ora d'inizio: </b>" + formatted_datetime + "<br/>" +
-		"<b>Descrizione: </b>" + event.description;
+		"<b>Descrizione: </b>" + event.descrizione;
 	return descHtml;
+}
+
+function getEventButtons(event){
+	buttonPage = "<a style=\"float:right;\"href=\"/LetsMeetWeb/auth/infoEvento.jsp?idEvento=" + event.idEvento +"\"><button id=\"infoButton\"> Info Evento </button></a>";
+	return buttonPage;
 }
 
 

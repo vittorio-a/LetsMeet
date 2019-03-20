@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
 		<meta charset="ISO-8859-1">
 		<link href="css/login.css" rel="stylesheet" type="text/css">
-				<script type="text/javascript" src="validationLogin.js"></script>
+			<!-- 	<script type="text/javascript" src="validationLogin.js"></script> -->
 		<title>Log In</title>
 	</head>
 
@@ -19,13 +21,15 @@
 			
 			<div id="login">
 			
-					<form id="login" action="/LetsMeetWeb/account/loginControl" method="post" onsubmit="validateLogin()">
+					<form id="login">
 					
 							<input type="text" id="username" name="username" placeholder="Usarname" size="72">
 					
 							<input type="password" id="password" name="password" placeholder="Password" size="72">
 					
-							<input type="submit" name="invio" value="Invio" size="45">
+							<input type="button" name="invio" value="Invio" size="45" onclick="submitForm()">
+							
+							<p id="error-text" style="visibility: hidden; color: red;"></p>
 					
 					</form>
 					
@@ -38,5 +42,40 @@
 
 		</body>
 		
+<script>
+
+
+//function submitForm(){
+function submitForm(){
+	console.log("agg bisogn e me fa l'amante");
+
+	username = $('#username')[0];
+	password =  $('#password')[0];
+	data = {username:username.value, password:password.value};
+	$.ajax({
+	     // url: $('#login').attr('action'),
+	      url: "/LetsMeetWeb/account/loginControl",
+	      type: 'POST',
+	      data : data,
+	      dataType: "json",
+	      success: function(data){
+	    	console.log(data);
+			if(data.errorcode == 0){
+				window.location = "/LetsMeetWeb/homePage.jsp";
+			}else{
+				alert(data.error);
+				/*
+				$("#error-text").text(data.error);
+				$("#error-text").css("visibility","visible");
+			*/
+			}
+	      },
+	    error : function() {
+			alert("C'è stato un problema con il login");
+	    }
+	});
+}
+//}
+</script>
 		
 </html>
