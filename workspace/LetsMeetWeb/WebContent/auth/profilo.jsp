@@ -6,7 +6,7 @@
 		<head>
 		
 			<meta charset="UTF-8">
-			<link href="css/profilo.css" rel="stylesheet" type="text/css">
+			<link href="../css/profilo.css" rel="stylesheet" type="text/css">
 			<title>Insert title here</title>
 			
 		</head>

@@ -22,7 +22,37 @@ function validateLogin(login){
 			return false; //Negate access
 	
 	} else
-		return true;
+		submitForm()
 	
-	
+		
+}
+function submitForm(){
+	console.log("agg bisogn e me fa l'amante");
+
+	username = $('#username')[0];
+	password =  $('#password')[0];
+	data = {username:username.value, password:password.value};
+	$.ajax({
+	     // url: $('#login').attr('action'),
+	      url: "/LetsMeetWeb/account/loginControl",
+	      type: 'POST',
+	      data : data,
+	      dataType: "json",
+	      success: function(data){
+	    	console.log(data);
+			if(data.errorcode == 0){
+				window.location = "/LetsMeetWeb/homePage.jsp";
+			}else{
+				alert(data.error);
+				/*
+				$("#error-text").text(data.error);
+				$("#error-text").css("visibility","visible");
+			*/
+			}
+	      },
+	    error : function() {
+			alert("C'è stato un problema con il login");
+	    }
+	});
+
 }

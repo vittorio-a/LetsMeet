@@ -5,7 +5,7 @@
 	
 		<meta charset="ISO-8859-1">
 		<link href="css/login.css" rel="stylesheet" type="text/css">
-			<!-- 	<script type="text/javascript" src="validationLogin.js"></script> -->
+		<script type="text/javascript" src="js/validationLogin.js"></script>
 		<title>Log In</title>
 	</head>
 
@@ -19,7 +19,7 @@
 			
 			</div>
 			
-			<div id="login">
+			<div id="login_container">
 			
 					<form id="login">
 					
@@ -27,7 +27,7 @@
 					
 							<input type="password" id="password" name="password" placeholder="Password" size="72">
 					
-							<input type="button" name="invio" value="Invio" size="45" onclick="submitForm()">
+							<input type="button" id="invio" name="invio" value="Invio" size="45" onclick="return validateLogin(this.form)">
 							
 							<p id="error-text" style="visibility: hidden; color: red;"></p>
 					
@@ -46,7 +46,7 @@
 
 
 //function submitForm(){
-function submitForm(){
+/*function submitForm(){
 	console.log("agg bisogn e me fa l'amante");
 
 	username = $('#username')[0];
@@ -67,14 +67,13 @@ function submitForm(){
 				/*
 				$("#error-text").text(data.error);
 				$("#error-text").css("visibility","visible");
-			*/
 			}
 	      },
 	    error : function() {
 			alert("C'è stato un problema con il login");
 	    }
 	});
-}
+}*/
 //}
 </script>
 		
