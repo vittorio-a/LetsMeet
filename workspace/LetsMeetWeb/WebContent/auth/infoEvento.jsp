@@ -190,6 +190,10 @@ function sendCommento(){
 						<p id="desc-txt"></p>
 				</div>
 				
+				<button id="tipo1">Partecipazione</button>
+				
+				<button id="tipo2">Verifica</button>
+				
 				<div id="visualizza_commenti">
 					
 						<h1>Commenti</h1>

@@ -71,7 +71,7 @@ h2{
 	top:25%;
 	font-family: Times New Roman;
 	font-size:180%;
-	background-color: #778899;
+	background-color: #4682b4;
 	border-radius: 2px;
 	width: 49%;
 	height: 65%;
@@ -181,7 +181,7 @@ span{
 
 
 #manager-info{
-	background-color: rgba(119, 136, 153, 0.8);
+	background-color: #4682b4;
 	border-radius: 2px;
 	text-align: center;
 	display:none;
