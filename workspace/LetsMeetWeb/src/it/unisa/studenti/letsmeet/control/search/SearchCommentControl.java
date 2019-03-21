@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -16,11 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+
 import com.google.gson.Gson;
 
 import it.unisa.studenti.letsmeet.manager.CommentoDao;
 import it.unisa.studenti.letsmeet.manager.CommentoSqlDao;
 import it.unisa.studenti.letsmeet.manager.DaoException;
+import it.unisa.studenti.letsmeet.manager.UtenteDao;
+import it.unisa.studenti.letsmeet.manager.UtenteSqlDao;
 import it.unisa.studenti.letsmeet.model.CommentoBean;
 import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 
@@ -37,6 +41,16 @@ public class SearchCommentControl extends HttpServlet {
     
 	DataSource ds;
 	Gson gson = new Gson();
+	
+	private class CommentoDaInviare{
+		private String contenuto;
+		private String username;
+		private int idUtente;
+		private int idEvento;
+		private int idCommento;
+		private Instant creationTime;		
+	}
+	
 	
     public SearchCommentControl() throws NamingException {
     	ds = DataSourceSingleton.getDataSource();
@@ -77,7 +91,22 @@ public class SearchCommentControl extends HttpServlet {
 				}
 			});
 			
-			String commentiJson = gson.toJson(commenti);
+			UtenteDao utenteDao = new UtenteSqlDao(conn);
+			
+			List<CommentoDaInviare> commentiDaInviare = new ArrayList<>();
+			
+			for(CommentoBean commento : commenti) {
+				CommentoDaInviare commentoDaInviare = new CommentoDaInviare();
+				commentoDaInviare.contenuto = commento.getContenuto();
+				commentoDaInviare.creationTime = commento.getCreationTime();
+				commentoDaInviare.idEvento = commento.getIdEvento();
+				commentoDaInviare.idUtente = commento.getIdUtente();
+				commentoDaInviare.username = utenteDao.get(commento.getIdUtente()).getCredentials().getUsername();
+				commentoDaInviare.idCommento = commento.getIdCommento();
+				commentiDaInviare.add(commentoDaInviare);
+			}
+			
+			String commentiJson = gson.toJson(commentiDaInviare);
 			response.getWriter().append("{\"error\":\"\", \"errorcode\":0, \"data\":" + commentiJson + "}");
 			return;
 

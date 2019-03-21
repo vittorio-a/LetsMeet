@@ -14,16 +14,14 @@ function validateLogin(login){
 		alert('Lo username deve contenere lettere, numeri o i caratteri "_", "." "-"  e deve essere lungo almeno 5');
 		document.getElementById("username").focus(); //Set focus
 		return false; //Negate access
-	} else
-		if (!pswIsOK) { //Check password
-			alert("La password non è valida");
-			document.getElementById("password").value="";
-			document.getElementById("password").focus(); //Set focus
-			return false; //Negate access
-	
-	} else
-		submitForm()
-	
+	} else if (!pswIsOK) { //Check password
+		alert("La password non è valida");
+		document.getElementById("password").value="";
+		document.getElementById("password").focus(); //Set focus
+		return false; //Negate access
+	} else{
+		submitForm();
+	}
 		
 }
 function submitForm(){

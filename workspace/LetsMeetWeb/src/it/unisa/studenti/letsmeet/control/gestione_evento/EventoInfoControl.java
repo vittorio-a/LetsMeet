@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import javax.swing.plaf.ButtonUI;
 
 import com.google.gson.Gson;
 
@@ -20,9 +21,12 @@ import it.unisa.studenti.letsmeet.manager.EventoDao;
 import it.unisa.studenti.letsmeet.manager.EventoSqlDao;
 import it.unisa.studenti.letsmeet.manager.PartecipazioneDao;
 import it.unisa.studenti.letsmeet.manager.PartecipazioneSqlDao;
+import it.unisa.studenti.letsmeet.manager.UtenteDao;
+import it.unisa.studenti.letsmeet.manager.UtenteSqlDao;
 import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 import it.unisa.studenti.letsmeet.model.EventoBean;
 import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
+import it.unisa.studenti.letsmeet.model.UtenteBean;
 
 /**
  * Servlet implementation class EventoInfoControl
@@ -63,17 +67,22 @@ public class EventoInfoControl extends HttpServlet {
 			EventoBean evento = dao.get(id);
 			PartecipazioneDao daoPartecipazione = new PartecipazioneSqlDao(conn);
 			List<PartecipazioneBean> partecipazioni = daoPartecipazione.getAllForSecondKey(id);
+			UtenteDao utenteDao = new UtenteSqlDao(conn);
+
 			StringBuilder builder = new StringBuilder();
-			builder.append("{\"error\":\"\", \"errocode\":0, \"data\":{\"evento\":");
+			builder.append("{\"error\":\"\", \"errorcode\":0, \"data\":{\"evento\":");
 			builder.append(gson.toJson(evento));
+			builder.append(",\"creatorUsername\":\"" + utenteDao.get(evento.getIdUtente()).getCredentials().getUsername() + "\"");
 			builder.append(",\"partecipazioni\":[");
 			boolean isFirst = true;
+
 			for(PartecipazioneBean partecipazione : partecipazioni) {
 				if(!isFirst) builder.append(",{");
 				else builder.append("{");
 				isFirst = false;
-				
-				builder.append("\"idUtente\":" + partecipazione.getIdUtente() + ",\"verificato\":");
+				UtenteBean utente = utenteDao.get(partecipazione.getIdUtente());
+				builder.append("\"username\":\""+  utente.getCredentials().getUsername() +"\"");
+				builder.append(",\"idUtente\":" + partecipazione.getIdUtente() + ",\"verificato\":");
 				builder.append(partecipazione.isVerificato());
 				builder.append("}");
 			}
