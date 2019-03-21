@@ -289,27 +289,54 @@ function setMarker(){
 	geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
           if (results[0]) {
-    	      var event = {coords: results[0].geometry.location, full_address: results[0].formatted_address, name:name ,description:description,type:type,date:datetime};
-    	    console.log(results);
-    	    var eventToSend = {
-    	    		  nome : name,
-    	    		  ora_inizio : datetime,
-    	    		  ora_fine: datetime,
-    	    		  posizione : JSON.stringify({
-    	    			  longitudine : results[0].geometry.location.lng(), 
-    	    			  latitudine : results[0].geometry.location.lat(),
-    	    			  formattedAdress : results[0].formatted_address,
-    	    			  nomeComune : results[0].address_components[2].long_name,
-    	    			  nomeProvincia: results[0].address_components[3].long_name,
-    	    			  sigla : results[0].address_components[3].short_name,
-    	    			  nomeRegione : results[0].address_components[4].long_name,
-    	    			  nomeNazione : results[0].address_components[5].long_name,
-    	    		  }),
-    	    		  descrizione: description,
-    	    		  tipo_evento: type,
-    	    	}
-    	    console.log(eventToSend);
-    	      $.post(
+        	  	var nomeComune;
+        	  	var nomeProvincia;
+        	  	var nomeRegione;
+        	  	var nomeNazione;
+        	  	var sigla;
+    	      	var event = {coords: results[0].geometry.location, full_address: results[0].formatted_address, name:name ,description:description,type:type,date:datetime};
+			    console.log(results);
+			    
+			    results[0].address_components.forEach(function(component){
+			    	component.types.forEach(function(type){
+			    		switch(type){
+				    	case "administrative_area_level_3":
+				   			nomeComune = component.long_name;
+				    		break;
+				   		case "administrative_area_level_2":
+				   			nomeProvincia = component.long_name;
+				   			sigla = component.short_name;
+				   			break;
+				   		case "administrative_area_level_1":
+				   			nomeRegione = component.long_name;
+			    			break;
+			    		case "country":
+			    			nomeNazione = component.long_name;
+			    			break;
+				    	}
+			    	});
+			    	
+			    });
+			    			    
+			    var eventToSend = {
+			    		  nome : name,
+			    		  ora_inizio : datetime,
+			    		  ora_fine: datetime,
+			    		  posizione : JSON.stringify({
+			    			  longitudine : results[0].geometry.location.lng(), 
+			    			  latitudine : results[0].geometry.location.lat(),
+			    			  formattedAdress : results[0].formatted_address,
+			    			  nomeComune : nomeComune,
+			    			  nomeProvincia: nomeProvincia,
+			    			  sigla : sigla,
+			    			  nomeRegione : nomeRegione,
+			    			  nomeNazione : nomeNazione,
+			    		  }),
+			    		  descrizione: description,
+			    		  tipo_evento: type,
+			    	}
+			   console.log(eventToSend);
+    	       $.post(
     	  			"/LetsMeetWeb/auth/eventi/eventoControl",
     	  			eventToSend,
     	  			function(result){
