@@ -11,7 +11,7 @@
 		<link href="css/homePage.css" rel="stylesheet" type="text/css">
 		<title>LetsMeet</title>
 			<script type="text/javascript" src="js/homePage.js"></script>
-		
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXKJ5FYwMS0kMu4FVl-RvpJ8oVHvtjw4&callback=init" async defer></script>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<style>
@@ -69,7 +69,8 @@
 													<option value=3>Educazione</option>
 													<option value=4>Divertimento</option>
 													<option value=5>Arte</option>
-													<option value=6>Altro</option>
+													<option value=6>Ingegneria del software</option>
+													<option value=7>Altro</option>
 												</select></label><br/>
 								
 								<label>Data e ora d'inizio<input id="date_field" name="datetime" type="datetime-local"></label><br/>
@@ -87,7 +88,7 @@
 							
 							<a href="auth/profilo.jsp"><img id="profilo" alt="profilo" src="images/profilo.png"></a> 
 							
-							<a href="impostazioni.html"><img id="settings" alt="settings" src="images/two-cogwheels-configuration-interface-symbol.png"></a>
+							<a href="#"><img id="settings" alt="settings" src="images/two-cogwheels-configuration-interface-symbol.png" onclick="changeTheme()"></a>
 				
 						</div>
 								
@@ -110,15 +111,15 @@
 						
 						<div id="radio_buttons">
 						
-							 <input id="radio_button1" type="radio" name="selection_type" value="0"> Globale
+							 <input id="radio_button1" type="radio" name="selection_type" value="0" onclick="loadEvents()"> Globale
 							 
-							 <input id="radio_button2" type="radio" name="selection_type" value="1"> A Distanza
+							 <input id="radio_button2" type="radio" name="selection_type" value="1" onclick="loadEvents()" checked> A Distanza
 							 
 							 
   						
   						</div>
   						
-  							<input id="number_box" type="number" name="quantity" min="1" max="9999">
+  							<input id="number_box" type="number" name="quantity" min="1" max="999" value="25" onchange="loadEvents()">
   							
   							<span>Km</span>
 						

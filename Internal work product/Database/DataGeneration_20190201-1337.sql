@@ -246,13 +246,13 @@ INSERT INTO superadmin(idSuperAdmin, username, passwordAdmin) VALUES
 -- Inserting data into table tipo
 --
 INSERT INTO tipo(idTipo, nomeTipo, descrizione) VALUES
-(1, 'Epioxevir', 'It should rather be regarded as an integral part of the development sequence.'),
-(2, 'Candithromypin', 'This could inevitably be a result of a hardware maintenance.'),
-(3, 'Acoconfen', 'The breach is quite a comprehensive matter.'),
-(4, 'Adifate', 'Therefore, the concept of the referential arguments can be treated as the only solution.'),
-(5, 'Irisonfen', 'It should rather be regarded as an integral part of the structure absorption.'),
-(6, 'Indofate', NULL),
-(7, 'Konidipivir', 'It should rather be regarded as an integral part of the corporate asset growth.');
+(1, 'Cultura', 'It should rather be regarded as an integral part of the development sequence.'),
+(2, 'Sport', 'This could inevitably be a result of a hardware maintenance.'),
+(3, 'Educazione', 'The breach is quite a comprehensive matter.'),
+(4, 'Divertimento', 'Therefore, the concept of the referential arguments can be treated as the only solution.'),
+(5, 'Arte', 'It should rather be regarded as an integral part of the structure absorption.'),
+(6, 'Ingegneria del software', 'No desc'),
+(7, 'Altro', 'It should rather be regarded as an integral part of the corporate asset growth.');
 
 --
 -- Inserting data into table utente

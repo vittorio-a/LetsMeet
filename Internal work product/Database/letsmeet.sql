@@ -186,3 +186,107 @@ CREATE TABLE SegnalazioneCommento(
     FOREIGN KEY(idCommento) REFERENCES Commento(idCommento)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+DELIMITER $$
+CREATE TRIGGER rating_insert AFTER INSERT ON Rating 
+FOR EACH ROW
+BEGIN
+	 DECLARE feedbackEvento INT;
+     DECLARE nf INT;
+     DECLARE feedbackUtente INT;
+     DECLARE idUt INT;
+     
+	 SET @feedbackEvento = (SELECT e.feedback
+	 FROM Evento e
+     WHERE e.idEvento = NEW.idEvento);
+     IF(NEW.voto) THEN
+		SET @nf = 1;
+	 ELSE 
+		SET @nf = -1;
+	 END IF;
+     UPDATE Evento e
+     SET e.feedback = @feedbackEvento + @nf
+     WHERE e.idEvento = NEW.idEvento;
+     SET @idUt =  (SELECT e.idUtente
+	 FROM Evento e
+     WHERE e.idEvento = NEW.idEvento);
+     
+     SET @feedbackUtente = (SELECT u.feedback
+	 FROM Utente u 
+     WHERE u.idUtente = @idUt);
+     
+     UPDATE Utente u
+     SET u.feedback = @feedbackUtente + @nf
+     WHERE u.idUtente = @idUt;
+END;$$
+
+CREATE TRIGGER rating_update AFTER UPDATE ON Rating 
+FOR EACH ROW
+BEGIN
+	 DECLARE feedbackEvento INT;
+     DECLARE nf INT;
+     DECLARE feedbackUtente INT;
+     DECLARE idUt INT;
+     
+	 SET @feedbackEvento = (SELECT e.feedback
+	 FROM Evento e
+     WHERE e.idEvento = NEW.idEvento);
+     IF(NEW.voto = OLD.voto) THEN
+		SET @nf = 0;
+	 ELSEIF(NEW.voto) THEN
+		SET @nf = 2;
+	 ELSE 
+		SET @nf = -2;
+	 END IF;
+     UPDATE Evento e
+     SET e.feedback = @feedbackEvento + @nf
+     WHERE e.idEvento = NEW.idEvento;
+     SET @idUt =  (SELECT e.idUtente
+	 FROM Evento e
+     WHERE e.idEvento = NEW.idEvento);
+     
+     SET @feedbackUtente = (SELECT u.feedback
+	 FROM Utente u 
+     WHERE u.idUtente = @idUt);
+     
+     UPDATE Utente u
+     SET u.feedback = @feedbackUtente + @nf
+     WHERE u.idUtente = @idUt;
+END;$$
+
+CREATE TRIGGER add_partecipazione AFTER INSERT ON Partecipazione
+FOR EACH ROW
+BEGIN
+	DECLARE nPart INT;
+    DECLARE nVer INT;
+    
+	IF(NEW.isVerificato) THEN
+		SET @nVer = (SELECT nVerificati
+			FROM Evento e
+			WHERE e.idEvento = NEW.idEvento);
+		UPDATE Evento e
+			SET e.nVerificati = @nVer + 1
+			WHERE e.idEvento = NEW.idEvento;    
+	END IF;
+	SET @nPart = (SELECT nPartecipanti
+		FROM Evento e
+        WHERE e.idEvento = NEW.idEvento);
+	UPDATE Evento e
+    SET e.nPartecipanti = @nPart + 1
+    WHERE e.idEvento = NEW.idEvento;
+    
+END;$$
+
+CREATE TRIGGER upd_partecipazione AFTER UPDATE ON Partecipazione
+FOR EACH ROW
+BEGIN
+    DECLARE nVer INT;
+	IF(NEW.isVerificato) THEN
+		SET @nVer = (SELECT nVerificati
+			FROM Evento e
+			WHERE e.idEvento = NEW.idEvento);
+		UPDATE Evento e
+			SET e.nVerificati = @nVer + 1
+			WHERE e.idEvento = NEW.idEvento;    
+	END IF;
+END;$$
