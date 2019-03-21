@@ -7,6 +7,7 @@ var events;
 var geocoder;
 var infowindow =null;
 var markers;
+var mapMarkes;
 
 
 
@@ -14,6 +15,7 @@ var markers;
 function init(){
     infowindow = new google.maps.InfoWindow;
 	markers = [];
+	mapMarkers = [];
 	if(navigator.geolocation){
     	navigator.geolocation.getCurrentPosition(initMap);
     }else{
@@ -55,6 +57,9 @@ function createCookie(name, value, days) {
     document.cookie = name + "=" + value + expires + "; path=/";
 }
 
+
+
+
 /*
 function getCookie(c_name) {
     if (document.cookie.length > 0) {
@@ -71,7 +76,37 @@ function getCookie(c_name) {
     return "";
 }*/
 
+var tm = 1;
 
+function changeTheme(){
+	if(tm == 2){
+		/*var lis = document.getElementsByTagName("li");
+		var i = 0;
+		for(i = 0; i < lis.lenght; i++){
+			$(lis[i]).toggleClass("li-1");
+			$(lis[i]).toggleClass("li-2");
+
+		}*/
+		$("#event").css("background-color","#4682b4");
+		$("#header").css("background-color","#4682b4");
+
+		tm = 1;
+		loadEvents();
+	}else{
+		/*var lis = document.getElementsByTagName("li");
+		var i = 0;
+		for(i = 0; i < lis.lenght; i++){
+			$(lis[i]).toggleClass("li-1");
+			$(lis[i]).toggleClass("li-2");
+
+		}*/
+		$("#event").css("background-color","#ffb6c1");
+		$("#header").css("background-color","#ffb6c1");
+
+		tm = 2;
+		loadEvents();
+	}
+}
 
 function onClickMarker(elem) {
 	var i = elem.getAttribute("data-position");
@@ -85,24 +120,63 @@ function onClickMarker(elem) {
 //   	infowindow.open(map, markers[i].marker);		
 }
 
-
+var type = 0;
+var dist = 25;
 function loadEvents(){
+	
+	
+	
 	//var js = getCookie("events");
 	var list = document.getElementById("event_list");
 
     $(list).empty();
-	
+	mapMarkers.forEach(function(marker){
+		marker.setMap(null);
+	});
+	mapMarkers = [];
+    var selected = $("input[name='selection_type']:checked"). val();
+    var dataFiltro = {tipo_filtro:"ALL"};
+    switch (selected) {
+	case "0":
+		type = 0;
+		break;
+	case "1":
+		/*dataFiltro = {tipo_filtro: "DISTANZA",
+				distanza:$("#number_box").val() * 1000,
+				latitudine:userPosition.lat,
+				longitudine:userPosition.lng};*/
+		type = 1;
+		dist = $("#number_box").val() * 1000;
+
+		break;
+	default:
+		break;
+	}
+    
 	$.post(
 			"/LetsMeetWeb/auth/search/searchEventControl",
-			{tipo_filtro : "ALL"},
+			dataFiltro,
 			function(result){
 				var events = JSON.parse(result);
+				console.log(events);
+				if(type == 1){
+					var eventsNew = [];
+					events.forEach(function(event){
+						if(google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(userPosition.lat, userPosition.lng), new google.maps.LatLng(event.posizione.latitudine, event.posizione.longitudine)) <= dist)
+							eventsNew.push(event);
+					});
+					events = eventsNew;
+				}
 				markers = events;
 				var i = 0;
 				events.forEach(function(event){
 					addMarker({lat:event.posizione.latitudine, lng:event.posizione.longitudine}, getEventDesc(event) + getEventButtons(event) , event.nome);
 					var node = document.createElement("li");
 					node.setAttribute("data-position", i);
+					var cl;
+					if(tm == 1) cl = "li-1";
+					else cl = "li-2";
+					node.setAttribute("class",cl);
 					i++;
 					node.setAttribute("onclick", "onClickMarker(this)");
 					var textNode = document.createTextNode(event.nome);
@@ -398,6 +472,7 @@ function addMarker(cords, description, name){
        	infowindow.setContent(description);
        	infowindow.open(map, marker);
       });
+	 mapMarkers.push(marker);
 }
 
 

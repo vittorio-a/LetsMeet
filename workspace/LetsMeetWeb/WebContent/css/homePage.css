@@ -48,6 +48,8 @@ a{
 	
 }
 
+
+
 h1{
 	
 	position: relative;
@@ -246,11 +248,19 @@ ul{
 	padding-left: 0px;
 }
 
-li:hover {
+.li-2{
+	color: #daa520;
+}
+
+.li-1:hover {
 	cursor: pointer;
 	background-color: #1e90ff;
 }
 
+.li-2:hover {
+	cursor: pointer;
+	background-color: #ffd700;
+}
 .gm-style{
 	font-family: monospace !important;
 	font-size: large !important;
