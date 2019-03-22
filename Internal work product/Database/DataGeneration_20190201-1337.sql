@@ -1,4 +1,5 @@
-﻿SET SQL_SAFE_UPDATES = 0;
+SET SQL_SAFE_UPDATES = 0;
+
 
 SET NAMES 'utf8';
 USE letsmeet;
