@@ -7,11 +7,13 @@
 <html>
 
 	<head>
+	
 			
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 	
 		<meta charset="	UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="../css/infoEvento.css" rel="stylesheet" type="text/css">
 		<title>Info</title>
 	</head>
