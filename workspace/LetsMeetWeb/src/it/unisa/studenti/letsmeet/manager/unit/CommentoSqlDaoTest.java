@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,8 @@ import java.sql.Connection;
 import java.time.Instant;
 import java.util.List;
 
-
+import it.unisa.studenti.letsmeet.manager.CommentoSqlDao;
+import it.unisa.studenti.letsmeet.manager.SqlDao;
 import it.unisa.studenti.letsmeet.model.CommentoBean;
 
 

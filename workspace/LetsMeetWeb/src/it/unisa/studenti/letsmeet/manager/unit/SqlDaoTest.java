@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +10,9 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import it.unisa.studenti.letsmeet.manager.DaoException;
+import it.unisa.studenti.letsmeet.manager.SqlDao;
 
 
 abstract class SqlDaoTest<T> {

@@ -1,11 +1,12 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.util.List;
 
-
+import it.unisa.studenti.letsmeet.manager.PartecipazioneSqlDao;
+import it.unisa.studenti.letsmeet.manager.SqlDaoDoubleKey;
 import it.unisa.studenti.letsmeet.model.PartecipazioneBean;
 
 class PartecipazioneSqlDaoTest extends SqlDaoDoubleKeyTest<PartecipazioneBean> {

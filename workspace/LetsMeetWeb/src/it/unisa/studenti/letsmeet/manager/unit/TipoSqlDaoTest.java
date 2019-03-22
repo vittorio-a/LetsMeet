@@ -1,11 +1,12 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;
 import java.util.List;
 
-
+import it.unisa.studenti.letsmeet.manager.SqlDao;
+import it.unisa.studenti.letsmeet.manager.TipoSqlDao;
 import it.unisa.studenti.letsmeet.model.TipoBean;
 
 class TipoSqlDaoTest extends SqlDaoTest<TipoBean>{
@@ -20,7 +21,7 @@ class TipoSqlDaoTest extends SqlDaoTest<TipoBean>{
 	@Override
 	protected void assertsGet(TipoBean test) {
 		assertEquals(1, test.getIdTipo());
-		assertEquals("Epioxevir", test.getNomeTipo());
+		assertEquals("Cultura", test.getNomeTipo());
 		assertEquals("It should rather be regarded as an integral part of the development sequence.", test.getDescrizione());
 
 	}

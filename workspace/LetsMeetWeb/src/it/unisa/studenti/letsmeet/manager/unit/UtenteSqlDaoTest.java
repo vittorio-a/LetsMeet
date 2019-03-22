@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +15,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.catalina.tribes.util.Arrays;
 
+import it.unisa.studenti.letsmeet.manager.DaoException;
+import it.unisa.studenti.letsmeet.manager.SqlDao;
+import it.unisa.studenti.letsmeet.manager.UtenteSqlDao;
 import it.unisa.studenti.letsmeet.model.CredentialsBean;
 import it.unisa.studenti.letsmeet.model.StatoUtente;
 import it.unisa.studenti.letsmeet.model.UtenteBean;

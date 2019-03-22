@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,7 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.sql.Connection;
 import java.util.List;
 
-
+import it.unisa.studenti.letsmeet.manager.RatingSqlDao;
+import it.unisa.studenti.letsmeet.manager.SqlDaoDoubleKey;
 import it.unisa.studenti.letsmeet.model.RatingBean;
 
 class RatingSqlDaoTest extends SqlDaoDoubleKeyTest<RatingBean> {

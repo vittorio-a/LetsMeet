@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,7 +7,8 @@ import java.sql.Connection;
 import java.time.Instant;
 import java.util.List;
 
-
+import it.unisa.studenti.letsmeet.manager.EventoSqlDao;
+import it.unisa.studenti.letsmeet.manager.SqlDao;
 import it.unisa.studenti.letsmeet.model.EventoBean;
 import it.unisa.studenti.letsmeet.model.PosizioneBean;
 import it.unisa.studenti.letsmeet.model.TipoBean;
@@ -25,9 +26,9 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 	protected void assertsGet(EventoBean test) {
 		assertEquals(1, test.getIdEvento());
 		assertEquals("Such tendency may approximately originate from the base configuration.", test.getNome());
-		assertTrue(new BigDecimal(3f).compareTo(test.getFeedback()) == 0);
-		assertEquals(0, test.getnPartecipanti());
-		assertEquals(0, test.getnVerificati());
+		assertTrue(new BigDecimal(4f).compareTo(test.getFeedback()) == 0);
+		assertEquals(1, test.getnPartecipanti());
+		assertEquals(1, test.getnVerificati());
 		assertEquals(Instant.parse("2019-02-07T13:22:40Z"), test.getOraInizio());
 		assertEquals(Instant.parse("2019-02-07T22:33:38Z"), test.getOraFine());
 		assertEquals(3, test.getIdUtente());
@@ -74,6 +75,8 @@ class EventoSqlDaoTest extends SqlDaoTest<EventoBean> {
 	protected EventoBean getUpdateObject() {
 		EventoBean bean = getInsertObject();
 		bean.setIdEvento(1);
+		bean.setnPartecipanti(1);
+		bean.setnVerificati(1);
 		return bean;
 	}
 

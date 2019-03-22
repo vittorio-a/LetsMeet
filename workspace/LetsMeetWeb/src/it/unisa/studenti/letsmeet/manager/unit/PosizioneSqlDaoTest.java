@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.manager;
+package it.unisa.studenti.letsmeet.manager.unit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,7 +6,9 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
-
+import it.unisa.studenti.letsmeet.manager.DaoException;
+import it.unisa.studenti.letsmeet.manager.PosizioneSqlDao;
+import it.unisa.studenti.letsmeet.manager.SqlDao;
 import it.unisa.studenti.letsmeet.model.PosizioneBean;
 
 class PosizioneSqlDaoTest extends SqlDaoTest<PosizioneBean> {
