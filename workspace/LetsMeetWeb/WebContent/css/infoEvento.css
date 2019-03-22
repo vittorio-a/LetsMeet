@@ -256,10 +256,9 @@ input{
 
 #desc-txt{
 	
-	border-style:solid;
-	border-color: black;
-	padding-bottom: 5px;
-	border-radius: 3px;
+	
+	padding-left: 40px;
+	
 	
 }
 
@@ -321,3 +320,66 @@ button.gia{
 	background: green !important;
 }
 
+
+@media (max-width: 1500px){
+	
+	
+	
+#btn_part{
+	
+	position: absolute;
+	left:40%;
+	top:68%;
+ 	outline: none;
+	text-align: center;
+ 	text-decoration: none;
+ 	color: #fff;
+ 	padding: 20px 40px;
+ 	border: solid 1px #0076a3;
+ 	background: #0095cd;
+ 	font-size: 90%;
+ 	width: 134px;
+ 	text-indent: -30%;
+	
+}
+
+#btn_verf{
+	
+	position: absolute;
+	left:40%;
+	top:80%;
+ 	outline: none;
+ 	text-align: center;
+ 	text-decoration: none;
+ 	color: #fff;
+ 	padding: 20px 40px;
+ 	border: solid 1px #0076a3;
+ 	background: #0095cd;
+ 	font-size: 100%;
+	
+}
+		
+button{
+	cursor: pointer;
+}
+
+
+
+button:disabled {
+	cursor: default;
+	background: gray !important; 
+}
+
+img.disabled{
+	cursor: default !important;	
+}
+
+button.gia{
+	background: green !important;
+}
+	
+	
+	
+	
+	
+}

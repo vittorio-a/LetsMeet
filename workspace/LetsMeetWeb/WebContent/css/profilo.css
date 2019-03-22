@@ -36,7 +36,7 @@ a{
 	font-family: Times New Roman;
 	color:white;
 	font-size:180%;
-	background-color: #778899;
+	background-color: #4682b4;
 	width: 99%;
 	border-radius: 2px;
 	height: 29%;
@@ -49,13 +49,25 @@ a{
 	top:30%;
 	font-family: Times New Roman;
 	font-size:120%;
-	background-color: #778899;
+	background-color: #4682b4;
 	border-radius: 2px;
 	width: 30%;
 	height: 65%;
 	display: table;
 	
 }
+
+#logo_container{
+	
+	margin-right: 13%;
+}
+
+#logo{
+	
+	height: 50%;
+	width: 35%;
+}
+
 
 #container_info{
 	
@@ -64,7 +76,7 @@ a{
 	left:31%;
 	font-family: Times New Roman;
 	font-size:120%;
-	background-color: #778899;
+	background-color: #4682b4;
 	border-radius: 2px;
 	width: 68%;
 	height: 65%;
@@ -117,7 +129,7 @@ h1{
 footer{
 
 	position:relative;
-	top: 65%;
+	top: 14%;
   	left: 0;
   	bottom: 0;
   	width: 100%;

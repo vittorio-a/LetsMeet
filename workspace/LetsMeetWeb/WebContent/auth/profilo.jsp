@@ -131,6 +131,14 @@
 						
 						
 						
+						<div id="logo_container">
+					
+							<img id="logo" alt="logo" src="../images/logo-LetsMeet.png">
+			
+			
+						</div>
+						
+						
 						<div id="container_info">
 							<table id="event-table" class="display">
 								<thead>
