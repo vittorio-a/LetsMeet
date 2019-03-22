@@ -2,6 +2,7 @@ package it.unisa.studenti.letsmeet.control.gestione_account;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -86,6 +87,14 @@ public class ProfiloEsternoControl extends HttpServlet {
 			response.getWriter().append(res);
 		}catch (Exception e) {
 			response.getWriter().append("{\"error\":\"internal generic error\", \"errorcode\":4, \"data\":null}");
+		}finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					//do nothing
+				}
+			}
 		}
 	}
 

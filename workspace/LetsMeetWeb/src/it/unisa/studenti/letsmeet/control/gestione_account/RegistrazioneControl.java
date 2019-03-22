@@ -144,7 +144,8 @@ public class RegistrazioneControl extends HttpServlet {
 		} catch (SQLException|DaoException e) {
 			PrintWriter out = new PrintWriter(response.getOutputStream());
 			out.print("{\"error\":\"Email già presente\", \"errorcode\":6, \"data\":null}");
-			out.close();		}finally {
+			out.close();		
+		}finally {
 			if(conn != null)
 				try {
 					conn.close();
