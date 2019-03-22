@@ -1,6 +1,34 @@
 /**
  * 
  */
+
+
+
+function submitForm(reg){
+	data = {username:reg.username.value, password:reg.password.value, email:reg.email.value};
+	$.ajax({
+	      url: "/LetsMeetWeb/account/registrazione",
+	      type: 'POST',
+	      data : data,
+	      dataType: "json",
+	      success: function(data){
+	    	console.log(data);
+			if(data.errorcode == 0){
+				window.location = "/LetsMeetWeb/login.html";
+			}else{
+				alert(data.error);
+				/*
+				$("#error-text").text(data.error);
+				$("#error-text").css("visibility","visible");
+			*/
+			}
+	      },
+	    error : function() {
+			alert("C'è stato un problema con la registrazione");
+	    }
+	});
+}
+
 function validateRegistration(registration){
 	var usrValidator = /^(\w+[_\.\-]*\w*){4,}$/;
 	var pswValidator = /^[a-zA-Z 0-9 \@\._\!\?\-]{8,}$/;
@@ -25,7 +53,7 @@ function validateRegistration(registration){
 	
 	} else
 
-		if (formRegistration.confermapsw.value != formRegistration.password.value) { //Check password
+		if (registration.confermapsw.value != registration.password.value) { //Check password
 			alert("Le password inserite non corrispondono");
 			document.getElementById("password").value="";
 			document.getElementById("confermapsw").value="";
@@ -33,13 +61,13 @@ function validateRegistration(registration){
 			return false; //Negate access
 	}else
 			
-		if(!mailsOK){ // Check email
+		if(!mailIsOK){ // Check email
 			alert("Email non corretta")
 			document.getElementById("email").focus(); //Set focus
 			return false; //Negate access
-	}else 
-		return true;
-				
-	
-	
+	}else
+		submitForm(registration);
+		return false;	
 }
+
+

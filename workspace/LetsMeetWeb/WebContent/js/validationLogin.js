@@ -39,7 +39,7 @@ function submitForm(){
 	      success: function(data){
 	    	console.log(data);
 			if(data.errorcode == 0){
-				window.location = "/LetsMeetWeb/homePage.jsp";
+				window.location = "/LetsMeetWeb/auth/homePage.jsp";
 			}else{
 				alert(data.error);
 				/*

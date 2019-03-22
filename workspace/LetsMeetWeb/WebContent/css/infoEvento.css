@@ -222,7 +222,7 @@ input{
 	
 }
 
-#tipo1{
+#btn_part{
 	
 	position: absolute;
 	left:27%;
@@ -238,7 +238,7 @@ input{
 	
 }
 
-#tipo2{
+#btn_verf{
 	
 	position: absolute;
 	left:40%;
@@ -310,3 +310,21 @@ footer{
   	text-align: center;
 }
 	
+button{
+	cursor: pointer;
+}
+
+
+
+button:disabled {
+	cursor: default;
+	background: gray !important; 
+}
+
+img.disabled{
+	cursor: default !important;	
+}
+
+button.gia{
+	background: green !important;
+}

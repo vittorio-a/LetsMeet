@@ -5,13 +5,15 @@
 		<link href="css/registration.css" rel="stylesheet" type="text/css">
 		<title>Registration</title>
 		<script type="text/javascript" src="js/validationReg.js"></script>
+   	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
 	</head>
 	
 		<body>
 			
 			<div id="login">
 			
-					<form id="registration" action="/LetsMeetWeb/account/registrazione" onsubmit="return validateRegistration(this.form)">
+					<form id="registration">
 					<ul>
 					<li>
 							<input type="text" id="username" name="username" placeholder="Usarname" size="72">
@@ -29,7 +31,7 @@
 					<li>
 					
 					
-							<input type="submit" id="bottone" name="invio" value="invio" size="36">
+							<input type="button" id="bottone" name="invio" value="invio" size="36" onclick="validateRegistration(this.form)">
 					</li>
 					</ul>
 					</form>

@@ -1,3 +1,4 @@
+<%@page import="it.unisa.studenti.letsmeet.control.gestione_account.LoginControl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,6 +9,7 @@
 	<head>
 			
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 	
 		<meta charset="	UTF-8">
 		<link href="../css/infoEvento.css" rel="stylesheet" type="text/css">
@@ -19,10 +21,45 @@
 		if(idEvn == null) idEvn = "1";
 	%>
 	var idEvento = <%=idEvn%>;
+	var idUser = <%=session.getAttribute(LoginControl.ID_IN_SESSION)%>;
 	fillEventInfo();
 	fillCommenti();
 
 	//devo prendere l'id dell'evento selezionato
+	
+var userPosition;
+var eventPosition = null;
+
+var userIsVerified = true, userIsPart = true;
+var eventDate = null;
+
+function updateUserPosition(){
+	navigator.geolocation.getCurrentPosition(function (position){
+		var lat = position.coords.latitude;
+		var lng = position.coords.longitude;
+		userPosition = ({lat: lat, lng: lng});
+		
+		if(eventPosition != null){
+			if(userIsPart && !userIsVerified && 
+					eventDate != null && eventDate < new Date() &&
+					google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(userPosition.lat, userPosition.lng),new google.maps.LatLng(eventPosition.lat, eventPosition.lng)) <= 100){
+			new google.maps.LatLng(userPosition.lat, userPosition.lng)
+
+				$("#btn_verf").prop("disabled", false);
+			}else{
+				$("#btn_verf").prop("disabled", true);
+			}
+
+		}
+	});
+}
+updateUserPosition;
+window.setInterval(updateUserPosition, 1000);
+
+window.setInterval(fillCommenti, 1000);
+window.setInterval(fillEventInfo, 1000);
+
+
 function fillEventInfo(){
 		$.ajax({
 				//essa passa l'id dell'evento alla servelt
@@ -37,12 +74,7 @@ function fillEventInfo(){
 						var evento = response.data.evento;
 
 						var d = new Date(evento.oraInizio.seconds * 1000);
-					    var dformat = [d.getMonth()+1,
-					               d.getDate(),
-					               d.getFullYear()].join('/')+' '+
-					              [d.getHours(),
-					               d.getMinutes(),
-					               d.getSeconds()].join(':');
+					    var dformat = d.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");;
 						
 						$("#desc-txt").text(evento.descrizione);
 						$("#part-txt").text(evento.nPartecipanti);
@@ -53,6 +85,36 @@ function fillEventInfo(){
 						$("#tipo").text(evento.tipo.nomeTipo);
 						//Prendere i commenti dall'array
 						
+						var userPart = false, userIsVer = false;
+						response.data.partecipazioni.forEach(function(part){
+							if(part.idUtente == idUser){
+								userPart = true;
+								if(part.verificato) userIsVer = true;
+							}
+						});
+						if(userPart){
+							$("#btn_part").prop("disabled", true);
+							$('#btn_part').addClass("gia");
+							if(userIsVer){
+								$("#btn_verf").prop("disabled", true);
+								$('#btn_verf').addClass("gia");
+							}
+						}else{
+							$('#like').addClass("disabled");
+							$('#like').attr("src", "../images/thumbs-up-gray.png");
+							$('#like').attr("onclick", "");
+
+							$('#dislike').addClass("disabled");
+							$('#dislike').attr("src", "../images/thumbs-up-gray.png");
+							$('#dislike').attr("onclick", "");
+
+						}
+						userIsVerified = userIsVer;
+						userIsPart = userPart;
+						var pos = response.data.evento.posizione;
+						eventPosition = {lat:pos.latitudine, lng:pos.longitudine};
+						eventDate = new Date(response.data.evento.oraInizio.seconds);
+						updateUserPosition();
 					}else{
 						alert(response.error);
 					}
@@ -106,6 +168,47 @@ function fillCommenti(){
 		
 }
 
+function partecipa(isVer){
+	var isVerificato;
+	if(isVer) isVerificato = isVer;
+	$.ajax({
+		//essa passa l'id dell'evento alla servelt
+		url: "/LetsMeetWeb/auth/eventi/partecipazioneControl",
+      	type: 'GET',
+      	data : {isVerificato:isVerificato,idEvento:idEvento},
+      	dataType: "json",
+		success: function(response){
+			console.log(response);
+			if(response.errorcode == 0){
+				userIsPart = true;
+				$("#btn_part").prop("disabled", true);
+				$('#btn_part').addClass("gia");
+			
+				$('#like').removeClass("disabled");
+				$('#like').attr("src", "../images/thumbs-up.png");
+				$('#like').attr("onclick", "vota(true)");
+
+				$('#dislike').removeClass("disabled");
+				$('#dislike').attr("src", "../images/thumbs-up.png");
+				$('#dislike').attr("onclick", "vota(false)");
+
+				if(isVer){
+					userIsVerified = true;
+					$("#btn_verf").prop("disabled", true);
+					$('#btn_verf').addClass("gia");
+
+				}
+				fillEventInfo();
+				
+			}else{
+				alert(response.error);
+			}
+		},
+		error : function() {
+			alert("C'è stato un problema con il caricamento dei commenti");
+  	  }
+	});
+}
 
 function vota(voto){
 	$.ajax({
@@ -163,15 +266,15 @@ function sendCommento(){
 						
 						<button id="tipo">Tipo</button>
 						
-						<a href="event.html"><img id="back" alt="freccia" src="../images/sign-out-option.png"></a>
+						<a href="homePage.jsp"><img id="back" alt="freccia" src="../images/sign-out-option.png"></a>
 						
 						<div id="calendar">
 							<img  alt="calendario" src="../images/calendar-with-a-clock-time-tools.png">
 							<span id="date-txt">0</span>
 						</div>
 						
-						<img id="like" alt="pollice" src="../images/thumbs-up.png" onclick="vota(1)">
-						<img id="dislike" class="ruota180" alt="pollice" src="../images/thumbs-up.png" onclick="vota(0)">
+						<img id="like" alt="pollice" src="../images/thumbs-up.png" onclick="vota('true')">
+						<img id="dislike" class="ruota180" alt="pollice" src="../images/thumbs-up.png" onclick="vota('false')">
 						
 						<div id="heart">
 							<img alt="cuore" src="../images/like-of-filled-heart.png">
@@ -190,9 +293,9 @@ function sendCommento(){
 						<p id="desc-txt"></p>
 				</div>
 				
-				<button id="tipo1">Partecipazione</button>
+				<button id="btn_part" onclick="partecipa(false)">Partecipazione</button>
 				
-				<button id="tipo2">Verifica</button>
+				<button id="btn_verf" onclick="partecipa(true)">Verifica</button>
 				
 				<div id="visualizza_commenti">
 					

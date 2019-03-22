@@ -427,7 +427,7 @@ function setMarker(){
     	    /*  addEvent(event);
         	    events.push(event);
         	    createCookie("events", JSON.stringify(events));*/
-        	   // closeManager();
+        	    closeManager();
             
           } else {
             window.alert('No results found');
@@ -481,7 +481,7 @@ function getEventDesc(event){
 	var descHtml = "<b>" + event.nome + "</b><br/>" +
 		"<b>Tipo: </b>" + event.tipo.nomeTipo + "<br/>" + 
 		"<b>Indirizzo: </b>" + event.posizione.formattedAdress + "<br/>" +
-		"<b>Data e ora d'inizio: </b>" + formatted_datetime + "<br/>" +
+		"<b>Data e ora d'inizio: </b>" + d.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ") + "<br/>" +
 		"<b>Descrizione: </b>" + event.descrizione;
 	return descHtml;
 }

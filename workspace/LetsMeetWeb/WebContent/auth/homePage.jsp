@@ -1,16 +1,19 @@
- <!DOCTYPE html>
+<%@page import="it.unisa.studenti.letsmeet.control.gestione_account.LoginControl"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 
 	<head>
 	
 		<meta charset="UTF-8">
-		<link href="css/homePage.css" rel="stylesheet" type="text/css">
+		<link href="../css/homePage.css" rel="stylesheet" type="text/css">
 		<title>LetsMeet</title>
-			<script type="text/javascript" src="js/homePage.js"></script>
-		
+			<script type="text/javascript" src="../js/homePage.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&v=3&libraries=geometry"></script>
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNXKJ5FYwMS0kMu4FVl-RvpJ8oVHvtjw4&callback=init" async defer></script>
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -43,12 +46,12 @@
       #latlng {
         width: 225px;
       }
+      
     </style>
 		
 	</head>
 	
 			<body>
-				<p id="idUtente" style="display: none;"><%=session.getAttribute(LoginControl.ID_IN_SESSION)%></p>
 				
 				<div id="container">
 						<div id="manager-info">
@@ -61,12 +64,13 @@
 							<div id="fdx">
 								<label>Tipo
 												<select name="Type" id="type_field">
-													<option>Cultura</option>
-													<option>Sport</option>
-													<option>Educazione</option>
-													<option>Divertimento</option>
-													<option>Arte</option>
-													<option>Altro</option>
+													<option value=1>Cultura</option>
+													<option value=2>Sport</option>
+													<option value=3>Educazione</option>
+													<option value=4>Divertimento</option>
+													<option value=5>Arte</option>
+													<option value=6>Ingegneria del software</option>
+													<option value=7>Altro</option>
 												</select></label><br/>
 								
 								<label>Data e ora d'inizio<input id="date_field" name="datetime" type="datetime-local"></label><br/>
@@ -82,9 +86,9 @@
 					
 							<h1><a href="homePage.html">LetsMeet</a></h1> 
 							
-							<a href="profilo.html"><img id="profilo" alt="profilo" src="images/profilo.png"></a> 
+							<a href="profilo.jsp"><img id="profilo" alt="profilo" src="../images/profilo.png"></a> 
 							
-							<a href="impostazioni.html"><img id="settings" alt="settings" src="images/two-cogwheels-configuration-interface-symbol.png"></a>
+							<a href="#"><img id="settings" alt="settings" src="../images/two-cogwheels-configuration-interface-symbol.png" onclick="changeTheme()"></a>
 				
 						</div>
 								
@@ -92,10 +96,10 @@
 						<section id="map">	
 						
 							<!-- <h2><a href="mappa.html">Mappa</a></h2> -->
-							<img id="info" alt="info" src="images/information-circle.png" onmouseenter="show('info-cont')" onmouseout="hide('info-cont')">
+							<img id="info" alt="info" src="../images/information-circle.png" onmouseenter="show('info-cont')" onmouseout="hide('info-cont')">
 							<div id="info-cont">
 								Clicca in un punto qualsiasi della mappa per aprire l'editor degli eventi<br>
-								L'indirizzo sar√† inserito automaticamente
+								L'indirizzo sar‡ inserito automaticamente
 							</div>
 							<div id="map-container"></div>
 						</section>
@@ -104,6 +108,20 @@
 						<aside id="event">
 						
 						<h2> Eventi </h2>
+						
+						<div id="radio_buttons">
+						
+							 <input id="radio_button1" type="radio" name="selection_type" value="0" onclick="loadEvents()"> Globale
+							 
+							 <input id="radio_button2" type="radio" name="selection_type" value="1" onclick="loadEvents()" checked> A Distanza
+							 
+							 
+  						
+  						</div>
+  						
+  							<input id="number_box" type="number" name="quantity" min="1" max="999" value="25" onchange="loadEvents()">
+  							
+  							<span>Km</span>
 						
 							<div id="event_container">
 								<ul id="event_list">
