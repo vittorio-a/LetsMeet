@@ -223,7 +223,7 @@ BEGIN
      WHERE u.idUtente = @idUt;
 END;$$
 
-/*
+
 CREATE TRIGGER rating_update AFTER UPDATE ON Rating 
 FOR EACH ROW
 BEGIN
@@ -294,4 +294,4 @@ BEGIN
 			SET e.nVerificati = @nVer + 1
 			WHERE e.idEvento = NEW.idEvento;    
 	END IF;
-END;$$*/
+END;$$
