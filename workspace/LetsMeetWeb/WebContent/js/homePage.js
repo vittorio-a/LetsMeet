@@ -36,8 +36,7 @@ function init(){
 	                      (month < 10 ? "0" + month.toString() : month) + "-" +
 	                      (day < 10 ? "0" + day.toString() : day) + "T" +
 	                      (hour < 10 ? "0" + hour.toString() : hour) + ":" +
-	                      (minute < 10 ? "0" + minute.toString() : minute) +
-	                      utcString.substring(16,19);
+	                      (minute < 10 ? "0" + minute.toString() : minute);
 	    var datetimeField = document.getElementById("date_field");
 	    datetimeField.value = localDatetime;
 	});

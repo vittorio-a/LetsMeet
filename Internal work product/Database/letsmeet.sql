@@ -115,8 +115,8 @@ CREATE TABLE Evento(
     feedback DECIMAL(6,4) NOT NULL DEFAULT 0,
     npartecipanti INTEGER(11) NOT NULL DEFAULT 0,
     nverificati INTEGER(11) NOT NULL DEFAULT 0,
-    oraInizio TIMESTAMP NOT NULL,
-    oraFine TIMESTAMP NOT NULL,
+    oraInizio TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    oraFine TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     idUtente INTEGER(11) NOT NULL,
     idTipo TINYINT NOT NULL,
     idPosizione INTEGER(11) NOT NULL,
@@ -199,6 +199,7 @@ BEGIN
 	 SET @feedbackEvento = (SELECT e.feedback
 	 FROM Evento e
      WHERE e.idEvento = NEW.idEvento);
+     
      IF(NEW.voto) THEN
 		SET @nf = 1;
 	 ELSE 
@@ -207,7 +208,9 @@ BEGIN
      UPDATE Evento e
      SET e.feedback = @feedbackEvento + @nf
      WHERE e.idEvento = NEW.idEvento;
-     SET @idUt =  (SELECT e.idUtente
+    
+    
+    SET @idUt =  (SELECT e.idUtente
 	 FROM Evento e
      WHERE e.idEvento = NEW.idEvento);
      
@@ -220,6 +223,7 @@ BEGIN
      WHERE u.idUtente = @idUt;
 END;$$
 
+/*
 CREATE TRIGGER rating_update AFTER UPDATE ON Rating 
 FOR EACH ROW
 BEGIN
@@ -253,6 +257,7 @@ BEGIN
      SET u.feedback = @feedbackUtente + @nf
      WHERE u.idUtente = @idUt;
 END;$$
+
 
 CREATE TRIGGER add_partecipazione AFTER INSERT ON Partecipazione
 FOR EACH ROW
@@ -289,4 +294,4 @@ BEGIN
 			SET e.nVerificati = @nVer + 1
 			WHERE e.idEvento = NEW.idEvento;    
 	END IF;
-END;$$
+END;$$*/

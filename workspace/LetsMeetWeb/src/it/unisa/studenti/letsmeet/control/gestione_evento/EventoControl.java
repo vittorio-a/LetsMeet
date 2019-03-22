@@ -126,8 +126,8 @@ public class EventoControl extends HttpServlet {
 		oraFineString = request.getParameter(ORA_FINE);
 		descrizione = request.getParameter(DESCRIZIONE);
 		tipoString = request.getParameter(TIPO);
-		if(!oraInizioString.endsWith("Z")) oraInizioString = oraInizioString + "Z";
-		if(!oraFineString.endsWith("Z")) oraFineString = oraFineString + "Z";
+		if(!oraInizioString.endsWith("Z")) oraInizioString = oraInizioString + ":00Z";
+		if(!oraFineString.endsWith("Z")) oraFineString = oraFineString + ":00Z";
 
 		Instant oraInizio = null, oraFine = null;
 		int idTipo = 0;
