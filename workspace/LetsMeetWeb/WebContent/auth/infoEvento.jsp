@@ -74,7 +74,7 @@ function fillEventInfo(){
 						var evento = response.data.evento;
 
 						var d = new Date(evento.oraInizio.seconds * 1000);
-					    var dformat = d.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");;
+					    var dformat = d.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");
 						
 						$("#desc-txt").text(evento.descrizione);
 						$("#part-txt").text(evento.nPartecipanti);
