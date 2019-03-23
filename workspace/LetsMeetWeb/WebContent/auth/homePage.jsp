@@ -60,6 +60,8 @@
 										<label>Nome<input id="name_field" name="Name" type="text"/></label><br/>
 										<label>Indirizzo<input id="addr_field" name="Address" type="text"/></label><br/>
 										
+										<label>Data e ora di fine<input id="date_field_end" name="datetime" type="datetime-local"></label><br/>
+										
 							</div>
 							<div id="fdx">
 								<label>Tipo
@@ -74,9 +76,12 @@
 												</select></label><br/>
 								
 								<label>Data e ora d'inizio<input id="date_field" name="datetime" type="datetime-local"></label><br/>
+								
+								<label>Descrizione<textarea id="desc_field" rows="3" cols="45"></textarea></label><br/>
+								
 							</div>
 							<div id="fdw">
-								<label>Descrizione<textarea id="desc_field" rows="3" cols="45"></textarea></label><br/>
+								
 								<input id="crea_btn" type="button" name="crea" value="Crea"  onclick="setMarker()">
 								<input id="cancel_btn" type="button" name="cancel" value="Cancel" onclick="closeManager()">
 							</div>
