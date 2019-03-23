@@ -91,6 +91,14 @@
 							<a href="#"><img id="settings" alt="settings" src="../images/two-cogwheels-configuration-interface-symbol.png" onclick="changeTheme()"></a>
 				
 						</div>
+						
+						
+						<div id="conferma_creazione">
+						
+						
+							<p>Evento creato!</p>
+						
+						</div>
 								
 								
 						<section id="map">	

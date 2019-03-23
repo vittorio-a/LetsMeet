@@ -67,6 +67,24 @@ h2{
 	display: inline;
 }
 
+
+#conferma_creazione{
+	
+	position: absolute;
+    background-color: #6495ed;
+    border-radius: 7px;
+    width: 10%;
+    height: 10%;
+    left: 45%;
+    text-align: center;
+    color: white;
+    border-style: solid;
+    top: 40%;
+    font-size:120%;
+    z-index: 5;
+	
+}
+
 #map{
 	
 	position:absolute;

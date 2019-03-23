@@ -262,6 +262,14 @@ function sendCommento(){
 			
 			<div id="container">
 			
+			
+				<div id="conferma_creazione">
+						
+						
+							<p>Rating effettuato!</p>
+						
+						</div>
+			
 					<div id="container_event1">
 					
 						<h1 id="nome-txt">evento1</h1>
