@@ -118,7 +118,7 @@ a{
 	border-radius: 2px;
 	width: 49%;
 	height: 36%;
-	display: table;
+	display:block;
 	overflow-y:scroll;
 	overflow-x:hidden; 
 
@@ -252,6 +252,11 @@ input{
 	
 	padding-left: 30px;
 	padding-top: 20px;
+}
+
+
+.break-word {
+    word-wrap: break-word;
 }
 
 #desc-txt{

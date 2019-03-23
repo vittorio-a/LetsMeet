@@ -292,7 +292,7 @@ function sendCommento(){
 				<div id="descrizione">
 						
 						<h1>Descrizione</h1>
-						<p id="desc-txt"></p>
+						<p class="break-word" id="desc-txt"></p>
 				</div>
 				
 				<button id="btn_part" onclick="partecipa(false)">Partecipazione</button>
