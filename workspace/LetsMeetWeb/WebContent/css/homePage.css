@@ -239,8 +239,23 @@ input, select, textarea{
 	width: 75%; 
 }
 
-textarea{
+#type_field{
+	
+	width:88%;
+}
+
+#date_field{
+	
+	width: 80.5%;
+}
+
+#date_field_end{
+	
 	width: 75%;
+}
+
+textarea{
+	width: 68%;
 	position: relative;
 	left: 5%;
 	
