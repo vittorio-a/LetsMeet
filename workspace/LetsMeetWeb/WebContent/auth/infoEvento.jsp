@@ -222,6 +222,10 @@ function vota(voto){
 		success: function(response){
 			console.log(response);
 			if(response.errorcode == 0){
+				show("conferma_creazione");
+				setTimeout(function(){
+					hide("conferma_creazione");
+				}, 1000);
 				fillEventInfo();
 			}else{
 				alert(response.error);
@@ -256,6 +260,14 @@ function sendCommento(){
 	});
 	
 }
+
+function show(id) {
+    document.getElementById(id).style.visibility = "visible";
+  }
+function hide(id) {
+    document.getElementById(id).style.visibility = "hidden";
+  }
+
 	</script>
 	
 		<body>
