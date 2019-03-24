@@ -42,18 +42,6 @@ function init(){
 	
 }
 
-function createCookie(name, value, days) {
-    var expires;
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
 
 
 var tm = 1;
@@ -83,9 +71,9 @@ function onClickMarker(elem) {
 	var lng = event.posizione.longitudine;
 	var coords = {lat:lat, lng:lng};
 	map.setCenter(coords);
-	//map.setZoom(13);
- //  	infowindow.setContent(getEventDesc(event));
-//   	infowindow.open(map, markers[i].marker);		
+	infowindow.setContent(getEventDesc(event) + getEventButtons(event));
+   	infowindow.open(map, mapMarkers[i]);
+		
 }
 
 var type = 0;
