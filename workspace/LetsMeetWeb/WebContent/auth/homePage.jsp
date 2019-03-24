@@ -84,7 +84,7 @@
 						</div>
 						<div id="header">
 					
-							<h1><a href="homePage.html">LetsMeet</a></h1> 
+							<h1><a href="homePage.jsp">LetsMeet</a></h1> 
 							
 							<a href="profilo.jsp"><img id="profilo" alt="profilo" src="../images/profilo.png"></a> 
 							

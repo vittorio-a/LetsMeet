@@ -309,3 +309,7 @@ ul{
 	top: 10%;
 	width: 45%;
 }
+
+#conferma_creazione{
+	visibility: hidden;
+}
