@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.filter;
+package it.unisa.studenti.letsmeet.model.filter;
 
 import java.util.ArrayList;
 import java.util.Collections;

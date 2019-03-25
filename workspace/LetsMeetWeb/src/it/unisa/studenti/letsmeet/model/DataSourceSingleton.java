@@ -13,7 +13,7 @@ public class DataSourceSingleton {
 	}
 	
 	
-	public static DataSource getDataSource() throws NamingException {
+	public synchronized static DataSource getDataSource() throws NamingException {
 		if(dataSource == null) {
 			dataSource = getDataSourceInternal();
 		}

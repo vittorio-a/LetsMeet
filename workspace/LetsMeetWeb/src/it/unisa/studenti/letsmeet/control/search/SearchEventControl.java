@@ -16,14 +16,14 @@ import javax.sql.DataSource;
 
 import com.google.gson.Gson;
 
-import it.unisa.studenti.letsmeet.filter.Filter;
-import it.unisa.studenti.letsmeet.filter.FilterFactory;
-import it.unisa.studenti.letsmeet.filter.FilterFactroyException;
-import it.unisa.studenti.letsmeet.filter.TipoFiltro;
 import it.unisa.studenti.letsmeet.manager.DaoException;
 import it.unisa.studenti.letsmeet.manager.EventoSqlDao;
 import it.unisa.studenti.letsmeet.model.DataSourceSingleton;
 import it.unisa.studenti.letsmeet.model.EventoBean;
+import it.unisa.studenti.letsmeet.model.filter.Filter;
+import it.unisa.studenti.letsmeet.model.filter.FilterFactory;
+import it.unisa.studenti.letsmeet.model.filter.FilterFactroyException;
+import it.unisa.studenti.letsmeet.model.filter.TipoFiltro;
 
 /**
  * Servlet implementation class SearchEventControl

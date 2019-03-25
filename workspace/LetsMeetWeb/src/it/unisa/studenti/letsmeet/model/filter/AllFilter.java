@@ -1,4 +1,4 @@
-package it.unisa.studenti.letsmeet.filter;
+package it.unisa.studenti.letsmeet.model.filter;
 
 
 public class AllFilter<T> implements Filter<T>{
